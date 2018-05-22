@@ -93,7 +93,7 @@ image bounds(508, 0, 492, 267) plant("filter") $ModuleAppearance {
 
   label bounds(1, 15, 490, 15) text("FILTER") colour(50, 50, 50) $LabelFontCol
 
-  rslider bounds(72, 48, 60, 60) range(0, 20000, 12000, 0.3, 1) channel("filtcut") text("cutoff") value(12000) valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(72, 48, 60, 60) range(0, 20000, 12000, 0.3, 0.001) channel("filtcut") text("cutoff") value(12000) valuetextbox(1) textbox(1) $FontCol
   checkbox bounds(57, 118, 100, 15) text("track notes") channel("filttrack") $FontCol
   rslider bounds(25, 169, 60, 60) range(0, 1.5, 0, 1, 0.001) channel("filtres") text("resonance") valuetextbox(1) textbox(1) $FontCol
   rslider bounds(118, 169, 60, 60) range(0, 100, 0, 1, 0.001) channel("filtdist") text("distortion") valuetextbox(1) textbox(1) $FontCol
@@ -128,7 +128,7 @@ image bounds(807, 266, 193, 115) plant("presets") $ModuleAppearance {
 
   label bounds(1, 15, 190, 15) text("PRESETS") colour(50, 50, 50) $LabelFontCol
 
-  combobox   bounds(20, 40, 152, 25) populate("*.snaps") $FontCol
+  combobox   bounds(20, 40, 152, 25) populate("the_river.snaps") $FontCol
   filebutton bounds(20, 74, 90, 25) text("save new") mode("snapshot")
 
 }
@@ -170,7 +170,7 @@ image bounds(850, 452, 150, 199) plant("cabinet") $ModuleAppearance {
 </Cabbage>
 <CsoundSynthesizer>
 <CsOptions>
--n --displays -+rtmidi=NULL -M0 --midi-key-cps=4 --midi-velocity-amp=5 -m 135
+-n -+rtmidi=NULL -M0 --midi-key-cps=4 --midi-velocity-amp=5
 </CsOptions>
 ; ==============================================
 <CsInstruments>
@@ -211,6 +211,7 @@ gimewavf2 ftgen 0, 0, 32768, 9, 1, 1, 0, 3, .333, 180, 5, .2, 0, 7, .143, 180, 9
 gasigl init 0
 gasigr init 0
 
+
 opcode Wavetable, k, kk
   kfrq, kwavnum xin
 
@@ -241,8 +242,8 @@ endop
 instr 1
   ifrq   = p4 ; comes from midi
   iscale = p5
-;  kbpmchn chnget "HOST_BPM"
-  kbpmchn = 160
+  kbpmchn chnget "HOST_BPM"
+;  kbpmchn = 160
   kbpm = kbpmchn / 60
   kwav1   chnget "wave1" ; the number of an f-table
   kwav2   chnget "wave2"
@@ -288,6 +289,22 @@ instr 1
   ienvd      chnget "envdec" ; duration of decay
   ienvr      chnget "envrel" ; duration of release
   ienvs      chnget "envsus" ; level of sustain
+
+;  alenv madsr ienva, ienvd, ienvs, ienvr
+;  aeenv mxadsr ienva, ienvd, ienvs, ienvr
+
+  ; use an xtratim/release pair for the envelopes,
+  ; because multiple linsegr/expsegr opcodes cause
+  ; serious performance problems
+  if (ienvr <= ifenvr) then
+    xtratim ienvr
+  else
+    xtratim ifenvr
+  endif
+  krel release
+
+  kcurramp init 0
+  kcurrcut init 0
 
           iTempoFracs[] fillarray 1, 2, 3, 4, 6, 8, 9, 12, 16, 27, 32, 81
         if (kvib1fttog == 1) then
@@ -339,6 +356,9 @@ instr 1
     aosc1  oscilikt kamp1*koscgain, kosc1frq, Wavetable:k(kosc1frq, kwav1)
     aosc2  oscilikt kamp2*koscgain, kosc2frq, Wavetable:k(kosc2frq, kwav2)
     aosc3  oscilikt kamp3*koscgain, kosc3frq, Wavetable:k(kosc3frq, kwav3)
+;    aosc1  oscilikt kamp1*koscgain, kosc1frq, gisine
+;    aosc2  oscilikt kamp2*koscgain, kosc2frq, gisine
+;    aosc3  oscilikt kamp3*koscgain, kosc3frq, gisine
 ;    aosc1  poscil3 kamp1*koscgain, kosc1frq
 ;    aosc2  poscil3 kamp2*koscgain, kosc2frq
 ;    aosc3  poscil3 kamp3*koscgain, kosc3frq
@@ -348,23 +368,43 @@ instr 1
           if (kftrack == 1) then
             kfcut = ifrq
           endif
-          if (ienvt == 0) then
-            afiltenv madsr ifenva, ifenvd, ifenvs, ifenvr
+          if (krel == 1) then
+            if (ifenvt == 0) then ; r
+              kfiltenv = kcurrcut * linseg:k(1, ifenvr, 0)
+            else
+              kfiltenv = kcurrcut * expseg:k(1, ifenvr, 0.0001)
+            endif
           else
-            afiltenv mxadsr ifenva, ifenvd, ifenvs, ifenvr
+            if (ifenvt == 0) then ; ads
+              kfiltenv linseg 0, ifenva, 1, ifenvd, ifenvs
+            else
+              kfiltenv expseg 0.0001, ifenva, 1, ifenvd, ifenvs
+            endif
+            kcurrcut = kfiltenv
           endif
-        asigfilt1 tonex asigprefilt, kfcut*afiltenv, 4
-        asigfilt2 lpf18 asigprefilt, kfcut*afiltenv, kfres, kfdist
+        asigfilt1 tonex asigprefilt, kfcut*kfiltenv, 4
+        asigfilt2 lpf18 asigprefilt, kfcut*kfiltenv, kfres, kfdist
       afilt2vol = kfres / 1.5
       afilt1vol = 1 - afilt2vol
     asigfilt = (asigfilt1 * afilt1vol) + (asigfilt2 * afilt2vol)
+;     asigfilt = asigfilt1
 
-    if (ienvt == 0) then
-      aenv madsr ienva, ienvd, ienvs, ienvr
+    if (krel == 1) then
+      if (ienvt == 0) then ; r
+        kenv = kcurramp * linseg:k(1, ienvr, 0)
+      else
+        kenv = kcurramp * expseg:k(1, ienvr, 0.0001)
+      endif
     else
-      aenv mxadsr ienva, ienvd, ienvs, ienvr
+      if (ienvt == 0) then ; ads
+        kenv linseg 0, ienva, 1, ienvd, ienvs
+      else
+        kenv expseg 0.0001, ienva, 1, ienvd, ienvs
+      endif
+      kcurramp = kenv
     endif
-  asigprescale = asigfilt * aenv
+  asigprescale = asigfilt * kenv
+  ;asigprescale = asigprefilt * kenv
 
   asigscale = asigprescale * iscale
 
@@ -531,7 +571,7 @@ instr 99 ; cabinet
 endin
 
 </CsInstruments>
-; ==============================================
+ ==============================================
 <CsScore>
 
 ;f 1  0 32768 10 1                                   ; sine wave
@@ -544,7 +584,7 @@ endin
 ;f 9  0 32768 7 1 4096 1 0 -1 28672 -1                            ; narrower pulse
 ;f 6  0 32768 11 30 1                                             ; buzz
 
-;f 0 z
+f 0 z
 i 98 0 z
 i 99 0 z
 </CsScore>
