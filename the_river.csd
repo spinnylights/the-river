@@ -93,8 +93,10 @@ image bounds(508, 0, 492, 267) plant("filter") $ModuleAppearance {
 
   label bounds(1, 15, 490, 15) text("FILTER") colour(50, 50, 50) $LabelFontCol
 
-  rslider bounds(72, 48, 60, 60) range(0, 20000, 12000, 0.3, 0.001) channel("filtcut") text("cutoff") value(12000) valuetextbox(1) textbox(1) $FontCol
-  checkbox bounds(57, 118, 100, 15) text("track notes") channel("filttrack") $FontCol
+  rslider bounds(25, 48, 60, 60) range(0, 20000, 12000, 0.3, 0.001) channel("filtcut") text("cutoff") value(12000) valuetextbox(1) textbox(1) $FontCol
+  checkbox bounds(10, 118, 100, 15) text("track notes") channel("filttrack") $FontCol
+  rslider bounds(118, 48, 60, 60) range(0, 20000, 1000, 1, 0.001) channel("filtwidth") text("bandwidth") valuetextbox(1) textbox(1) $FontCol
+  button bounds(50, 138, 80, 25) channel("filttype") items("lowpass","bandpass")
   rslider bounds(25, 169, 60, 60) range(0, 1.5, 0, 1, 0.001) channel("filtres") text("resonance") valuetextbox(1) textbox(1) $FontCol
   rslider bounds(118, 169, 60, 60) range(0, 100, 0, 1, 0.001) channel("filtdist") text("distortion") valuetextbox(1) textbox(1) $FontCol
 
@@ -104,6 +106,8 @@ image bounds(508, 0, 492, 267) plant("filter") $ModuleAppearance {
   rslider bounds(297, 159, 60, 60) range(0.01, 4, 4, 1, 0.001) channel("filtenvrel") text("release") valuetextbox(1) textbox(1) $FontCol
   button bounds(380, 128, 80, 40) channel("filtenvtype") items("linear","expon")
 
+  ;gentable bounds(204, 58, 225, 120) tablenumber(1) amprange(0, 1, 1, 0.0001) active(1)  identchannel("myfiltenv")
+  ;button bounds(204, 185, 80, 25) channel("filtenvtype") items("linear","expon")
 }
 
 image bounds(508, 266, 300, 187) plant("envelope") $ModuleAppearance {
@@ -182,6 +186,7 @@ nchnls  =  2
 
 ; waveforms
 
+
 ;f 1  0 32768 10 1                                   ; sine wave
 ; 6  0 32768 11 30 1                                             ; buzz
 gitabsize = 2 ^ 16
@@ -210,7 +215,6 @@ gimewavf2 ftgen 0, 0, 32768, 9, 1, 1, 0, 3, .333, 180, 5, .2, 0, 7, .143, 180, 9
 
 gasigl init 0
 gasigr init 0
-
 
 opcode Wavetable, k, kk
   kfrq, kwavnum xin
@@ -275,15 +279,18 @@ instr 1
   kvib1w     chnget "vibwave1" ; 0 is sine, 1 is triangle
   kvib2w     chnget "vibwave2"
   kvib3w     chnget "vibwave3"
+  kftype     chnget "filttype"
   kfcut      chnget "filtcut"
+  kfwidth    chnget "filtwidth"
   kfres      chnget "filtres" ; generally <1, higher values might cause aliasing
   kftrack    chnget "filttrack"
   kfdist     chnget "filtdist" ; amount of filter distortion, 1–100
-  ifenvt     chnget "filtenvtype" ; 0 is linear, 1 is exponential
+  kfenvt     chnget "filtenvtype" ; 0 is linear, 1 is exponential
   ifenva     chnget "filtenvatt" ; duration of attack
   ifenvd     chnget "filtenvdec" ; duration of decay
   ifenvs     chnget "filtenvsus" ; level of sustain
-  ifenvr     chnget "filtenvrel" ; duration of release
+;  ifenvr     chnget "filtenvrel" ; duration of release
+  ifenvr = 1
   ienvt      chnget "envtype" ; 0 is linear, 1 is exponential
   ienva      chnget "envatt" ; duration of attack
   ienvd      chnget "envdec" ; duration of decay
@@ -365,29 +372,71 @@ instr 1
     anoise noise   knamp*koscgain, knfil * (-1)
   asigprefilt = (aosc1 + aosc2 + aosc3 + anoise) / 4
 
+;  ktrig changed kfenvt
+;  if (ktrig == 1) then
+;    reinit UPDATE
+;  endif
+;
+;  UPDATE:
+;    if (kfenvt == 0) then
+;      ;chnset "tablenumber(1) amprange(0, 1, 1, 0.0001)", "myfiltenv" ; linear
+;      chnset "visible(1)", "gainlight"
+;   else
+;      ;chnset "tablenumber(2) amprange(0.0001, 1, 2, 0.0001)", "myfiltenv" ; expon
+;   endif
+;  rireturn
+
           if (kftrack == 1) then
             kfcut = ifrq
           endif
           if (krel == 1) then
-            if (ifenvt == 0) then ; r
+            if (kfenvt == 0) then ; r
               kfiltenv = kcurrcut * linseg:k(1, ifenvr, 0)
             else
               kfiltenv = kcurrcut * expseg:k(1, ifenvr, 0.0001)
             endif
           else
-            if (ifenvt == 0) then ; ads
+            if (kfenvt == 0) then ; ads
               kfiltenv linseg 0, ifenva, 1, ifenvd, ifenvs
             else
               kfiltenv expseg 0.0001, ifenva, 1, ifenvd, ifenvs
             endif
             kcurrcut = kfiltenv
+            ;aindx linseg 0, 1, 0.9999
+            ;kfiltenv tablei aindx, 1, 1
+            ;kcurrcut = kfiltenv
           endif
-        asigfilt1 tonex asigprefilt, kfcut*kfiltenv, 4
+    ;    asigfilt1 tonex asigprefilt, kfcut*kfiltenv, 4
+    ;    asigfilt2 lpf18 asigprefilt, kfcut*kfiltenv, kfres, kfdist
+    ;  afilt2vol = kfres / 1.5
+    ;  afilt1vol = 1 - afilt2vol
+    ;asigfilt = (asigfilt1 * afilt1vol) + (asigfilt2 * afilt2vol)
+
+  if (kftype == 0) then
+        asigfilt1 tonex asigprefilt, kfcut*kfiltenv
         asigfilt2 lpf18 asigprefilt, kfcut*kfiltenv, kfres, kfdist
       afilt2vol = kfres / 1.5
       afilt1vol = 1 - afilt2vol
     asigfilt = (asigfilt1 * afilt1vol) + (asigfilt2 * afilt2vol)
-;     asigfilt = asigfilt1
+  else
+            asigfilt111 tonex asigprefilt, (kfcut+kfwidth)*kfiltenv, 3
+            asigfilt112 lpf18 asigprefilt, (kfcut+kfwidth)*kfiltenv, kfres, kfdist
+          afilt112vol = kfres / 1.5
+          afilt111vol = 1 - afilt112vol
+        asigfilt11 = (asigfilt111 * afilt111vol) + (asigfilt112 * afilt112vol)
+            ksigfilt12cutprezero = kfcut - kfwidth
+          if (ksigfilt12cutprezero < 0) then
+            ksigfilt12cut = 0
+          else
+            ksigfilt12cut = ksigfilt12cutprezero
+          endif
+        asigfilt12  atonex asigfilt11, ksigfilt12cut*kfiltenv, 3
+      ;  asigfilt2 atonex asigfilt21, (kfcut+kfwidth)*kfiltenv
+;   asigfilt = (asigfilt11 + asigfilt12) / 2
+     asigfilt = asigfilt12
+  endif
+
+
 
     if (krel == 1) then
       if (ienvt == 0) then ; r
@@ -404,7 +453,6 @@ instr 1
       kcurramp = kenv
     endif
   asigprescale = asigfilt * kenv
-  ;asigprescale = asigprefilt * kenv
 
   asigscale = asigprescale * iscale
 
@@ -565,6 +613,7 @@ instr 99 ; cabinet
   else
     chnset "colour(255, 140, 0, 0)", "gainlight"
   endif
+    ;chnset "colour(255, 140, 0, 255)", "gainlight"
 
   gasigl = 0
   gasigr = 0
@@ -573,16 +622,9 @@ endin
 </CsInstruments>
  ==============================================
 <CsScore>
-
-;f 1  0 32768 10 1                                   ; sine wave
-;f 3  0 32768 7 -1 16384 1 16384 -1 ; triangle wave
-;f 4  0 32768 7 -1 32768 1 ; sawtooth
-;f 5  0 32768 7 -1 24576 1 8192 -1 ; semi-sawtooth
-;f 7  0 32768 7 1 16384 1 0 -1 16384 -1 ; square wave
-;f 2  0 32768 7 1 12288 1 0 -1 20480 -1 ; pulse wave
-;f 8  0 32768 7 1 8192 1 0 -1 24576 -1                            ; narrow pulse
-;f 9  0 32768 7 1 4096 1 0 -1 28672 -1                            ; narrower pulse
-;f 6  0 32768 11 30 1                                             ; buzz
+;f 1 0 16384 -7 0 16383 1 1 ; for the filter cutoff envelope
+;f 2 0 16384 -5 0.0001 16383 1 1 ; for the filter cutoff envelope
+;f 2 0 16384 -16 1 0 0 ; for the filter cutoff envelope release
 
 f 0 z
 i 98 0 z
