@@ -80,17 +80,6 @@ image bounds(309, 530, 200, 121) plant("controls") $ModuleAppearance {
 
 image bounds(508, 0, 492, 267) plant("filter") $ModuleAppearance {
 
-#  image bounds(0, 30, 188, 237) $ModuleAppearance
-#  image bounds(0, 30, 188, 146) $ModuleAppearance
-#  image bounds(0, 30, 94, 237) $ModuleAppearance
-#
-# image bounds(188, 30, 304, 237) $ModuleAppearance
-#image bounds(188, 30, 245, 237) $ModuleAppearance
-#image bounds(188, 30, 187, 237) $ModuleAppearance
-#image bounds(375, 30, 187, 118) $ModuleAppearance
-# image bounds(188, 30, 93, 237) $ModuleAppearance
-# image bounds(188, 30, 187, 118) $ModuleAppearance
-
   label bounds(1, 15, 490, 15) text("FILTER") colour(50, 50, 50) $LabelFontCol
 
   rslider bounds(25, 48, 60, 60) range(0, 20000, 12000, 0.3, 0.001) channel("filtcut") text("cutoff") value(12000) valuetextbox(1) textbox(1) $FontCol
@@ -106,17 +95,9 @@ image bounds(508, 0, 492, 267) plant("filter") $ModuleAppearance {
   rslider bounds(297, 159, 60, 60) range(0.01, 4, 4, 1, 0.001) channel("filtenvrel") text("release") valuetextbox(1) textbox(1) $FontCol
   button bounds(380, 128, 80, 40) channel("filtenvtype") items("linear","expon")
 
-  ;gentable bounds(204, 58, 225, 120) tablenumber(1) amprange(0, 1, 1, 0.0001) active(1)  identchannel("myfiltenv")
-  ;button bounds(204, 185, 80, 25) channel("filtenvtype") items("linear","expon")
 }
 
 image bounds(508, 266, 300, 187) plant("envelope") $ModuleAppearance {
-
-  #image bounds(0, 30, 300, 77) $ModuleAppearance
-  #image bounds(0, 30, 242, 155) $ModuleAppearance
-  #image bounds(0, 30, 185, 155) $ModuleAppearance
-  #image bounds(0, 30, 92, 155) $ModuleAppearance
-  #image bounds(0, 30, 185, 77) $ModuleAppearance
 
   label bounds(1, 15, 298, 15) text("ENVELOPE") colour(50, 50, 50) $LabelFontCol
 
@@ -144,10 +125,6 @@ image bounds(807, 380, 193, 73) plant("logo") $ModuleAppearance {
 }
 
 image bounds(508, 452, 343, 199) plant("reverb") $ModuleAppearance {
-
-# image bounds(0, 0, 256, 199) $ModuleAppearance
-# image bounds(0, 0, 171, 199) $ModuleAppearance
-# image bounds(0, 0, 85, 199) $ModuleAppearance
 
   label bounds(1, 15, 341, 15) text("REVERB") colour(50, 50, 50) $LabelFontCol
 
@@ -289,16 +266,12 @@ instr 1
   ifenva     chnget "filtenvatt" ; duration of attack
   ifenvd     chnget "filtenvdec" ; duration of decay
   ifenvs     chnget "filtenvsus" ; level of sustain
-;  ifenvr     chnget "filtenvrel" ; duration of release
-  ifenvr = 1
+  ifenvr     chnget "filtenvrel" ; duration of release
   ienvt      chnget "envtype" ; 0 is linear, 1 is exponential
   ienva      chnget "envatt" ; duration of attack
   ienvd      chnget "envdec" ; duration of decay
   ienvr      chnget "envrel" ; duration of release
   ienvs      chnget "envsus" ; level of sustain
-
-;  alenv madsr ienva, ienvd, ienvs, ienvr
-;  aeenv mxadsr ienva, ienvd, ienvs, ienvr
 
   ; use an xtratim/release pair for the envelopes,
   ; because multiple linsegr/expsegr opcodes cause
@@ -363,28 +336,8 @@ instr 1
     aosc1  oscilikt kamp1*koscgain, kosc1frq, Wavetable:k(kosc1frq, kwav1)
     aosc2  oscilikt kamp2*koscgain, kosc2frq, Wavetable:k(kosc2frq, kwav2)
     aosc3  oscilikt kamp3*koscgain, kosc3frq, Wavetable:k(kosc3frq, kwav3)
-;    aosc1  oscilikt kamp1*koscgain, kosc1frq, gisine
-;    aosc2  oscilikt kamp2*koscgain, kosc2frq, gisine
-;    aosc3  oscilikt kamp3*koscgain, kosc3frq, gisine
-;    aosc1  poscil3 kamp1*koscgain, kosc1frq
-;    aosc2  poscil3 kamp2*koscgain, kosc2frq
-;    aosc3  poscil3 kamp3*koscgain, kosc3frq
     anoise noise   knamp*koscgain, knfil * (-1)
   asigprefilt = (aosc1 + aosc2 + aosc3 + anoise) / 4
-
-;  ktrig changed kfenvt
-;  if (ktrig == 1) then
-;    reinit UPDATE
-;  endif
-;
-;  UPDATE:
-;    if (kfenvt == 0) then
-;      ;chnset "tablenumber(1) amprange(0, 1, 1, 0.0001)", "myfiltenv" ; linear
-;      chnset "visible(1)", "gainlight"
-;   else
-;      ;chnset "tablenumber(2) amprange(0.0001, 1, 2, 0.0001)", "myfiltenv" ; expon
-;   endif
-;  rireturn
 
           if (kftrack == 1) then
             kfcut = ifrq
@@ -402,15 +355,7 @@ instr 1
               kfiltenv expseg 0.0001, ifenva, 1, ifenvd, ifenvs
             endif
             kcurrcut = kfiltenv
-            ;aindx linseg 0, 1, 0.9999
-            ;kfiltenv tablei aindx, 1, 1
-            ;kcurrcut = kfiltenv
           endif
-    ;    asigfilt1 tonex asigprefilt, kfcut*kfiltenv, 4
-    ;    asigfilt2 lpf18 asigprefilt, kfcut*kfiltenv, kfres, kfdist
-    ;  afilt2vol = kfres / 1.5
-    ;  afilt1vol = 1 - afilt2vol
-    ;asigfilt = (asigfilt1 * afilt1vol) + (asigfilt2 * afilt2vol)
 
   if (kftype == 0) then
         asigfilt1 tonex asigprefilt, kfcut*kfiltenv
@@ -431,12 +376,8 @@ instr 1
             ksigfilt12cut = ksigfilt12cutprezero
           endif
         asigfilt12  atonex asigfilt11, ksigfilt12cut*kfiltenv, 3
-      ;  asigfilt2 atonex asigfilt21, (kfcut+kfwidth)*kfiltenv
-;   asigfilt = (asigfilt11 + asigfilt12) / 2
      asigfilt = asigfilt12
   endif
-
-
 
     if (krel == 1) then
       if (ienvt == 0) then ; r
@@ -460,7 +401,6 @@ instr 1
   gasigl = gasigl + asigl
   gasigr = gasigr + asigr
 
-  ;outs asigl, asigr
 endin
 
 opcode Schroeder, a, akkikikikikiki
@@ -555,8 +495,6 @@ instr 98 ; reverb
       adelrl, adelrr pan2 adelr, kpan, 2
     asigl = ((adelll + adelrl) * kwetamt * kgain) + (gasigl * kdryamt)
     asigr = ((adellr + adelrr) * kwetamt * kgain) + (gasigr * kdryamt)
-;  gasigl = gasigl + asigl
-;  gasigr = gasigr + asigr
   gasigl = asigl
   gasigr = asigr
 endin
@@ -613,7 +551,6 @@ instr 99 ; cabinet
   else
     chnset "colour(255, 140, 0, 0)", "gainlight"
   endif
-    ;chnset "colour(255, 140, 0, 255)", "gainlight"
 
   gasigl = 0
   gasigr = 0
@@ -622,10 +559,6 @@ endin
 </CsInstruments>
  ==============================================
 <CsScore>
-;f 1 0 16384 -7 0 16383 1 1 ; for the filter cutoff envelope
-;f 2 0 16384 -5 0.0001 16383 1 1 ; for the filter cutoff envelope
-;f 2 0 16384 -16 1 0 0 ; for the filter cutoff envelope release
-
 f 0 z
 i 98 0 z
 i 99 0 z
