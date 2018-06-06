@@ -90,10 +90,12 @@ image bounds(508, 0, 492, 267) plant("filter") $ModuleAppearance {
   rslider bounds(118, 169, 60, 60) range(0, 100, 0, 1, 0.001) channel("filtdist") text("distortion") valuetextbox(1) textbox(1) $FontCol
 
   rslider bounds(204, 58, 60, 60) range(0.01, 4, 0.01, 1, 0.001) channel("filtenvatt") text("attack") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(297, 58, 60, 60) range(0.01, 4, 0.01, 1, 0.001) channel("filtenvdec") text("decay") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(204, 159, 60, 60) range(0.01, 1, 1, 1, 0.001) channel("filtenvsus") text("sustain") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(297, 159, 60, 60) range(0.01, 4, 4, 1, 0.001) channel("filtenvrel") text("release") valuetextbox(1) textbox(1) $FontCol
-  button bounds(380, 128, 80, 40) channel("filtenvtype") items("linear","expon")
+  rslider bounds(274, 58, 60, 60) range(0.01, 4, 0.01, 1, 0.001) channel("filtenvdec") text("decay") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(344, 58, 60, 60) range(0.01, 1, 1, 1, 0.001) channel("filtenvsus") text("sustain") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(414, 58, 60, 60) range(0.01, 4, 4, 1, 0.001) channel("filtenvrel") text("release") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(204, 159, 60, 60) range(-10, 10, 0, 1, 0.001) channel("filtenvattshape") text("shape") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(274, 159, 60, 60) range(-10, 10, 0, 1, 0.001) channel("filtenvdecshape") text("shape") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(414, 159, 60, 60) range(-10, 10, 0, 1, 0.001) channel("filtenvrelshape") text("shape") valuetextbox(1) textbox(1) $FontCol
 
 }
 
@@ -101,15 +103,17 @@ image bounds(508, 266, 300, 187) plant("envelope") $ModuleAppearance {
 
   label bounds(1, 15, 298, 15) text("ENVELOPE") colour(50, 50, 50) $LabelFontCol
 
-  rslider bounds(17, 39, 60, 60) range(0.01, 4, 0.01, 1, 0.001) channel("envatt") text("attack") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(108, 39, 60, 60) range(0.01, 4, 0.01, 1, 0.001) channel("envdec") text("decay") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(17, 110, 60, 60) range(0.01, 1, 1, 1, 0.001) channel("envsus") text("sustain") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(108, 110, 60, 60) range(0.01, 4, 0.01, 1, 0.001) channel("envrel") text("release") valuetextbox(1) textbox(1) $FontCol
-  button bounds(191, 88, 80, 40) channel("envtype") items("linear","expon")
+  rslider bounds(15, 39, 60, 60) range(0.01, 4, 0.01, 1, 0.001) channel("envatt") text("attack") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(85, 39, 60, 60) range(0.01, 4, 0.01, 1, 0.001) channel("envdec") text("decay") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(155, 39, 60, 60) range(0.01, 1, 1, 1, 0.001) channel("envsus") text("sustain") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(225, 39, 60, 60) range(0.01, 4, 0.01, 1, 0.001) channel("envrel") text("release") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(15, 110, 60, 60)  range(-10, 10, 0, 1, 0.001) channel("envattshape") text("shape") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(85, 110, 60, 60)  range(-10, 10, 0, 1, 0.001) channel("envdecshape") text("shape") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(225, 110, 60, 60) range(-10, 10, 0, 1, 0.001) channel("envrelshape") text("shape") valuetextbox(1) textbox(1) $FontCol
 
 }
 
-image bounds(807, 266, 193, 115) plant("presets") $ModuleAppearance {
+image bounds(807, 266, 197, 115) plant("presets") $ModuleAppearance {
 
   label bounds(1, 15, 190, 15) text("PRESETS") colour(50, 50, 50) $LabelFontCol
 
@@ -262,16 +266,20 @@ instr 1
   kfres      chnget "filtres" ; generally <1, higher values might cause aliasing
   kftrack    chnget "filttrack"
   kfdist     chnget "filtdist" ; amount of filter distortion, 1–100
-  kfenvt     chnget "filtenvtype" ; 0 is linear, 1 is exponential
   ifenva     chnget "filtenvatt" ; duration of attack
   ifenvd     chnget "filtenvdec" ; duration of decay
   ifenvs     chnget "filtenvsus" ; level of sustain
   ifenvr     chnget "filtenvrel" ; duration of release
-  ienvt      chnget "envtype" ; 0 is linear, 1 is exponential
+  ifenvash   chnget "filtenvattshape"
+  ifenvdsh   chnget "filtenvdecshape"
+  ifenvrsh   chnget "filtenvrelshape"
   ienva      chnget "envatt" ; duration of attack
   ienvd      chnget "envdec" ; duration of decay
   ienvr      chnget "envrel" ; duration of release
   ienvs      chnget "envsus" ; level of sustain
+  ienvash    chnget "envattshape"
+  ienvdsh    chnget "envdecshape"
+  ienvrsh    chnget "envrelshape"
 
   ; use an xtratim/release pair for the envelopes,
   ; because multiple linsegr/expsegr opcodes cause
@@ -343,17 +351,9 @@ instr 1
             kfcut = ifrq
           endif
           if (krel == 1) then
-            if (kfenvt == 0) then ; r
-              kfiltenv = kcurrcut * linseg:k(1, ifenvr, 0)
-            else
-              kfiltenv = kcurrcut * expseg:k(1, ifenvr, 0.0001)
-            endif
+            kfiltenv = kcurrcut * transeg:k(1, ifenvr, ifenvrsh, 0) ; r
           else
-            if (kfenvt == 0) then ; ads
-              kfiltenv linseg 0, ifenva, 1, ifenvd, ifenvs
-            else
-              kfiltenv expseg 0.0001, ifenva, 1, ifenvd, ifenvs
-            endif
+            kfiltenv transeg 0, ifenva, ifenvash, 1, ifenvd, ifenvdsh, ifenvs ; ads
             kcurrcut = kfiltenv
           endif
 
@@ -380,17 +380,9 @@ instr 1
   endif
 
     if (krel == 1) then
-      if (ienvt == 0) then ; r
-        kenv = kcurramp * linseg:k(1, ienvr, 0)
-      else
-        kenv = kcurramp * expseg:k(1, ienvr, 0.0001)
-      endif
+      kenv = kcurramp * transeg:k(1, ienvr, ienvrsh, 0) ; r
     else
-      if (ienvt == 0) then ; ads
-        kenv linseg 0, ienva, 1, ienvd, ienvs
-      else
-        kenv expseg 0.0001, ienva, 1, ienvd, ienvs
-      endif
+      kenv transeg 0, ienva, ienvash, 1, ienvd, ienvdsh, ienvs
       kcurramp = kenv
     endif
   asigprescale = asigfilt * kenv
