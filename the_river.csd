@@ -270,14 +270,14 @@ instr 1
   ifenvd     chnget "filtenvdec" ; duration of decay
   ifenvs     chnget "filtenvsus" ; level of sustain
   ifenvr     chnget "filtenvrel" ; duration of release
-  ifenvash   chnget "filtenvattshape"
+  ifenvash   =      chnget:i("filtenvattshape") * -1
   ifenvdsh   chnget "filtenvdecshape"
   ifenvrsh   chnget "filtenvrelshape"
   ienva      chnget "envatt" ; duration of attack
   ienvd      chnget "envdec" ; duration of decay
   ienvr      chnget "envrel" ; duration of release
   ienvs      chnget "envsus" ; level of sustain
-  ienvash    chnget "envattshape"
+  ienvash    =      chnget:i("envattshape") * -1
   ienvdsh    chnget "envdecshape"
   ienvrsh    chnget "envrelshape"
 
