@@ -133,4 +133,21 @@
            revwet="0" revfiltcut="20000" revsize="1" revtight="0.0099999997764825820923"
            revgain="1" revwarble="9.9999997473787516356e-06" revpan="0.5"
            revwarbpan="0" wood="0" woodspread="1"/>
+  <PRESET9 PresetName="The_River 9" wave1="9" wave2="5" wave3="4" fmod1="1"
+           fmod2="1" fmod3="1" vibamp1="0" vibamp2="0" vibamp3="0" vibfreq1="0"
+           vibfreq2="0" vibfreq3="0" vibfreqt1tog="0" vibfreqt2tog="0" vibfreqt3tog="0"
+           vibfreqt1="1" vibfreqt2="1" vibfreqt3="1" vibwave1="0" vibwave2="0"
+           vibwave3="0" amp1="1" amp2="1" amp3="1" osc1tog="1" osc2tog="1"
+           osc3tog="1" pitchbend="0" pitchbrange="7" noisetog="1" noisefilt="0"
+           noiseamp="0" pan="0.5" oscgain="0.80000001192092895508" filttog="1"
+           filtcut="12000" filttrack="0" filtwidth="1000" filttype="0" filtres="0"
+           filtdist="0" filtenvatt="1.4780000448226928711" filtenvdec="0.0099999997764825820923"
+           filtenvsus="1" filtenvrel="4" filtenvattshape="-3.5199995040893554688"
+           filtenvdecshape="0" filtenvrelshape="0" envatt="0.0099999997764825820923"
+           envdec="0.0099999997764825820923" envsus="1" envrel="0.0099999997764825820923"
+           envattshape="0" envdecshape="0" envrelshape="0" combochan="1"
+           revtog="1" revwet="1" revfiltcut="20000" revsize="3.3460001945495605469"
+           revtight="0.3900000452995300293" revgain="1" revwarble="0.00068999989889562129974"
+           revpan="0.5" revwarbpan="0" reviws="1024" cabtog="1" wood="0"
+           woodspread="1"/>
 </CABBAGE_PRESETS>
