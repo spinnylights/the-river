@@ -93,7 +93,7 @@ image bounds(508, 0, 492, 267) plant("filter") $ModuleAppearance {
   rslider bounds(10, 48, 90, 60) range(0, 20000, 12000, 0.3, 0.001) channel("filtcut") text("cutoff") value(12000) valuetextbox(1) textbox(1) $FontCol
   checkbox bounds(10, 118, 100, 15) text("track notes") channel("filttrack") $FontCol
   rslider bounds(103, 48, 90, 60) range(0, 20000, 1000, 1, 0.001) channel("filtwidth") text("bandwidth") valuetextbox(1) textbox(1) $FontCol
-  button bounds(50, 138, 80, 25) channel("filttype") items("lowpass","bandpass")
+  button bounds(62, 137, 80, 25) channel("filttype") items("lowpass","bandpass")
   rslider bounds(25, 169, 60, 60) range(0, 1.5, 0, 1, 0.001) channel("filtres") text("resonance") valuetextbox(1) textbox(1) $FontCol
   rslider bounds(118, 169, 60, 60) range(0, 100, 0, 1, 0.001) channel("filtdist") text("distortion") valuetextbox(1) textbox(1) $FontCol
 
