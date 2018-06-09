@@ -144,14 +144,14 @@ image bounds(508, 452, 343, 199) plant("reverb") $ModuleAppearance {
 
     rslider bounds(13, 41, 60, 60) range(0, 1, 0, 1, 0.001) channel("revwet") text("wetness") valuetextbox(1) textbox(1) $FontCol
     rslider bounds(13, 115, 60, 60) range(0, 20000, 20000, 0.5, 0.001) channel("revfiltcut") text("brightness") valuetextbox(1) textbox(1) $FontCol
-    rslider bounds(78, 41, 60, 60) range(0.01, 4, 1, 1, 0.001) channel("revsize") text("size") valuetextbox(1) textbox(1) $FontCol
+    rslider bounds(78, 41, 60, 60) range(0.01, 4, 1, 1, 0.001) channel("revsize") text("splash") valuetextbox(1) textbox(1) $FontCol
     rslider bounds(78, 115, 60, 60) range(0.01, 0.99, 0.01, 1, 0.001) channel("revtight") text("tightness") valuetextbox(1) textbox(1) $FontCol
-    rslider bounds(143, 41, 60, 60) range(0, 3, 1, 1, 0.001) channel("revgain") text("gain") valuetextbox(1) textbox(1) $FontCol
+    rslider bounds(143, 41, 60, 60) range(.2, 5, .6, .4, 0.001) channel("revdist") text("distance") valuetextbox(1024) textbox(1) $FontCol
     rslider bounds(143, 115, 60, 60) range(0.00001, 0.001, 0.00001, 1, 0.00001) channel("revwarble") text("warble") valuetextbox(1) textbox(1) $FontCol
-    rslider bounds(209, 41, 60, 60) range(0, 1, 0.5, 1, 0.001) text("pan") channel("revpan") valuetextbox(1) textbox(1) $FontCol
-    rslider bounds(209, 115, 60, 60) range(-1, 1, 0, 1, 0.001) channel("revwarbpan") text("warble pan") valuetextbox(1) textbox(1) $FontCol
-
-    rslider bounds(274, 78, 60, 60) range(8, 1024, 1024, 1, 4) channel("reviws") text("quality") valuetextbox(1024) textbox(1) $FontCol
+    rslider bounds(208, 41, 60, 60) range(8, 1024, 1024, 1, 4) channel("reviws") text("quality") valuetextbox(1024) textbox(1) $FontCol
+    rslider bounds(208, 115, 60, 60) range(-1, 1, 0, 1, 0.001) channel("revwarbpan") text("warble pan") valuetextbox(1) textbox(1) $FontCol
+    rslider bounds(273, 41, 60, 60) range(0, 1, 0.5, 1, 0.001) text("pan") channel("revpan") valuetextbox(1) textbox(1) $FontCol
+    rslider bounds(273, 115, 60, 60) range(0, 3, 1, 1, 0.001) channel("revgain") text("gain") valuetextbox(1) textbox(1) $FontCol
 
   }
 
@@ -439,8 +439,10 @@ image bounds(508, 452, 343, 199) plant("reverb") $ModuleAppearance {
 
   endin
 
-  opcode Schroeder, a, akkikikikikikii
-    ain, kgain, kdelt, imaxdelt, kalrvt1, iallpt1, kalrvt2, iallpt2, kalrvt3, iallpt3, kalrvt4, iallpt4, kalrvt5, iallpt5, iiws xin
+  opcode Schroeder, a, akkikikikikikiik
+    ain, kgain, kdelt, imaxdelt, kalrvt1, iallpt1, kalrvt2, iallpt2, kalrvt3, iallpt3, kalrvt4, iallpt4, kalrvt5, iallpt5, iiws, kdistance xin
+
+    imaxdist = 8
 
     aallp5 init 0
 
@@ -450,11 +452,11 @@ image bounds(508, 452, 343, 199) plant("reverb") $ModuleAppearance {
 
     adel vdelayx adelin, a(kdelt), imaxdelt, iiws
 
-    aallp1 alpass adel,   kalrvt1, iallpt1
-    aallp2 alpass aallp1, kalrvt2, iallpt2
-    aallp3 alpass aallp2, kalrvt3, iallpt3
-    aallp4 alpass aallp3, kalrvt4, iallpt4
-    aallp5 alpass aallp4, kalrvt5, iallpt5
+    aallp1 valpass adelin, kalrvt1, iallpt1*(kdistance), imaxdist
+    aallp2 valpass aallp1, kalrvt2, iallpt2*(kdistance), imaxdist
+    aallp3 valpass aallp2, kalrvt3, iallpt3*(kdistance), imaxdist
+    aallp4 valpass aallp3, kalrvt4, iallpt4*(kdistance), imaxdist
+    aallp5 valpass aallp4, kalrvt5, iallpt5*(kdistance), imaxdist
 
       asig = (aallp5 * (1 - kgain*kgain)) + (ain * (-kgain))
     xout asig
@@ -475,6 +477,7 @@ instr 98 ; reverb
     kwarbpan  chnget "revwarbpan" ; -1 – 1
     kreviws   chnget "reviws"
     ireviws   chnget "reviws"
+    kdistance chnget "revdist"
 
     kiwschanged changed kreviws
     if (kiwschanged == 1) then
@@ -525,7 +528,7 @@ instr 98 ; reverb
       iallpt3l  = 0.047
       iallpt4l  = 0.073
       iallpt5l  = 0.084
-    adell Schroeder afiltsigl, kfeedback, kdeltl, imaxdelt, kalrvt1l, iallpt1l, kalrvt2l, iallpt2l, kalrvt3l, iallpt3l, kalrvt4l, iallpt4l, kalrvt5l, iallpt5l, ireviws
+    adell Schroeder afiltsigl, kfeedback, kdeltl, imaxdelt, kalrvt1l, iallpt1l, kalrvt2l, iallpt2l, kalrvt3l, iallpt3l, kalrvt4l, iallpt4l, kalrvt5l, iallpt5l, ireviws, kdistance
 
         kdeltrandr = randh:k(kwarbler/2, 1.8, 2, 1) + kwarbler/2
       kdeltr     = poscil3:a(kdeltrandr, 2) + (kdeltrandr / 2)
@@ -539,7 +542,7 @@ instr 98 ; reverb
       iallpt3r   = 0.048
       iallpt4r   = 0.071
       iallpt5r   = 0.085
-    adelr Schroeder afiltsigr, kfeedback, kdeltr, imaxdelt, kalrvt1r, iallpt1r, kalrvt2r, iallpt2r, kalrvt3r, iallpt3r, kalrvt4r, iallpt4r, kalrvt5r, iallpt5r, ireviws
+    adelr Schroeder afiltsigr, kfeedback, kdeltr, imaxdelt, kalrvt1r, iallpt1r, kalrvt2r, iallpt2r, kalrvt3r, iallpt3r, kalrvt4r, iallpt4r, kalrvt5r, iallpt5r, ireviws, kdistance
 
         adelll, adellr pan2 adell, kpan, 2
         adelrl, adelrr pan2 adelr, kpan, 2
