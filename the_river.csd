@@ -443,8 +443,10 @@ image bounds(508, 452, 343, 199) plant("reverb") $ModuleAppearance {
     ain, kgain, kdelt, imaxdelt, kalrvt1, iallpt1, kalrvt2, iallpt2, kalrvt3, iallpt3, kalrvt4, iallpt4, kalrvt5, iallpt5, iiws xin
 
     aallp5 init 0
-    
-    adelin = ain + (aallp5 * kgain)
+
+    kgainfblimit = kgain / 3.3
+
+    adelin = ain + (aallp5 * kgainfblimit)
 
     adel vdelayx adelin, a(kdelt), imaxdelt, iiws
 
