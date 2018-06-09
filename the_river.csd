@@ -147,10 +147,10 @@ image bounds(508, 452, 343, 199) plant("reverb") $ModuleAppearance {
     rslider bounds(78, 41, 60, 60) range(0.01, 4, 1, 1, 0.001) channel("revsize") text("splash") valuetextbox(1) textbox(1) $FontCol
     rslider bounds(78, 115, 60, 60) range(0.01, 0.99, 0.01, 1, 0.001) channel("revtight") text("tightness") valuetextbox(1) textbox(1) $FontCol
     rslider bounds(143, 41, 60, 60) range(.2, 5, .6, .4, 0.001) channel("revdist") text("distance") valuetextbox(1024) textbox(1) $FontCol
-    rslider bounds(143, 115, 60, 60) range(0.00001, 0.001, 0.00001, 1, 0.00001) channel("revwarble") text("warble") valuetextbox(1) textbox(1) $FontCol
-    rslider bounds(208, 41, 60, 60) range(8, 1024, 1024, 1, 4) channel("reviws") text("quality") valuetextbox(1024) textbox(1) $FontCol
-    rslider bounds(208, 115, 60, 60) range(-1, 1, 0, 1, 0.001) channel("revwarbpan") text("warble pan") valuetextbox(1) textbox(1) $FontCol
-    rslider bounds(273, 41, 60, 60) range(0, 1, 0.5, 1, 0.001) text("pan") channel("revpan") valuetextbox(1) textbox(1) $FontCol
+    rslider bounds(143, 115, 60, 60) range(1, 100, 1, 1, 0.1) channel("revwarble") text("warble") valuetextbox(1) textbox(1) $FontCol
+    rslider bounds(208, 41, 60, 60) range(0, 1, 0.5, 1, 0.001) text("pan") channel("revpan") valuetextbox(1) textbox(1) $FontCol
+    rslider bounds(208, 115, 60, 60) range(8, 1024, 1024, 1, 4) channel("reviws") text("quality") valuetextbox(1024) textbox(1) $FontCol
+    rslider bounds(273, 41, 60, 60) range(0, 20, 0, 0.5, 0.001) channel("panlforate") text("pan lfo") valuetextbox(1) textbox(1) $FontCol
     rslider bounds(273, 115, 60, 60) range(0, 3, 1, 1, 0.001) channel("revgain") text("gain") valuetextbox(1) textbox(1) $FontCol
 
   }
@@ -466,18 +466,19 @@ instr 98 ; reverb
   krevtog   chnget "revtog"
 
   if (krevtog == 1) then
-      kwetamt chnget "revwet"
-    kdryamt  = 1 - kwetamt
-    krolloff  chnget "revfiltcut"
-    kfeedback chnget "revtight"
-    kgain     chnget "revgain"
-    ksize     chnget "revsize"
-    kwarble   chnget "revwarble" ; 0.001 – 0.00001
-    kpan      chnget "revpan"
-    kwarbpan  chnget "revwarbpan" ; -1 – 1
-    kreviws   chnget "reviws"
-    ireviws   chnget "reviws"
-    kdistance chnget "revdist"
+      kwetamt   chnget "revwet"
+    kdryamt  =  1 - kwetamt
+    krolloff    chnget "revfiltcut"
+    kfeedback   chnget "revtight"
+    kgain       chnget "revgain"
+    ksize       chnget "revsize"
+    kwarble =   chnget:k("revwarble")/100000 ; 0.001 – 0.00001
+    kpan        chnget "revpan"
+    ;kwarbpan  chnget "revwarbpan" ; -1 – 1
+    kpanlforate chnget "panlforate"
+    kreviws     chnget "reviws"
+    ireviws     chnget "reviws"
+    kdistance   chnget "revdist"
 
     kiwschanged changed kreviws
     if (kiwschanged == 1) then
@@ -489,16 +490,16 @@ instr 98 ; reverb
 
       imaxdelt = 0.001
       imindelt = 0.00001
-      kwarblel = 0.00001
-      kwarbler = 0.00001
+      kwarblel = kwarble
+      kwarbler = kwarble
 
-      if (kwarbpan < 0) then
-        kwarblel = kwarble * (1 + kwarbpan)
-        kwarbler = (-kwarbpan) * (imaxdelt - kwarble) + kwarble
-      else
-        kwarblel = kwarbpan * (imaxdelt - kwarble) + kwarble
-        kwarbler = kwarble * (1 - kwarbpan)
-      endif
+;      if (kwarbpan < 0) then
+;        kwarblel = kwarble * (1 + kwarbpan)
+;        kwarbler = (-kwarbpan) * (imaxdelt - kwarble) + kwarble
+;      else
+;        kwarblel = kwarbpan * (imaxdelt - kwarble) + kwarble
+;        kwarbler = kwarble * (1 - kwarbpan)
+;      endif
 
       if (kwarblel > imaxdelt) then
         kwarblel = imaxdelt
@@ -544,8 +545,11 @@ instr 98 ; reverb
       iallpt5r   = 0.085
     adelr Schroeder afiltsigr, kfeedback, kdeltr, imaxdelt, kalrvt1r, iallpt1r, kalrvt2r, iallpt2r, kalrvt3r, iallpt3r, kalrvt4r, iallpt4r, kalrvt5r, iallpt5r, ireviws, kdistance
 
-        adelll, adellr pan2 adell, kpan, 2
-        adelrl, adelrr pan2 adelr, kpan, 2
+            apanlfo = poscil3:a(0.5, kpanlforate) + 0.5
+            apanlfoscale = kpan*(-2) + 1
+          apanlfoamt = apanlfo * apanlfoscale
+        adelll, adellr pan2 adell, kpan+apanlfoamt, 2
+        adelrl, adelrr pan2 adelr, kpan+apanlfoamt, 2
       asigl = ((adelll + adelrl) * kwetamt * kgain) + (gasigl * kdryamt)
       asigr = ((adellr + adelrr) * kwetamt * kgain) + (gasigr * kdryamt)
     gasigl = asigl
