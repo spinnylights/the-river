@@ -33,9 +33,9 @@ image bounds(0, 0, 310, 651) plant("oscillators") $ModuleAppearance {
   rslider bounds(126, 243, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibfreq2") text("freq") valuetextbox(1) textbox(1) $FontCol
   rslider bounds(220, 243, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibfreq3") text("freq") valuetextbox(1) textbox(1) $FontCol
 
-  checkbox bounds(31,  318, 100, 15) channel("vibfreqt1tog") text("tempo") $FontCol $FontCol
-  checkbox bounds(126, 318, 100, 15) channel("vibfreqt2tog") text("tempo") $FontCol $FontCol
-  checkbox bounds(222, 318, 100, 15) channel("vibfreqt3tog") text("tempo") $FontCol $FontCol
+  checkbox bounds(31,  318, 100, 15) channel("vibfreqt1tog") text("tempo") $FontCol $FontCol $SwitchCol
+  checkbox bounds(126, 318, 100, 15) channel("vibfreqt2tog") text("tempo") $FontCol $FontCol $SwitchCol
+  checkbox bounds(222, 318, 100, 15) channel("vibfreqt3tog") text("tempo") $FontCol $FontCol $SwitchCol
 
   combobox bounds(20,  343, 80, 20) channel("vibfreqt1") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
   combobox bounds(115, 343, 80, 20) channel("vibfreqt2") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
@@ -91,7 +91,7 @@ image bounds(508, 0, 492, 267) plant("filter") $ModuleAppearance {
   checkbox bounds (5, 17, 11, 11) channel("filttog") value(1) $SwitchCol
 
   rslider bounds(10, 48, 90, 60) range(0, 20000, 12000, 0.3, 0.001) channel("filtcut") text("cutoff") value(12000) valuetextbox(1) textbox(1) $FontCol
-  checkbox bounds(10, 118, 100, 15) text("track notes") channel("filttrack") $FontCol
+  checkbox bounds(10, 118, 100, 15) text("track notes") channel("filttrack") $FontCol $SwitchCol
   rslider bounds(103, 48, 90, 60) range(0, 20000, 1000, 1, 0.001) channel("filtwidth") text("bandwidth") valuetextbox(1) textbox(1) $FontCol
   button bounds(62, 137, 80, 25) channel("filttype") items("lowpass","bandpass")
   rslider bounds(25, 169, 60, 60) range(0, 1.5, 0, 1, 0.001) channel("filtres") text("resonance") valuetextbox(1) textbox(1) $FontCol
