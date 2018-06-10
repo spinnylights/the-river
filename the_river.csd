@@ -331,8 +331,7 @@ image bounds(818, 452, 343, 199) plant("reverb") $ModuleAppearance {
   instr 1
     ifrq   = p4 ; comes from midi
     iscale = p5
-;    kbpmchn chnget "HOST_BPM"
-    kbpmchn = 120
+    kbpmchn chnget "HOST_BPM"
     kbpm = kbpmchn / 60
     kwav1   chnget "wave1" ; the number of an f-table
     kwav2   chnget "wave2"
@@ -587,7 +586,6 @@ instr 98 ; reverb
     ksize       chnget "revsize"
     kwarble =   chnget:k("revwarble")/100000 ; 0.001 – 0.00001
     kpan        chnget "revpan"
-    ;kwarbpan  chnget "revwarbpan" ; -1 – 1
     kpanlforate chnget "panlforate"
     kreviws     chnget "reviws"
     ireviws     chnget "reviws"
@@ -605,14 +603,6 @@ instr 98 ; reverb
       imindelt = 0.00001
       kwarblel = kwarble
       kwarbler = kwarble
-
-;      if (kwarbpan < 0) then
-;        kwarblel = kwarble * (1 + kwarbpan)
-;        kwarbler = (-kwarbpan) * (imaxdelt - kwarble) + kwarble
-;      else
-;        kwarblel = kwarbpan * (imaxdelt - kwarble) + kwarble
-;        kwarbler = kwarble * (1 - kwarbpan)
-;      endif
 
       if (kwarblel > imaxdelt) then
         kwarblel = imaxdelt
