@@ -23,37 +23,42 @@ image bounds(0, 0, 310, 651) plant("oscillators") $ModuleAppearance {
   rslider bounds(126, 65, 60, 60) range(0.9, 1.1, 1, 1, 0.001) velocity(1) channel("fmod2") value(1) text("detune") valuetextbox(1) textbox(1) $FontCol
   rslider bounds(220, 65, 60, 60) range(0.9, 1.1, 1, 1, 0.001) velocity(1) channel("fmod3") value(1) text("detune") valuetextbox(1) textbox(1) $FontCol
 
-  label bounds(1, 144, 308, 14) text("VIBRATO") $FontCol
+  rslider bounds(31, 135, 60, 60) range(0, .5, 0, 1, 0.001) channel("osc1phase") text("phase") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(126, 135, 60, 60) range(0, .5, 0, 1, 0.001) channel("osc2phase") text("phase") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(220, 135, 60, 60) range(0, .5, 0, 1, 0.001) channel("osc3phase") text("phase") valuetextbox(1) textbox(1) $FontCol
 
-  rslider bounds(31,  168, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibamp1") text("amp") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(126, 168, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibamp2") text("amp") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(220, 168, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibamp3") text("amp") valuetextbox(1) textbox(1) $FontCol
+  label bounds(1, 214, 308, 14) text("VIBRATO") $FontCol
 
-  rslider bounds(31,  243, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibfreq1") text("freq") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(126, 243, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibfreq2") text("freq") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(220, 243, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibfreq3") text("freq") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(31,  238, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibamp1") text("amp") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(126, 238, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibamp2") text("amp") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(220, 238, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibamp3") text("amp") valuetextbox(1) textbox(1) $FontCol
 
-  checkbox bounds(31,  318, 100, 15) channel("vibfreqt1tog") text("tempo") $FontCol $FontCol $SwitchCol
-  checkbox bounds(126, 318, 100, 15) channel("vibfreqt2tog") text("tempo") $FontCol $FontCol $SwitchCol
-  checkbox bounds(222, 318, 100, 15) channel("vibfreqt3tog") text("tempo") $FontCol $FontCol $SwitchCol
+  rslider bounds(31,  313, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibfreq1") text("freq") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(126, 313, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibfreq2") text("freq") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(220, 313, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibfreq3") text("freq") valuetextbox(1) textbox(1) $FontCol
 
-  combobox bounds(20,  343, 80, 20) channel("vibfreqt1") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
-  combobox bounds(115, 343, 80, 20) channel("vibfreqt2") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
-  combobox bounds(210, 343, 80, 20) channel("vibfreqt3") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
+  checkbox bounds(31,  388, 100, 15) channel("vibfreqt1tog") text("tempo") $FontCol $FontCol $SwitchCol
+  checkbox bounds(126, 388, 100, 15) channel("vibfreqt2tog") text("tempo") $FontCol $FontCol $SwitchCol
+  checkbox bounds(222, 388, 100, 15) channel("vibfreqt3tog") text("tempo") $FontCol $FontCol $SwitchCol
 
-  button bounds(31,  385, 60, 30) channel("vibwave1") items("sine","triangle")
-  button bounds(126, 385, 60, 30) channel("vibwave2") items("sine","triangle")
-  button bounds(220, 385, 60, 30) channel("vibwave3") items("sine","triangle")
+  combobox bounds(20,  413, 80, 20) channel("vibfreqt1") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
+  combobox bounds(115, 413, 80, 20) channel("vibfreqt2") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
+  combobox bounds(210, 413, 80, 20) channel("vibfreqt3") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
 
-  label bounds(1, 440, 308, 15) text("AMP") $FontCol
+  button bounds(31,  445, 60, 30) channel("vibwave1") items("sine","triangle")
+  button bounds(126, 445, 60, 30) channel("vibwave2") items("sine","triangle")
+  button bounds(220, 445, 60, 30) channel("vibwave3") items("sine","triangle")
 
-  vslider bounds(36,  468, 50, 150) range(0, 2, 1, 1, 0.001) value(1) channel("amp1") valuetextbox(1) textbox(1) $FontCol $Highlight
-  vslider bounds(131, 468, 50, 150) range(0, 2, 1, 1, 0.001) value(1) channel("amp2") valuetextbox(1) textbox(1) $FontCol $Highlight
-  vslider bounds(225, 468, 50, 150) range(0, 2, 1, 1, 0.001) value(1) channel("amp3") valuetextbox(1) textbox(1) $FontCol $Highlight
 
-  checkbox bounds (56,  625, 11, 11) channel("osc1tog") value(1) $SwitchCol
-  checkbox bounds (151, 625, 11, 11) channel("osc2tog") value(1) $SwitchCol
-  checkbox bounds (245, 625, 11, 11) channel("osc3tog") value(1) $SwitchCol
+  label bounds(1, 500, 308, 15) text("AMP") $FontCol
+
+  rslider bounds(36,  533, 50, 60) range(0, 2, 1, 1, 0.001) value(1) channel("amp1") valuetextbox(1) textbox(1) $FontCol $Highlight
+  rslider bounds(131, 533, 50, 60) range(0, 2, 1, 1, 0.001) value(1) channel("amp2") valuetextbox(1) textbox(1) $FontCol $Highlight
+  rslider bounds(225, 533, 50, 60) range(0, 2, 1, 1, 0.001) value(1) channel("amp3") valuetextbox(1) textbox(1) $FontCol $Highlight
+
+  checkbox bounds (56,  610, 11, 11) channel("osc1tog") value(1) $SwitchCol
+  checkbox bounds (151, 610, 11, 11) channel("osc2tog") value(1) $SwitchCol
+  checkbox bounds (245, 610, 11, 11) channel("osc3tog") value(1) $SwitchCol
 }
 
 image bounds(309, 0, 200, 217) plant("pitch") $ModuleAppearance {
@@ -275,6 +280,9 @@ image bounds(508, 452, 343, 199) plant("reverb") $ModuleAppearance {
     kvib1w     chnget "vibwave1" ; 0 is sine, 1 is triangle
     kvib2w     chnget "vibwave2"
     kvib3w     chnget "vibwave3"
+    kphase1    chnget "osc1phase"
+    kphase2    chnget "osc2phase"
+    kphase3    chnget "osc3phase"
     kosc1tog   chnget "osc1tog"
     kosc2tog   chnget "osc2tog"
     kosc3tog   chnget "osc3tog"
@@ -332,7 +340,7 @@ image bounds(508, 452, 343, 199) plant("reverb") $ModuleAppearance {
                   endif
                 endif
               kosc1frq = (ifrq*kmod1*kpitch) + kvib1
-            aosc1  oscilikt kamp1*koscgain, kosc1frq, Wavetable:k(kosc1frq, kwav1)
+            aosc1 tableikt phasor:a(kosc1frq)+kphase1, Wavetable:k(kosc1frq, kwav1), 1, 0, 1
           else
             aosc1 = 0
           endif
@@ -353,7 +361,7 @@ image bounds(508, 452, 343, 199) plant("reverb") $ModuleAppearance {
                 endif
               endif
             kosc2frq = (ifrq*kmod2*kpitch) + kvib2
-          aosc2  oscilikt kamp2*koscgain, kosc2frq, Wavetable:k(kosc2frq, kwav2)
+          aosc2 tableikt phasor:a(kosc2frq)+kphase2, Wavetable:k(kosc2frq, kwav2), 1, 0, 1
         else
           aosc2 = 0
         endif
@@ -374,7 +382,7 @@ image bounds(508, 452, 343, 199) plant("reverb") $ModuleAppearance {
               endif
             endif
           kosc3frq = (ifrq*kmod3*kpitch) + kvib3
-        aosc3  oscilikt kamp3*koscgain, kosc3frq, Wavetable:k(kosc3frq, kwav3)
+        aosc3 tableikt phasor:a(kosc3frq)+kphase3, Wavetable:k(kosc3frq, kwav3), 1, 0, 1
       else
         aosc3 = 0
       endif
@@ -385,7 +393,7 @@ image bounds(508, 452, 343, 199) plant("reverb") $ModuleAppearance {
         anoise = 0
       endif
 
-    asigprefilt = (aosc1 + aosc2 + aosc3 + anoise) / 4
+    asigprefilt = ((aosc1*kamp1*koscgain) + (aosc2*kamp2*koscgain) + (aosc3*kamp3*koscgain) + anoise) / 4
 
     if (kfilttog == 1) then
         if (kftrack == 1) then
