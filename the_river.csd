@@ -9,7 +9,7 @@ form caption("The River") size(1310, 870), pluginid("rivr")
 
 #define Waveforms text("sine", "triangle", "saw", "semi-saw", "square", "pulse", "narrow pulse", "narrower pulse", "buzz")
 
-keyboard bounds(619, 651, 690, 219) middlec(4) keywidth(30)
+keyboard bounds(619, 0, 200, 217) middlec(4) keywidth(30)
 
 image bounds(0, 0, 620, 870) plant("oscillators") $ModuleAppearance {
 
@@ -123,12 +123,31 @@ image bounds(0, 0, 620, 870) plant("oscillators") $ModuleAppearance {
 
 ;}
 
-image bounds(619, 0, 200, 217) plant("pitch") $ModuleAppearance {
+#define PitchLocations text("center", "slider", "floor", "ceiling")
 
-  label bounds(1, 15, 198, 15) text("PITCH") colour(50, 50, 50) $LabelFontCol
+image bounds(619, 651, 690, 219) plant("pitch") $ModuleAppearance {
+
+  label bounds(1, 15, 688, 15) text("PITCH") colour(50, 50, 50) $LabelFontCol
 
   vslider bounds(34, 45, 50, 150) range(-1, 1, 0, 1, 0.001) channel("pitchbend") valuetextbox(1) textbox(1) $FontCol $Highlight
-  rslider bounds(109, 83, 60, 60) range(1, 36, 7, 1, 1) channel("pitchbrange") text("semitones") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(109, 83, 60, 60) range(1, 120, 7, 1, 1) channel("pitchbrange") text("semitones") valuetextbox(1) textbox(1) $FontCol
+
+  rslider bounds(214, 45, 60, 60) range(0.001, 4, 0.001, 1, 0.001) channel("pitchenvatt") text("attack") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(284, 45, 60, 60) range(0.001, 4, 0.001, 1, 0.001) channel("pitchenvdec") text("decay") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(354, 45, 60, 60) range(0.001, 1, 1, 1, 0.001) channel("pitchenvsus") text("sustain") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(424, 45, 60, 60) range(0.001, 4, 4, 1, 0.001) channel("pitchenvrel") text("release") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(214, 136, 60, 60) range(-10, 10, 0, 1, 0.001) channel("pitchenvattshape") text("shape") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(284, 136, 60, 60) range(-10, 10, 0, 1, 0.001) channel("pitchenvdecshape") text("shape") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(424, 136, 60, 60) range(-10, 10, 0, 1, 0.001) channel("pitchenvrelshape") text("shape") valuetextbox(1) textbox(1) $FontCol
+
+  label text("from:")       bounds(539, 46, 50, 12) align("left") $FontCol
+  combobox                  bounds(539, 66, 80, 20) channel("pitchenvfrom") value(1) $PitchLocations
+
+  label text("to:")         bounds(539, 101, 50, 12) align("left") $FontCol
+  combobox                  bounds(539, 121, 80, 20) channel("pitchenvto") value(2) $PitchLocations
+
+  label text("release to:") bounds(539, 156, 50, 12) align("left") $FontCol
+  combobox                  bounds(539, 176, 80, 20) channel("pitchenvrelfloor") value(2) $PitchLocations
 
 }
 
@@ -278,6 +297,8 @@ image bounds(818, 452, 343, 199) plant("reverb") $ModuleAppearance {
   gasigl init 0
   gasigr init 0
 
+  gkcurrpitch init 0
+
   opcode Wavetable, k, kk
     kfrq, kwavnum xin
 
@@ -349,6 +370,18 @@ image bounds(818, 452, 343, 199) plant("reverb") $ModuleAppearance {
     kmod3      chnget "fmod3"
     kpitchb    chnget "pitchbend"
     kpitchbr   chnget "pitchbrange"
+    ipitchb    chnget "pitchbend"
+    ipitchbr   chnget "pitchbrange"
+    ipitchenva chnget "pitchenvatt"
+    ipitchenvd chnget "pitchenvdec"
+    ipitchenvs chnget "pitchenvsus"
+    ipitchenvr chnget "pitchenvrel"
+    ipitchenvrf chnget "pitchenvrelfloor"
+    ipitchenvash =    chnget:i("pitchenvattshape") * -1
+    ipitchenvdsh chnget "pitchenvdecshape"
+    ipitchenvrsh chnget "pitchenvrelshape"
+    ipitchenvfrom chnget "pitchenvfrom"
+    ipitchenvto chnget "pitchenvto"
     kvib1a     chnget "vibamp1"
     kvib2a     chnget "vibamp2"
     kvib3a     chnget "vibamp3"
@@ -441,28 +474,89 @@ image bounds(818, 452, 343, 199) plant("reverb") $ModuleAppearance {
     endif
     krel release
 
-    kcurramp init 0
-    kcurrcut init 0
+    kcurramp   init 0
+    kcurrcut   init 0
+    kcurrpitch init 0
 
-        kpitch = semitone(kpitchbr * kpitchb)
+            if     (ipitchenvfrom == 1) then
+              ipitchfloor = 0
+            elseif (ipitchenvfrom == 2) then
+              ipitchfloor = ipitchbr * ipitchb
+            elseif (ipitchenvfrom == 3) then
+              ipitchfloor = -ipitchbr
+            else
+              ipitchfloor = ipitchbr
+            endif
+
+            if     (ipitchenvto == 1) then
+              ipitchceil = 0
+            elseif (ipitchenvto == 2) then
+              ipitchceil = ipitchbr * ipitchb
+            elseif (ipitchenvto == 3) then
+              ipitchceil = -ipitchbr
+            else
+              ipitchceil = ipitchbr
+            endif
+
+            isecondpart = abs(ipitchfloor - ipitchceil) * (1 - ipitchenvs)
+          if (ipitchceil == 0) then
+            if (ipitchfloor > 0) then
+              ipitchenvsus = isecondpart
+            elseif (ipitchfloor < 0) then
+              ipitchenvsus = -(isecondpart)
+            else
+              ipitchenvsus = 0
+            endif
+          elseif (ipitchceil > 0) then
+            ipitchenvsus = ipitchceil - isecondpart
+          else
+            ipitchenvsus = ipitchceil + isecondpart
+          endif
+
+          if     (ipitchenvrf == 1) then
+            ipitchenvrfloor = 0
+          elseif (ipitchenvrf == 2) then
+            ipitchenvrfloor = ipitchbr * ipitchb
+          elseif (ipitchenvrf  == 3) then
+            ipitchenvrfloor = -ipitchbr
+          else
+            ipitchenvrfloor = ipitchbr
+          endif
+
+          krelchanged changed krel
+          if (krel == 0) then
+            kpitchenv transeg ipitchfloor, ipitchenva, ipitchenvash, ipitchceil, ipitchenvd, ipitchenvdsh, ipitchenvsus
+            gkcurrpitch = kpitchenv
+            kpitch = semitone(kpitchenv)
+            kfrq = ifrq * kpitch
+          elseif (krelchanged == 1) then
+            reinit calcrenv
+          else
+            calcrenv:
+              icurrpitch = i(gkcurrpitch)
+              kpitchenvrel transeg icurrpitch, ipitchenvr, ipitchenvrsh, ipitchenvrfloor
+              kpitch = semitone(kpitchenvrel)
+              kfrq = ifrq * kpitch
+              rireturn
+          endif
 
         ; 1
           kvib1 FancyVibr kvib1fttog, kvib1ft, kbpm, kvib1w, kvib1a, kvib1f, gimewavf1, gimewavf2
             kphamp1 = ((kphase1 * (-1) / 0.5) + 0.5) / 2
           kphasevib1 FancyVibr kphfrqtog1, kphfrqtem1, kbpm, kphwave1, kphamp1, kphasefrq1, gimewavf1, gimewavf2, kphamp1
-        kosc1frq = (ifrq*kmod1*kpitch) + kvib1
+        kosc1frq = (kfrq*kmod1) + kvib1
 
         ; 2
           kvib2 FancyVibr kvib2fttog, kvib2ft, kbpm, kvib2w, kvib2a, kvib2f, gimewavf1, gimewavf2
             kphamp2 = ((kphase2 * (-1) / 0.5) + 0.5) / 2
           kphasevib2 FancyVibr kphfrqtog2, kphfrqtem2, kbpm, kphwave2, kphamp2, kphasefrq2, gimewavf1, gimewavf2, kphamp2
-        kosc2frq = (ifrq*kmod2*kpitch) + kvib2
+        kosc2frq = (kfrq*kmod2) + kvib2
 
         ; 3
           kvib3 FancyVibr kvib3fttog, kvib3ft, kbpm, kvib3w, kvib3a, kvib3f, gimewavf1, gimewavf2
             kphamp3 = ((kphase3 * (-1) / 0.5) + 0.5) / 2
           kphasevib3 FancyVibr kphfrqtog3, kphfrqtem3, kbpm, kphwave3, kphamp3, kphasefrq3, gimewavf1, gimewavf2, kphamp3
-        kosc3frq = (ifrq*kmod3*kpitch) + kvib3
+        kosc3frq = (kfrq*kmod3) + kvib3
 
       if (kosc1tog == 1) then
           afmosc11 tableikt phasor:a(kosc1frq*(kfmratio11+kfmfine11))+(kphase1+kphasevib1), Wavetable:k(kosc1frq, kwav1), 1, 0, 1
@@ -499,9 +593,10 @@ image bounds(818, 452, 343, 199) plant("reverb") $ModuleAppearance {
 
     asigprefilt = ((aosc1*kamp1*koscgain) + (aosc2*kamp2*koscgain) + (aosc3*kamp3*koscgain) + anoise) / 4
 
+
     if (kfilttog == 1) then
         if (kftrack == 1) then
-          kfcut = ifrq
+          kfcut = kfrq
         endif
         if (krel == 1) then
           kfiltenv = kcurrcut * transeg:k(1, ifenvr, ifenvrsh, 0) ; r
