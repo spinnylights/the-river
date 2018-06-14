@@ -146,7 +146,7 @@ image bounds(619, 651, 690, 219) plant("pitch") $ModuleAppearance {
   label text("to:")         bounds(539, 101, 50, 12) align("left") $FontCol
   combobox                  bounds(539, 121, 80, 20) channel("pitchenvto") value(2) $PitchLocations
 
-  label text("release to:") bounds(539, 156, 50, 12) align("left") $FontCol
+  label text("release to:") bounds(539, 156, 80, 12) align("left") $FontCol
   combobox                  bounds(539, 176, 80, 20) channel("pitchenvrelfloor") value(2) $PitchLocations
 
 }
