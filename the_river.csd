@@ -169,26 +169,26 @@ image bounds(619, 651, 690, 219) plant("pitch") $ModuleAppearance {
 
 }
 
-image bounds(619, 0, 200, 315) plant("noise") $ModuleAppearance {
+image bounds(619, 0, 200, 128) plant("noise") $ModuleAppearance {
 
   label bounds(1, 15, 198, 15) text("NOISE") colour(50, 50, 50) $LabelFontCol
 
   checkbox bounds (5, 17, 11, 11) channel("noisetog") value(1) $SwitchCol
 
-  rslider bounds(70, 45, 60, 60) range(-0.999, 0.999, 0, 1, 0.001) text("color") channel("noisefilt") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(70, 127, 60, 60) range(0, 2, 0, 1, 0.001) channel("noiseamp") valuetextbox(1) textbox(1) valuetextbox(1) $FontCol $Highlight
+  rslider bounds(35, 45, 60, 60) range(-0.999, 0.999, 0, 1, 0.001) text("color") channel("noisefilt") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(109, 45, 60, 60) range(0, 2, 0, 1, 0.001) channel("noiseamp") valuetextbox(1) textbox(1) valuetextbox(1) $FontCol $Highlight
 
 }
 
-image bounds(619, 216, 200, 121) plant("controls") $ModuleAppearance {
+image bounds(619, 127, 200, 93) plant("controls") $ModuleAppearance {
 
-  rslider bounds(25, 25, 60, 60) range(0, 1, 0.5, 1, 0.001) channel("pan") value(0.5) text("pan") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(95, 25, 60, 60) range(0.25, 4, 1, 0.42, 0.001) channel("oscgain") text("gain") value(0.8) valuetextbox(1) textbox(1) $FontCol
-  image bounds(160, 47, 15, 15) outlinecolour(0, 128, 0, 255) outlinethickness(2) colour(255, 140, 0, 0) shape("circle") identchannel("gainlight") $Highlight
+  rslider bounds(25, 11, 60, 60) range(0, 1, 0.5, 1, 0.001) channel("pan") value(0.5) text("pan") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(95, 11, 60, 60) range(0.25, 4, 1, 0.42, 0.001) channel("oscgain") text("gain") value(0.8) valuetextbox(1) textbox(1) $FontCol
+  image bounds(160, 33, 15, 15) outlinecolour(0, 128, 0, 255) outlinethickness(2) colour(255, 140, 0, 0) shape("circle") identchannel("gainlight") $Highlight
 
 }
 
-image bounds(619, 336, 200, 233) $ModuleAppearance {
+image bounds(619, 219, 200, 234) plant("delay") $ModuleAppearance {
 
   label bounds(1, 15, 198, 15) text("DELAY") colour(50, 50, 50) $LabelFontCol
   checkbox bounds (5, 17, 11, 11) channel("delaytog") value(1) $SwitchCol
@@ -202,6 +202,17 @@ image bounds(619, 336, 200, 233) $ModuleAppearance {
 
   rslider bounds(40, 150, 60, 60) range(0, 1, 0.5, 1, 0.001) channel("delaypan") text("pan") valuetextbox(1) textbox(1) $FontCol
   rslider bounds(104, 150, 60, 60) range(0, 20, 0, 0.5, 0.001) channel("delaypanlfo") text("pan lfo") valuetextbox(1) textbox(1) $FontCol
+}
+
+image bounds(619, 452, 200, 200) plant("peakeq") $ModuleAppearance {
+
+  label bounds(1, 15, 198, 15) text("PEAKING EQ") colour(50, 50, 50) $LabelFontCol
+  checkbox bounds (5, 17, 11, 11) channel("peaktog") value(0) $SwitchCol
+
+  rslider bounds(63,  41, 80, 60) range(0, 20000, 2000, 0.3, 0.001) channel("peakcenter") text("cutoff") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(31, 115, 60, 60) range(0, 12, 1, 0.28, 0.001) channel("peakv") text("boost/cut") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(111, 115, 60, 60) range(0.25, 4, 1, 0.44, 0.001) channel("peakq") text("Q") valuetextbox(1) textbox(1) $FontCol
+
 }
 
 image bounds(818, 0, 492, 267) plant("filter") $ModuleAppearance {
@@ -256,26 +267,26 @@ image bounds(1117, 380, 193, 73) plant("logo") $ModuleAppearance {
 
 }
 
-image bounds(818, 452, 343, 199) plant("reverb") $ModuleAppearance {
+image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
 
   label bounds(1, 15, 341, 15) text("REVERB") colour(50, 50, 50) $LabelFontCol
 
-    checkbox bounds (5, 17, 11, 11) channel("revtog") value(1) $SwitchCol
+  checkbox bounds (5, 17, 11, 11) channel("revtog") value(1) $SwitchCol
 
-    rslider bounds(13, 41, 60, 60) range(0, 1, 0, 1, 0.001) channel("revwet") text("wetness") valuetextbox(1) textbox(1) $FontCol
-    rslider bounds(1, 115, 85, 60) range(0, 20000, 20000, 0.5, 0.001) channel("revfiltcut") text("brightness") valuetextbox(1) textbox(1) $FontCol
-    rslider bounds(78, 41, 60, 60) range(0.01, 4, 1, 1, 0.001) channel("revsize") text("splash") valuetextbox(1) textbox(1) $FontCol
-    rslider bounds(78, 115, 60, 60) range(0.01, 0.99, 0.01, 1, 0.001) channel("revtight") text("tightness") valuetextbox(1) textbox(1) $FontCol
-    rslider bounds(143, 41, 60, 60) range(.2, 5, .6, .4, 0.001) channel("revdist") text("distance") valuetextbox(1024) textbox(1) $FontCol
-    rslider bounds(143, 115, 60, 60) range(1, 100, 1, 1, 0.1) channel("revwarble") text("warble") valuetextbox(1) textbox(1) $FontCol
-    rslider bounds(208, 41, 60, 60) range(0, 1, 0.5, 1, 0.001) text("pan") channel("revpan") valuetextbox(1) textbox(1) $FontCol
-    rslider bounds(208, 115, 60, 60) range(8, 1024, 1024, 1, 4) channel("reviws") text("quality") valuetextbox(1024) textbox(1) $FontCol
-    rslider bounds(273, 41, 60, 60) range(0, 20, 0, 0.5, 0.001) channel("panlforate") text("pan lfo") valuetextbox(1) textbox(1) $FontCol
-    rslider bounds(273, 115, 60, 60) range(0, 3, 1, 1, 0.001) channel("revgain") text("gain") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(13, 41, 60, 60) range(0, 1, 0, 1, 0.001) channel("revwet") text("wetness") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(1, 115, 85, 60) range(0, 20000, 20000, 0.5, 0.001) channel("revfiltcut") text("brightness") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(78, 41, 60, 60) range(0.01, 4, 1, 1, 0.001) channel("revsize") text("splash") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(78, 115, 60, 60) range(0.01, 0.99, 0.01, 1, 0.001) channel("revtight") text("tightness") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(143, 41, 60, 60) range(.2, 5, .6, .4, 0.001) channel("revdist") text("distance") valuetextbox(1024) textbox(1) $FontCol
+  rslider bounds(143, 115, 60, 60) range(1, 100, 1, 1, 0.1) channel("revwarble") text("warble") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(208, 41, 60, 60) range(0, 1, 0.5, 1, 0.001) text("pan") channel("revpan") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(208, 115, 60, 60) range(8, 1024, 1024, 1, 4) channel("reviws") text("quality") valuetextbox(1024) textbox(1) $FontCol
+  rslider bounds(273, 41, 60, 60) range(0, 20, 0, 0.5, 0.001) channel("panlforate") text("pan lfo") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(273, 115, 60, 60) range(0, 3, 1, 1, 0.001) channel("revgain") text("gain") valuetextbox(1) textbox(1) $FontCol
 
   }
 
-  image bounds(1160, 452, 150, 199) plant("cabinet") $ModuleAppearance {
+  image bounds(1160, 452, 150, 200) plant("cabinet") $ModuleAppearance {
 
     label bounds(1, 15, 148, 15) text("CABINET") colour(50, 50, 50) $LabelFontCol
 
@@ -680,7 +691,7 @@ image bounds(818, 452, 343, 199) plant("reverb") $ModuleAppearance {
 
   endin
 
-  instr 97 ; delay
+  instr 96 ; delay
     ktoggle chnget "delaytog"
     if (ktoggle == 1) then
       kamp        chnget "delayamp"
@@ -736,6 +747,25 @@ image bounds(818, 452, 343, 199) plant("reverb") $ModuleAppearance {
       asig = (aallp5 * (1 - kgain*kgain)) + (ain * (-kgain))
     xout asig
   endop
+
+instr 97 ; mix filter
+  ktoggle chnget "peaktog"
+  kv      chnget "peakv"
+  if ((ktoggle == 1) && (kv != 1)) then
+    kcenter  chnget "peakcenter"
+    kq       chnget "peakq"
+    iqcenter =      sqrt(0.5)
+
+    denorm gasigl
+    denorm gasigr
+
+    asigfiltl pareq gasigl, kcenter, kv, kq * iqcenter
+    asigfiltr pareq gasigr, kcenter, kv, kq * iqcenter
+
+    gasigl = asigfiltl
+    gasigr = asigfiltr
+  endif
+endin
 
 instr 98 ; reverb
   krevtog   chnget "revtog"
@@ -892,6 +922,7 @@ endin
  ==============================================
 <CsScore>
 f 0 z
+i 96 0 z
 i 97 0 z
 i 98 0 z
 i 99 0 z
