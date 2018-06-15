@@ -17,7 +17,7 @@
 ; zoe@milky.flowers or on Twitter at @spinnylights.
 
 <Cabbage> bounds(1, 0, 0, 0)
-form caption("The River") size(1310, 870), pluginid("rivr")
+form caption("The River") size(1310, 970), pluginid("rivr")
 
 #define ModuleAppearance shape("sharp"), colour(3, 65, 54), outlinecolour(216, 216, 216), outlinethickness(2)
 #define FontCol fontcolour(216, 216, 216) textcolour(216, 216, 216) fontcolour:0(216, 216, 216) fontcolour:1(216, 216, 216)
@@ -27,7 +27,7 @@ form caption("The River") size(1310, 870), pluginid("rivr")
 
 #define Waveforms text("sine", "triangle", "saw", "semi-saw", "square", "pulse", "narrow pulse", "narrower pulse", "buzz")
 
-keyboard bounds(619, 0, 200, 217) middlec(4) keywidth(30)
+keyboard bounds(0, 870, 1310, 100) middlec(4) keywidth(30)
 
 image bounds(0, 0, 620, 870) plant("oscillators") $ModuleAppearance {
 
@@ -169,23 +169,39 @@ image bounds(619, 651, 690, 219) plant("pitch") $ModuleAppearance {
 
 }
 
-image bounds(619, 216, 200, 315) plant("noise") $ModuleAppearance {
+image bounds(619, 0, 200, 315) plant("noise") $ModuleAppearance {
 
   label bounds(1, 15, 198, 15) text("NOISE") colour(50, 50, 50) $LabelFontCol
 
   checkbox bounds (5, 17, 11, 11) channel("noisetog") value(1) $SwitchCol
 
-  rslider bounds(70, 52, 60, 60) range(-0.999, 0.999, 0, 1, 0.001) text("color") channel("noisefilt") valuetextbox(1) textbox(1) $FontCol
-  vslider bounds(75, 135, 50, 150) range(0, 2, 0, 1, 0.001) channel("noiseamp") valuetextbox(1) textbox(1) $FontCol $Highlight
+  rslider bounds(70, 45, 60, 60) range(-0.999, 0.999, 0, 1, 0.001) text("color") channel("noisefilt") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(70, 127, 60, 60) range(0, 2, 0, 1, 0.001) channel("noiseamp") valuetextbox(1) textbox(1) valuetextbox(1) $FontCol $Highlight
 
 }
 
-image bounds(619, 530, 200, 121) plant("controls") $ModuleAppearance {
+image bounds(619, 216, 200, 121) plant("controls") $ModuleAppearance {
 
   rslider bounds(25, 25, 60, 60) range(0, 1, 0.5, 1, 0.001) channel("pan") value(0.5) text("pan") valuetextbox(1) textbox(1) $FontCol
   rslider bounds(95, 25, 60, 60) range(0.25, 4, 1, 0.42, 0.001) channel("oscgain") text("gain") value(0.8) valuetextbox(1) textbox(1) $FontCol
   image bounds(160, 47, 15, 15) outlinecolour(0, 128, 0, 255) outlinethickness(2) colour(255, 140, 0, 0) shape("circle") identchannel("gainlight") $Highlight
 
+}
+
+image bounds(619, 336, 200, 233) $ModuleAppearance {
+
+  label bounds(1, 15, 198, 15) text("DELAY") colour(50, 50, 50) $LabelFontCol
+  checkbox bounds (5, 17, 11, 11) channel("delaytog") value(1) $SwitchCol
+
+  rslider bounds(10, 45, 60, 60) range(0, 2, 0, 1, 0.001) channel("delayamp") text("amp") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(70, 45, 60, 60) range(0, 100, 0, 1, 0.001) channel("delaydec") text("decay") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(130, 45, 60, 60) range(0, 10, 0, 0.25, 0.001) channel("delayspeed") text("speed") valuetextbox(1) textbox(1) $FontCol
+
+  checkbox bounds(18, 123, 60, 15) channel("delaytempotog") text("tempo") $FontCol $FontCol $SwitchCol
+  combobox bounds(100, 120, 80, 20) channel("delaytempo") text("8/1", "6/1", "4/1", "3/1", "2/1", "1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") value(6) $FontCol
+
+  rslider bounds(40, 150, 60, 60) range(0, 1, 0.5, 1, 0.001) channel("delaypan") text("pan") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(104, 150, 60, 60) range(0, 20, 0, 0.5, 0.001) channel("delaypanlfo") text("pan lfo") valuetextbox(1) textbox(1) $FontCol
 }
 
 image bounds(818, 0, 492, 267) plant("filter") $ModuleAppearance {
@@ -664,6 +680,40 @@ image bounds(818, 452, 343, 199) plant("reverb") $ModuleAppearance {
 
   endin
 
+  instr 97 ; delay
+    ktoggle chnget "delaytog"
+    if (ktoggle == 1) then
+      kamp        chnget "delayamp"
+      kdecay      chnget "delaydec"
+      ktempotog   chnget "delaytempotog"
+      ktempo      chnget "delaytempo"
+      kpan        chnget "delaypan"
+      kpanlforate chnget "delaypanlfo"
+      imaxspeed   =      10 ; max value of slider
+
+      iTempoFracs[] fillarray 0.125, 0.16665, 0.25, 0.3333, 0.5, 1, 2, 3, 4, 6, 8, 9, 12, 16, 27, 32, 81
+
+      if (ktempotog == 1) then
+        kbpmchn chnget "HOST_BPM"
+        kspeed = 60 / (iTempoFracs[ktempo] * kbpmchn)
+      else
+        kspeed chnget "delayspeed"
+      endif
+
+      asiglprescale vcomb gasigl, kdecay, kspeed, imaxspeed
+      asigrprescale vcomb gasigr, kdecay, kspeed, imaxspeed
+
+            apanlfo = poscil3:a(0.5, kpanlforate) + 0.5
+            apanlfoscale = kpan*(-2) + 1
+          apanlfoamt = apanlfo * apanlfoscale
+      asigl = asiglprescale * kamp * (1 - (kpan+apanlfoamt))
+      asigr = asigrprescale * kamp * (kpan+apanlfoamt)
+
+      gasigl = gasigl + asigl
+      gasigr = gasigr + asigr
+    endif
+  endin
+
   opcode Schroeder, a, akkikikikikikiik
     ain, kgain, kdelt, imaxdelt, kalrvt1, iallpt1, kalrvt2, iallpt2, kalrvt3, iallpt3, kalrvt4, iallpt4, kalrvt5, iallpt5, iiws, kdistance xin
 
@@ -842,6 +892,7 @@ endin
  ==============================================
 <CsScore>
 f 0 z
+i 97 0 z
 i 98 0 z
 i 99 0 z
 </CsScore>
