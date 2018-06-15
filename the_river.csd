@@ -207,7 +207,7 @@ image bounds(619, 219, 200, 234) plant("delay") $ModuleAppearance {
 image bounds(619, 452, 200, 200) plant("peakeq") $ModuleAppearance {
 
   label bounds(1, 15, 198, 15) text("PEAKING EQ") colour(50, 50, 50) $LabelFontCol
-  checkbox bounds (5, 17, 11, 11) channel("peaktog") value(0) $SwitchCol
+  checkbox bounds (5, 17, 11, 11) channel("peaktog") value(1) $SwitchCol
 
   rslider bounds(63,  41, 80, 60) range(0, 20000, 2000, 0.3, 0.001) channel("peakcenter") text("cutoff") valuetextbox(1) textbox(1) $FontCol
   rslider bounds(31, 115, 60, 60) range(0, 12, 1, 0.28, 0.001) channel("peakv") text("boost/cut") valuetextbox(1) textbox(1) $FontCol
@@ -630,7 +630,7 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
         aosc3 = 0
       endif
 
-      if (knoisetog == 1) then
+      if ((knoisetog == 1) && (knamp > 0)) then
         anoise noise   knamp*koscgain, knfil * (-1)
       else
         anoise = 0
@@ -693,8 +693,8 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
 
   instr 96 ; delay
     ktoggle chnget "delaytog"
-    if (ktoggle == 1) then
-      kamp        chnget "delayamp"
+    kamp    chnget "delayamp"
+    if ((ktoggle == 1) && (kamp > 0)) then
       kdecay      chnget "delaydec"
       ktempotog   chnget "delaytempotog"
       ktempo      chnget "delaytempo"
@@ -748,7 +748,7 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     xout asig
   endop
 
-instr 97 ; mix filter
+instr 97 ; peaking eq
   ktoggle chnget "peaktog"
   kv      chnget "peakv"
   if ((ktoggle == 1) && (kv != 1)) then
@@ -769,9 +769,9 @@ endin
 
 instr 98 ; reverb
   krevtog   chnget "revtog"
+  kwetamt   chnget "revwet"
 
-  if (krevtog == 1) then
-      kwetamt   chnget "revwet"
+  if ((krevtog == 1) && (kwetamt > 0)) then
     kdryamt  =  1 - kwetamt
     krolloff    chnget "revfiltcut"
     kfeedback   chnget "revtight"
@@ -857,12 +857,12 @@ endin
 instr 99 ; cabinet
   
   kcabtog chnget "cabtog"
+  kwoodwd chnget "wood"
 
-  if (kcabtog == 1) then
+  if ((kcabtog == 1) && (kwoodwd > 0)) then
     asynthl = gasigl
     asynthr = gasigr
 
-    kwoodwd chnget "wood"
     kwoodsp chnget "woodspread"
 
           kfundamental = 180
