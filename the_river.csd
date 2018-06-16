@@ -209,9 +209,12 @@ image bounds(619, 452, 200, 200) plant("peakeq") $ModuleAppearance {
   label bounds(1, 15, 198, 15) text("PEAKING EQ") colour(50, 50, 50) $LabelFontCol
   checkbox bounds (5, 17, 11, 11) channel("peaktog") value(1) $SwitchCol
 
-  rslider bounds(63,  41, 80, 60) range(0, 20000, 2000, 0.3, 0.001) channel("peakcenter") text("cutoff") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(31, 115, 60, 60) range(0, 12, 1, 0.28, 0.001) channel("peakv") text("boost/cut") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(111, 115, 60, 60) range(0.25, 4, 1, 0.44, 0.001) channel("peakq") text("Q") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(0,  45, 80, 60) range(0, 20000, 2000, 0.3, 0.001) channel("peakcenter") text("cutoff") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(70, 45, 60, 60) range(0, 12, 1, 0.28, 0.001) channel("peakv") text("boost/cut") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(130, 45, 60, 60) range(0.25, 4, 1, 0.44, 0.001) channel("peakq") text("Q") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(0,  120, 80, 60) range(0, 20000, 7000, 0.3, 0.001) channel("peakcenter2") text("cutoff") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(70, 120, 60, 60) range(0, 12, 1, 0.28, 0.001) channel("peakv2") text("boost/cut") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(130, 120, 60, 60) range(0.25, 4, 1, 0.44, 0.001) channel("peakq2") text("Q") valuetextbox(1) textbox(1) $FontCol
 
 }
 
@@ -751,9 +754,12 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
 instr 97 ; peaking eq
   ktoggle chnget "peaktog"
   kv      chnget "peakv"
-  if ((ktoggle == 1) && (kv != 1)) then
+  kv2     chnget "peakv2"
+  if ((ktoggle == 1) && ((kv != 1) || (kv2 != 1))) then
     kcenter  chnget "peakcenter"
     kq       chnget "peakq"
+    kcenter2 chnget "peakcenter2"
+    kq2      chnget "peakq2"
     iqcenter =      sqrt(0.5)
 
     denorm gasigl
@@ -762,8 +768,11 @@ instr 97 ; peaking eq
     asigfiltl pareq gasigl, kcenter, kv, kq * iqcenter
     asigfiltr pareq gasigr, kcenter, kv, kq * iqcenter
 
-    gasigl = asigfiltl
-    gasigr = asigfiltr
+    asigfiltl2 pareq asigfiltl, kcenter2, kv2, kq2 * iqcenter
+    asigfiltr2 pareq asigfiltr, kcenter2, kv2, kq2 * iqcenter
+
+    gasigl = asigfiltl2
+    gasigr = asigfiltr2
   endif
 endin
 
