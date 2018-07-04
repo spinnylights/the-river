@@ -377,21 +377,25 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
   opcode FancyVibr, k, kkkkkkiiO
     ktoggle, ktempofrac, kbpm, kwave, kamp, kfreq, isin, itri, iadj xin
 
-    iTempoFracs[] fillarray 1, 2, 3, 4, 6, 8, 9, 12, 16, 27, 32, 81
+    if (kamp != 0) then
+      iTempoFracs[] fillarray 1, 2, 3, 4, 6, 8, 9, 12, 16, 27, 32, 81
 
-    if (ktoggle == 1) then
-      kfreqt = iTempoFracs[ktempofrac] * kbpm
-      if (kwave == 0) then
-        kvib = poscil:k(kamp, kfreqt) + iadj
+      if (ktoggle == 1) then
+        kfreqt = iTempoFracs[ktempofrac] * kbpm
+        if (kwave == 0) then
+          kvib = poscil:k(kamp, kfreqt) + iadj
+        else
+          kvib = poscil:k(kamp, kfreqt, itri) + iadj
+        endif
       else
-        kvib = poscil:k(kamp, kfreqt, itri) + iadj
+        if (kwave == 0) then
+          kvib = vibr:k(kamp, kfreq, isin) + iadj
+        else
+          kvib = vibr:k(kamp, kfreq, itri) + iadj
+        endif
       endif
     else
-      if (kwave == 0) then
-        kvib = vibr:k(kamp, kfreq, isin) + iadj
-      else
-        kvib = vibr:k(kamp, kfreq, itri) + iadj
-      endif
+      kvib = 0
     endif
 
     xout kvib
@@ -590,20 +594,32 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
 
         ; 1
           kvib1 FancyVibr kvib1fttog, kvib1ft, kbpm, kvib1w, kvib1a, kvib1f, gimewavf1, gimewavf2
-            kphamp1 = ((kphase1 * (-1) / 0.5) + 0.5) / 2
-          kphasevib1 FancyVibr kphfrqtog1, kphfrqtem1, kbpm, kphwave1, kphamp1, kphasefrq1, gimewavf1, gimewavf2, kphamp1
+          if ((kphasefrq1 != 0) || (kphfrqtog1 == 1)) then
+              kphamp1 = ((kphase1 * (-1) / 0.5) + 0.5) / 2
+            kphasevib1 FancyVibr kphfrqtog1, kphfrqtem1, kbpm, kphwave1, kphamp1, kphasefrq1, gimewavf1, gimewavf2, kphamp1
+          else
+            kphasevib1 = 0
+          endif
         kosc1frq = (kfrq*kmod1) + kvib1
 
         ; 2
           kvib2 FancyVibr kvib2fttog, kvib2ft, kbpm, kvib2w, kvib2a, kvib2f, gimewavf1, gimewavf2
-            kphamp2 = ((kphase2 * (-1) / 0.5) + 0.5) / 2
-          kphasevib2 FancyVibr kphfrqtog2, kphfrqtem2, kbpm, kphwave2, kphamp2, kphasefrq2, gimewavf1, gimewavf2, kphamp2
+          if ((kphasefrq2 != 0) || (kphfrqtog2 == 1)) then
+              kphamp2 = ((kphase2 * (-1) / 0.5) + 0.5) / 2
+            kphasevib2 FancyVibr kphfrqtog2, kphfrqtem2, kbpm, kphwave2, kphamp2, kphasefrq2, gimewavf1, gimewavf2, kphamp2
+          else
+            kphasevib2 = 0
+          endif
         kosc2frq = (kfrq*kmod2) + kvib2
 
         ; 3
           kvib3 FancyVibr kvib3fttog, kvib3ft, kbpm, kvib3w, kvib3a, kvib3f, gimewavf1, gimewavf2
-            kphamp3 = ((kphase3 * (-1) / 0.5) + 0.5) / 2
-          kphasevib3 FancyVibr kphfrqtog3, kphfrqtem3, kbpm, kphwave3, kphamp3, kphasefrq3, gimewavf1, gimewavf2, kphamp3
+          if ((kphasefrq3 != 0) || (kphfrqtog3 == 1)) then
+              kphamp3 = ((kphase3 * (-1) / 0.5) + 0.5) / 2
+            kphasevib3 FancyVibr kphfrqtog3, kphfrqtem3, kbpm, kphwave3, kphamp3, kphasefrq3, gimewavf1, gimewavf2, kphamp3
+          else
+            kphasevib3 = 0
+          endif
         kosc3frq = (kfrq*kmod3) + kvib3
 
       if (kosc1tog == 1) then
