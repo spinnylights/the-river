@@ -382,9 +382,9 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     if (ktoggle == 1) then
       kfreqt = iTempoFracs[ktempofrac] * kbpm
       if (kwave == 0) then
-        kvib = poscil3:k(kamp, kfreqt) + iadj
+        kvib = poscil:k(kamp, kfreqt) + iadj
       else
-        kvib = poscil3:k(kamp, kfreqt, itri) + iadj
+        kvib = poscil:k(kamp, kfreqt, itri) + iadj
       endif
     else
       if (kwave == 0) then
@@ -717,7 +717,7 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
       asiglprescale vcomb gasigl, kdecay, kspeed, imaxspeed
       asigrprescale vcomb gasigr, kdecay, kspeed, imaxspeed
 
-            apanlfo = poscil3:a(0.5, kpanlforate) + 0.5
+            apanlfo = poscil:a(0.5, kpanlforate) + 0.5
             apanlfoscale = kpan*(-2) + 1
           apanlfoamt = apanlfo * apanlfoscale
       asigl = asiglprescale * kamp * (1 - (kpan+apanlfoamt))
@@ -823,7 +823,7 @@ instr 98 ; reverb
     afiltsigr tonex gasigr, krolloff
 
         kdeltrandl = randh:k(kwarblel/2, 7.8, 2, 1) + kwarblel/2
-      kdeltl     = poscil3:a(kdeltrandl, 2) + (kdeltrandl / 2)
+      kdeltl     = poscil:a(kdeltrandl, 2) + (kdeltrandl / 2)
       kalrvt1l  = ksize
       kalrvt2l  = ksize * 0.8
       kalrvt3l  = ksize * 0.6
@@ -837,7 +837,7 @@ instr 98 ; reverb
     adell Schroeder afiltsigl, kfeedback, kdeltl, imaxdelt, kalrvt1l, iallpt1l, kalrvt2l, iallpt2l, kalrvt3l, iallpt3l, kalrvt4l, iallpt4l, kalrvt5l, iallpt5l, ireviws, kdistance
 
         kdeltrandr = randh:k(kwarbler/2, 1.8, 2, 1) + kwarbler/2
-      kdeltr     = poscil3:a(kdeltrandr, 2) + (kdeltrandr / 2)
+      kdeltr     = poscil:a(kdeltrandr, 2) + (kdeltrandr / 2)
       kalrvt1r   = ksize
       kalrvt2r   = ksize * 0.78
       kalrvt3r   = ksize * 0.61
@@ -850,7 +850,7 @@ instr 98 ; reverb
       iallpt5r   = 0.085
     adelr Schroeder afiltsigr, kfeedback, kdeltr, imaxdelt, kalrvt1r, iallpt1r, kalrvt2r, iallpt2r, kalrvt3r, iallpt3r, kalrvt4r, iallpt4r, kalrvt5r, iallpt5r, ireviws, kdistance
 
-            apanlfo = poscil3:a(0.5, kpanlforate) + 0.5
+            apanlfo = poscil:a(0.5, kpanlforate) + 0.5
             apanlfoscale = kpan*(-2) + 1
           apanlfoamt = apanlfo * apanlfoscale
         adelll, adellr pan2 adell, kpan+apanlfoamt, 2
