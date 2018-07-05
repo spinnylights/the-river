@@ -401,6 +401,19 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     xout kvib
   endop
 
+  opcode FancyPhaseVibr, k, kkkkkkii
+    ktoggle, ktempofrac, kbpm, kwave, kphase, kfreq, isin, itri xin
+
+    if ((kfreq != 0) || (ktoggle == 1)) then
+        kamp = ((kphase * (-1) / 0.5) + 0.5) / 2
+      kphasevib FancyVibr ktoggle, ktempofrac, kbpm, kwave, kamp, kfreq, gimewavf1, gimewavf2, kamp
+    else
+      kphasevib = 0
+    endif
+
+    xout kphasevib
+  endop
+
   instr 1
     ifrq   = p4 ; comes from midi
     iscale = p5
@@ -594,33 +607,18 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
 
         ; 1
           kvib1 FancyVibr kvib1fttog, kvib1ft, kbpm, kvib1w, kvib1a, kvib1f, gimewavf1, gimewavf2
-          if ((kphasefrq1 != 0) || (kphfrqtog1 == 1)) then
-              kphamp1 = ((kphase1 * (-1) / 0.5) + 0.5) / 2
-            kphasevib1 FancyVibr kphfrqtog1, kphfrqtem1, kbpm, kphwave1, kphamp1, kphasefrq1, gimewavf1, gimewavf2, kphamp1
-          else
-            kphasevib1 = 0
-          endif
         kosc1frq = (kfrq*kmod1) + kvib1
+        kphasevib1 FancyPhaseVibr kphfrqtog1, kphfrqtem1, kbpm, kphwave1, kphase1, kphasefrq1, gimewavf1, gimewavf2
 
         ; 2
           kvib2 FancyVibr kvib2fttog, kvib2ft, kbpm, kvib2w, kvib2a, kvib2f, gimewavf1, gimewavf2
-          if ((kphasefrq2 != 0) || (kphfrqtog2 == 1)) then
-              kphamp2 = ((kphase2 * (-1) / 0.5) + 0.5) / 2
-            kphasevib2 FancyVibr kphfrqtog2, kphfrqtem2, kbpm, kphwave2, kphamp2, kphasefrq2, gimewavf1, gimewavf2, kphamp2
-          else
-            kphasevib2 = 0
-          endif
         kosc2frq = (kfrq*kmod2) + kvib2
+        kphasevib2 FancyPhaseVibr kphfrqtog2, kphfrqtem2, kbpm, kphwave2, kphase2, kphasefrq2, gimewavf1, gimewavf2
 
         ; 3
           kvib3 FancyVibr kvib3fttog, kvib3ft, kbpm, kvib3w, kvib3a, kvib3f, gimewavf1, gimewavf2
-          if ((kphasefrq3 != 0) || (kphfrqtog3 == 1)) then
-              kphamp3 = ((kphase3 * (-1) / 0.5) + 0.5) / 2
-            kphasevib3 FancyVibr kphfrqtog3, kphfrqtem3, kbpm, kphwave3, kphamp3, kphasefrq3, gimewavf1, gimewavf2, kphamp3
-          else
-            kphasevib3 = 0
-          endif
         kosc3frq = (kfrq*kmod3) + kvib3
+        kphasevib3 FancyPhaseVibr kphfrqtog3, kphfrqtem3, kbpm, kphwave3, kphase3, kphasefrq3, gimewavf1, gimewavf2
 
       if (kosc1tog == 1) then
           afmosc11 tableikt phasor:a(kosc1frq*(kfmratio11+kfmfine11))+(kphase1+kphasevib1), Wavetable:k(kosc1frq, kwav1), 1, 0, 1
