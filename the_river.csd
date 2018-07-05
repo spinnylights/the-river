@@ -414,6 +414,38 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     xout kphasevib
   endop
 
+  opcode FMOsc, a, kkkkkkkkkkkkkkkkkkkkkki
+    ktoggle, koscfrq1, kfmratio1, kfmfine1, kphase1, kphasevib1, kwav1, kfmamt1, koscfrq2, kfmratio2, kfmfine2, kphase2, kphasevib2, kwav2, kfmamt2, koscfrq3, kfmratio3, kfmfine3, kphase3, kphasevib3, kwav3, kfmamt3, ioscid xin
+
+    if (ktoggle == 1) then
+        if     (ioscid == 1) then
+          koscfrq   = koscfrq1
+          kphase    = kphase1
+          kphasevib = kphasevib1
+          kwav      = kwav1
+        elseif (ioscid == 2) then
+          koscfrq   = koscfrq2
+          kphase    = kphase2
+          kphasevib = kphasevib2
+          kwav      = kwav2
+        elseif (ioscid == 3) then
+          koscfrq   = koscfrq3
+          kphase    = kphase3
+          kphasevib = kphasevib3
+          kwav      = kwav3
+        endif
+
+        afmosc1 tableikt phasor:a(koscfrq1*(kfmratio1+kfmfine1))+(kphase1+kphasevib1), Wavetable:k(koscfrq1, kwav1), 1, 0, 1
+        afmosc2 tableikt phasor:a(koscfrq2*(kfmratio2+kfmfine2))+(kphase2+kphasevib2), Wavetable:k(koscfrq2, kwav2), 1, 0, 1
+        afmosc3 tableikt phasor:a(koscfrq3*(kfmratio3+kfmfine3))+(kphase3+kphasevib3), Wavetable:k(koscfrq3, kwav3), 1, 0, 1
+      aosc tableikt phasor:a(koscfrq)+(kphase+kphasevib)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(koscfrq, kwav), 1, 0, 1
+    else
+      aosc = 0
+    endif
+
+    xout aosc
+  endop
+
   instr 1
     ifrq   = p4 ; comes from midi
     iscale = p5
@@ -605,47 +637,24 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
               rireturn
           endif
 
-        ; 1
           kvib1 FancyVibr kvib1fttog, kvib1ft, kbpm, kvib1w, kvib1a, kvib1f, gimewavf1, gimewavf2
         kosc1frq = (kfrq*kmod1) + kvib1
         kphasevib1 FancyPhaseVibr kphfrqtog1, kphfrqtem1, kbpm, kphwave1, kphase1, kphasefrq1, gimewavf1, gimewavf2
 
-        ; 2
           kvib2 FancyVibr kvib2fttog, kvib2ft, kbpm, kvib2w, kvib2a, kvib2f, gimewavf1, gimewavf2
         kosc2frq = (kfrq*kmod2) + kvib2
         kphasevib2 FancyPhaseVibr kphfrqtog2, kphfrqtem2, kbpm, kphwave2, kphase2, kphasefrq2, gimewavf1, gimewavf2
 
-        ; 3
           kvib3 FancyVibr kvib3fttog, kvib3ft, kbpm, kvib3w, kvib3a, kvib3f, gimewavf1, gimewavf2
         kosc3frq = (kfrq*kmod3) + kvib3
         kphasevib3 FancyPhaseVibr kphfrqtog3, kphfrqtem3, kbpm, kphwave3, kphase3, kphasefrq3, gimewavf1, gimewavf2
 
-      if (kosc1tog == 1) then
-          afmosc11 tableikt phasor:a(kosc1frq*(kfmratio11+kfmfine11))+(kphase1+kphasevib1), Wavetable:k(kosc1frq, kwav1), 1, 0, 1
-          afmosc12 tableikt phasor:a(kosc2frq*(kfmratio12+kfmfine12))+(kphase2+kphasevib2), Wavetable:k(kosc2frq, kwav2), 1, 0, 1
-          afmosc13 tableikt phasor:a(kosc3frq*(kfmratio13+kfmfine13))+(kphase3+kphasevib3), Wavetable:k(kosc3frq, kwav3), 1, 0, 1
-        aosc1 tableikt phasor:a(kosc1frq)+(kphase1+kphasevib1)+(afmosc11*kfmamt11)+(afmosc12*kfmamt12)+(afmosc13*kfmamt13), Wavetable:k(kosc1frq, kwav1), 1, 0, 1
-      else
-        aosc1 = 0
-      endif
+      aosc1 FMOsc kosc1tog, kosc1frq, kfmratio11, kfmfine11, kphase1, kphasevib1, kwav1, kfmamt11, kosc2frq, kfmratio12, kfmfine12, kphase2, kphasevib2, kwav2, kfmamt12, kosc3frq, kfmratio13, kfmfine13, kphase3, kphasevib3, kwav3, kfmamt13, 1
 
-      if (kosc2tog == 1) then
-          afmosc21 tableikt phasor:a(kosc1frq*(kfmratio21+kfmfine21))+(kphase1+kphasevib1), Wavetable:k(kosc1frq, kwav1), 1, 0, 1
-          afmosc22 tableikt phasor:a(kosc2frq*(kfmratio22+kfmfine22))+(kphase2+kphasevib2), Wavetable:k(kosc2frq, kwav2), 1, 0, 1
-          afmosc23 tableikt phasor:a(kosc3frq*(kfmratio23+kfmfine23))+(kphase3+kphasevib3), Wavetable:k(kosc3frq, kwav3), 1, 0, 1
-        aosc2 tableikt phasor:a(kosc2frq)+(kphase2+kphasevib2)+(afmosc21*kfmamt21)+(afmosc22*kfmamt22)+(afmosc23*kfmamt23), Wavetable:k(kosc2frq, kwav2), 1, 0, 1
-      else
-        aosc2 = 0
-      endif
+      aosc2 FMOsc kosc2tog, kosc1frq, kfmratio21, kfmfine21, kphase1, kphasevib1, kwav1, kfmamt21, kosc2frq, kfmratio22, kfmfine22, kphase2, kphasevib2, kwav2, kfmamt22, kosc3frq, kfmratio23, kfmfine23, kphase3, kphasevib3, kwav3, kfmamt23, 2
 
-      if (kosc3tog == 1) then
-          afmosc31 tableikt phasor:a(kosc1frq*(kfmratio31+kfmfine31))+(kphase1+kphasevib1), Wavetable:k(kosc1frq, kwav1), 1, 0, 1
-          afmosc32 tableikt phasor:a(kosc2frq*(kfmratio32+kfmfine32))+(kphase2+kphasevib2), Wavetable:k(kosc2frq, kwav2), 1, 0, 1
-          afmosc33 tableikt phasor:a(kosc3frq*(kfmratio33+kfmfine33))+(kphase3+kphasevib3), Wavetable:k(kosc3frq, kwav3), 1, 0, 1
-        aosc3 tableikt phasor:a(kosc3frq)+(kphase3+kphasevib3)+(afmosc31*kfmamt31)+(afmosc32*kfmamt32)+(afmosc33*kfmamt33), Wavetable:k(kosc3frq, kwav3), 1, 0, 1
-      else
-        aosc3 = 0
-      endif
+      aosc3 FMOsc kosc3tog, kosc1frq, kfmratio31, kfmfine31, kphase1, kphasevib1, kwav1, kfmamt31, kosc2frq, kfmratio32, kfmfine32, kphase2, kphasevib2, kwav2, kfmamt32, kosc3frq, kfmratio33, kfmfine33, kphase3, kphasevib3, kwav3, kfmamt33, 3
+
 
       if ((knoisetog == 1) && (knamp > 0)) then
         anoise noise   knamp*koscgain, knfil * (-1)
