@@ -414,30 +414,46 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     xout kphasevib
   endop
 
-  opcode FMOsc, a, kkkkkkkkkkkkkkkkkkkkkki
-    ktoggle, koscfrq1, kfmratio1, kfmfine1, kphase1, kphasevib1, kwav1, kfmamt1, koscfrq2, kfmratio2, kfmfine2, kphase2, kphasevib2, kwav2, kfmamt2, koscfrq3, kfmratio3, kfmfine3, kphase3, kphasevib3, kwav3, kfmamt3, ioscid xin
+  opcode FMOsc, a, kkkkkkkkkkkkkkkkkkkkkkkki
+    ktoggle1, ktoggle2, ktoggle3, koscfrq1, kfmratio1, kfmfine1, kphase1, kphasevib1, kwav1, kfmamt1, koscfrq2, kfmratio2, kfmfine2, kphase2, kphasevib2, kwav2, kfmamt2, koscfrq3, kfmratio3, kfmfine3, kphase3, kphasevib3, kwav3, kfmamt3, ioscid xin
+
+    if     (ioscid == 1) then
+      koscfrq   = koscfrq1
+      kphase    = kphase1
+      kphasevib = kphasevib1
+      kwav      = kwav1
+      ktoggle   = ktoggle1
+    elseif (ioscid == 2) then
+      koscfrq   = koscfrq2
+      kphase    = kphase2
+      kphasevib = kphasevib2
+      kwav      = kwav2
+      ktoggle   = ktoggle2
+    elseif (ioscid == 3) then
+      koscfrq   = koscfrq3
+      kphase    = kphase3
+      kphasevib = kphasevib3
+      kwav      = kwav3
+      ktoggle   = ktoggle3
+    endif
 
     if (ktoggle == 1) then
-        if     (ioscid == 1) then
-          koscfrq   = koscfrq1
-          kphase    = kphase1
-          kphasevib = kphasevib1
-          kwav      = kwav1
-        elseif (ioscid == 2) then
-          koscfrq   = koscfrq2
-          kphase    = kphase2
-          kphasevib = kphasevib2
-          kwav      = kwav2
-        elseif (ioscid == 3) then
-          koscfrq   = koscfrq3
-          kphase    = kphase3
-          kphasevib = kphasevib3
-          kwav      = kwav3
-        endif
 
-        afmosc1 tableikt phasor:a(koscfrq1*(kfmratio1+kfmfine1))+(kphase1+kphasevib1), Wavetable:k(koscfrq1, kwav1), 1, 0, 1
-        afmosc2 tableikt phasor:a(koscfrq2*(kfmratio2+kfmfine2))+(kphase2+kphasevib2), Wavetable:k(koscfrq2, kwav2), 1, 0, 1
-        afmosc3 tableikt phasor:a(koscfrq3*(kfmratio3+kfmfine3))+(kphase3+kphasevib3), Wavetable:k(koscfrq3, kwav3), 1, 0, 1
+        if (ktoggle1 == 1) then
+          afmosc1 tableikt phasor:a(koscfrq1*(kfmratio1+kfmfine1))+(kphase1+kphasevib1), Wavetable:k(koscfrq1, kwav1), 1, 0, 1
+        else
+          afmosc1 = 0
+        endif
+        if (ktoggle2 == 1) then
+          afmosc2 tableikt phasor:a(koscfrq2*(kfmratio2+kfmfine2))+(kphase2+kphasevib2), Wavetable:k(koscfrq2, kwav2), 1, 0, 1
+        else
+          afmosc2 = 0
+        endif
+        if (ktoggle3 == 1) then
+          afmosc3 tableikt phasor:a(koscfrq3*(kfmratio3+kfmfine3))+(kphase3+kphasevib3), Wavetable:k(koscfrq3, kwav3), 1, 0, 1
+        else
+          afmosc3 = 0
+        endif
       aosc tableikt phasor:a(koscfrq)+(kphase+kphasevib)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(koscfrq, kwav), 1, 0, 1
     else
       aosc = 0
@@ -649,11 +665,11 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
         kosc3frq = (kfrq*kmod3) + kvib3
         kphasevib3 FancyPhaseVibr kphfrqtog3, kphfrqtem3, kbpm, kphwave3, kphase3, kphasefrq3, gimewavf1, gimewavf2
 
-      aosc1 FMOsc kosc1tog, kosc1frq, kfmratio11, kfmfine11, kphase1, kphasevib1, kwav1, kfmamt11, kosc2frq, kfmratio12, kfmfine12, kphase2, kphasevib2, kwav2, kfmamt12, kosc3frq, kfmratio13, kfmfine13, kphase3, kphasevib3, kwav3, kfmamt13, 1
+      aosc1 FMOsc kosc1tog, kosc2tog, kosc3tog, kosc1frq, kfmratio11, kfmfine11, kphase1, kphasevib1, kwav1, kfmamt11, kosc2frq, kfmratio12, kfmfine12, kphase2, kphasevib2, kwav2, kfmamt12, kosc3frq, kfmratio13, kfmfine13, kphase3, kphasevib3, kwav3, kfmamt13, 1
 
-      aosc2 FMOsc kosc2tog, kosc1frq, kfmratio21, kfmfine21, kphase1, kphasevib1, kwav1, kfmamt21, kosc2frq, kfmratio22, kfmfine22, kphase2, kphasevib2, kwav2, kfmamt22, kosc3frq, kfmratio23, kfmfine23, kphase3, kphasevib3, kwav3, kfmamt23, 2
+      aosc2 FMOsc kosc1tog, kosc2tog, kosc3tog, kosc1frq, kfmratio21, kfmfine21, kphase1, kphasevib1, kwav1, kfmamt21, kosc2frq, kfmratio22, kfmfine22, kphase2, kphasevib2, kwav2, kfmamt22, kosc3frq, kfmratio23, kfmfine23, kphase3, kphasevib3, kwav3, kfmamt23, 2
 
-      aosc3 FMOsc kosc3tog, kosc1frq, kfmratio31, kfmfine31, kphase1, kphasevib1, kwav1, kfmamt31, kosc2frq, kfmratio32, kfmfine32, kphase2, kphasevib2, kwav2, kfmamt32, kosc3frq, kfmratio33, kfmfine33, kphase3, kphasevib3, kwav3, kfmamt33, 3
+      aosc3 FMOsc kosc1tog, kosc2tog, kosc3tog, kosc1frq, kfmratio31, kfmfine31, kphase1, kphasevib1, kwav1, kfmamt31, kosc2frq, kfmratio32, kfmfine32, kphase2, kphasevib2, kwav2, kfmamt32, kosc3frq, kfmratio33, kfmfine33, kphase3, kphasevib3, kwav3, kfmamt33, 3
 
 
       if ((knoisetog == 1) && (knamp > 0)) then
