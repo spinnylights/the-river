@@ -308,7 +308,7 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
   ; ==============================================
   <CsInstruments>
 
-  sr      =  48000
+  sr      =  41000
   ksmps   =  32
   nchnls  =  2
   0dbfs   =  1
