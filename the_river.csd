@@ -318,7 +318,7 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
 
   ;f 1  0 32768 10 1                                   ; sine wave
   ; 6  0 32768 11 30 1                                             ; buzz
-  gitabsize = 2 ^ 16
+  gitabsize = 2 ^ 17
   gisine     ftgen 0, 0, gitabsize, 10, 1
   gitriangle ftgen 0, 0, gitabsize,  7, -1,     gitabsize/2, 1, gitabsize/2, -1                      ; triangle wave
   gitrianglebl vco2init -gitriangle,  gitriangle+1, 1.05, 512, gitabsize, gitriangle
@@ -440,21 +440,21 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     if (ktoggle == 1) then
 
         if (ktoggle1 == 1) then
-          afmosc1 tableikt phasor:a(koscfrq1*(kfmratio1+kfmfine1))+(kphase1+kphasevib1), Wavetable:k(koscfrq1, kwav1), 1, 0, 1
+          afmosc1 tablekt phasor:a(koscfrq1*(kfmratio1+kfmfine1))+(kphase1+kphasevib1), Wavetable:k(koscfrq1, kwav1), 1, 0, 1
         else
           afmosc1 = 0
         endif
         if (ktoggle2 == 1) then
-          afmosc2 tableikt phasor:a(koscfrq2*(kfmratio2+kfmfine2))+(kphase2+kphasevib2), Wavetable:k(koscfrq2, kwav2), 1, 0, 1
+          afmosc2 tablekt phasor:a(koscfrq2*(kfmratio2+kfmfine2))+(kphase2+kphasevib2), Wavetable:k(koscfrq2, kwav2), 1, 0, 1
         else
           afmosc2 = 0
         endif
         if (ktoggle3 == 1) then
-          afmosc3 tableikt phasor:a(koscfrq3*(kfmratio3+kfmfine3))+(kphase3+kphasevib3), Wavetable:k(koscfrq3, kwav3), 1, 0, 1
+          afmosc3 tablekt phasor:a(koscfrq3*(kfmratio3+kfmfine3))+(kphase3+kphasevib3), Wavetable:k(koscfrq3, kwav3), 1, 0, 1
         else
           afmosc3 = 0
         endif
-      aosc tableikt phasor:a(koscfrq)+(kphase+kphasevib)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(koscfrq, kwav), 1, 0, 1
+      aosc tablekt phasor:a(koscfrq)+(kphase+kphasevib)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(koscfrq, kwav), 1, 0, 1
     else
       aosc = 0
     endif
