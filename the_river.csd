@@ -781,12 +781,12 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     adel vdelayx adelin, a(kdelt), imaxdelt, iiws
 
     aallp1 valpass adel, kalrvt1, iallpt1*(kdistance), imaxdist
-    aallp2 valpass aallp1, kalrvt2, iallpt2*(kdistance), imaxdist
-    aallp3 valpass aallp2, kalrvt3, iallpt3*(kdistance), imaxdist
-    aallp4 valpass aallp3, kalrvt4, iallpt4*(kdistance), imaxdist
-    aallp5 valpass aallp4, kalrvt5, iallpt5*(kdistance), imaxdist
+    aallp1 valpass aallp1, kalrvt2, iallpt2*(kdistance), imaxdist
+    aallp1 valpass aallp1, kalrvt3, iallpt3*(kdistance), imaxdist
+    aallp1 valpass aallp1, kalrvt4, iallpt4*(kdistance), imaxdist
+    aallp1 valpass aallp1, kalrvt5, iallpt5*(kdistance), imaxdist
 
-      asig = (aallp5 * (1 - kgain*kgain)) + (ain * (-kgain))
+      asig = (aallp1 * (1 - kgain*kgain)) + (ain * (-kgain))
     xout asig
   endop
 
