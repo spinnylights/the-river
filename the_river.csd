@@ -303,7 +303,7 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
   </Cabbage>
   <CsoundSynthesizer>
   <CsOptions>
-  -n -+rtmidi=NULL -M0 --midi-key-cps=4 --midi-velocity-amp=5
+  -n -m0 -+rtmidi=NULL -M0 --midi-key-cps=4 --midi-velocity-amp=5
   </CsOptions>
   ; ==============================================
   <CsInstruments>
