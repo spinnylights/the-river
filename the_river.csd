@@ -17,7 +17,7 @@
 ; zoe@milky.flowers or on Twitter at @spinnylights.
 
 <Cabbage> bounds(1, 0, 0, 0)
-form caption("The River") size(1310, 970), pluginid("rivr")
+form caption("The River") size(1310, 1025), pluginid("rivr")
 
 #define ModuleAppearance shape("sharp"), colour(3, 65, 54), outlinecolour(216, 216, 216), outlinethickness(2)
 #define FontCol fontcolour(216, 216, 216) textcolour(216, 216, 216) fontcolour:0(216, 216, 216) fontcolour:1(216, 216, 216)
@@ -27,9 +27,9 @@ form caption("The River") size(1310, 970), pluginid("rivr")
 
 #define Waveforms text("sine", "triangle", "saw", "semi-saw", "square", "pulse", "narrow pulse", "narrower pulse", "buzz")
 
-keyboard bounds(0, 870, 1310, 100) middlec(4) keywidth(30)
+keyboard bounds(619, 870, 690, 155) middlec(4) keywidth(30)
 
-image bounds(0, 0, 620, 870) plant("oscillators") $ModuleAppearance {
+image bounds(0, 0, 620, 1025) plant("oscillators") $ModuleAppearance {
 
   label bounds(1, 15, 618, 15) text("OSCILLATORS") colour(50, 50, 50) $LabelFontCol
 
@@ -87,13 +87,21 @@ image bounds(0, 0, 620, 870) plant("oscillators") $ModuleAppearance {
 
   label bounds(1, 725, 308, 15) text("AMP") $FontCol
 
-  rslider bounds(36, 758, 50, 60) range(0, 2, 1, 1, 0.001) value(1) channel("amp1") valuetextbox(1) textbox(1) $FontCol $Highlight
-  rslider bounds(131, 758, 50, 60) range(0, 2, 1, 1, 0.001) value(1) channel("amp2") valuetextbox(1) textbox(1) $FontCol $Highlight
-  rslider bounds(225, 758, 50, 60) range(0, 2, 1, 1, 0.001) value(1) channel("amp3") valuetextbox(1) textbox(1) $FontCol $Highlight
+  rslider bounds(31, 751, 60, 60)  range(0, 1, 0.5, 1, 0.001) channel("osc1pan") text("pan") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(126, 751, 60, 60) range(0, 1, 0.5, 1, 0.001) channel("osc2pan") text("pan") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(220, 751, 60, 60) range(0, 1, 0.5, 1, 0.001) channel("osc3pan") text("pan") valuetextbox(1) textbox(1) $FontCol
 
-  checkbox bounds (56, 835, 11, 11) channel("osc1tog") value(1) $SwitchCol
-  checkbox bounds (151, 835, 11, 11) channel("osc2tog") value(1) $SwitchCol
-  checkbox bounds (245, 835, 11, 11) channel("osc3tog") value(1) $SwitchCol
+  rslider bounds(31,  833, 60, 60) range(0, 20, 0, 0.5, 0.001) channel("osc1panlfo") text("pan lfo") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(126, 833, 60, 60) range(0, 20, 0, 0.5, 0.001) channel("osc2panlfo") text("pan lfo") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(220, 833, 60, 60) range(0, 20, 0, 0.5, 0.001) channel("osc3panlfo") text("pan lfo") valuetextbox(1) textbox(1) $FontCol
+
+  rslider bounds(36, 913, 50, 60) range(0, 2, 1, 1, 0.001) value(1) channel("amp1") valuetextbox(1) textbox(1) $FontCol $Highlight
+  rslider bounds(131, 913, 50, 60) range(0, 2, 1, 1, 0.001) value(1) channel("amp2") valuetextbox(1) textbox(1) $FontCol $Highlight
+  rslider bounds(225, 913, 50, 60) range(0, 2, 1, 1, 0.001) value(1) channel("amp3") valuetextbox(1) textbox(1) $FontCol $Highlight
+
+  checkbox bounds (56, 990, 11, 11) channel("osc1tog") value(1) $SwitchCol
+  checkbox bounds (151, 990, 11, 11) channel("osc2tog") value(1) $SwitchCol
+  checkbox bounds (245, 990, 11, 11) channel("osc3tog") value(1) $SwitchCol
 
   label bounds(316, 50, 308, 15) text("FREQUENCY MODULATION") $FontCol
 
