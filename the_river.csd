@@ -148,7 +148,8 @@ image bounds(619, 651, 690, 219) plant("pitch") $ModuleAppearance {
   label bounds(1, 15, 688, 15) text("PITCH") colour(50, 50, 50) $LabelFontCol
 
   vslider bounds(34, 45, 50, 150) range(-1, 1, 0, 1, 0.001) channel("pitchbend") valuetextbox(1) textbox(1) $FontCol $Highlight
-  rslider bounds(109, 83, 60, 60) range(1, 120, 7, 1, 1) channel("pitchbrange") text("semitones") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(109, 61, 60, 60) range(1, 120, 7, 1, 1) channel("pitchbrange") text("semitones") valuetextbox(1) textbox(1) $FontCol
+  checkbox bounds(99, 152, 100, 15) channel("pitchenvtog") text("envelope") $FontCol $SwitchCol
 
   rslider bounds(214, 45, 60, 60) range(0.001, 4, 0.001, 1, 0.001) channel("pitchenvatt") text("attack") valuetextbox(1) textbox(1) $FontCol
   rslider bounds(284, 45, 60, 60) range(0.001, 4, 0.001, 1, 0.001) channel("pitchenvdec") text("decay") valuetextbox(1) textbox(1) $FontCol
@@ -485,6 +486,7 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     kpitchbr   chnget "pitchbrange"
     ipitchb    chnget "pitchbend"
     ipitchbr   chnget "pitchbrange"
+    ipitchenvtog chnget "pitchenvtog"
     ipitchenva chnget "pitchenvatt"
     ipitchenvd chnget "pitchenvdec"
     ipitchenvs chnget "pitchenvsus"
@@ -591,6 +593,7 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     kcurrcut   init 0
     kcurrpitch init 0
 
+    if (ipitchenvtog == 1) then
             if     (ipitchenvfrom == 1) then
               ipitchfloor = 0
             elseif (ipitchenvfrom == 2) then
@@ -652,6 +655,10 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
               kfrq = ifrq * kpitch
               rireturn
           endif
+    else
+      kpitch = semitone(kpitchbr * kpitchb)
+      kfrq = ifrq * kpitch
+    endif
 
           kvib1 FancyVibr kvib1fttog, kvib1ft, kbpm, kvib1w, kvib1a, kvib1f, gimewavf1, gimewavf2
         kosc1frq = (kfrq*kmod1) + kvib1
