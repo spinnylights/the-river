@@ -284,7 +284,7 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
   rslider bounds(143, 41, 60, 60) range(.2, 5, .6, .4, 0.001) channel("revdist") text("distance") valuetextbox(1024) textbox(1) $FontCol
   rslider bounds(143, 115, 60, 60) range(1, 100, 1, 1, 0.1) channel("revwarble") text("warble") valuetextbox(1) textbox(1) $FontCol
   rslider bounds(208, 41, 60, 60) range(0, 1, 0.5, 1, 0.001) text("pan") channel("revpan") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(208, 115, 60, 60) range(8, 1024, 1024, 1, 4) channel("reviws") text("quality") valuetextbox(1024) textbox(1) $FontCol
+  rslider bounds(208, 115, 60, 60) range(8, 1024, 100, 1, 4) channel("reviws") text("quality") valuetextbox(1024) textbox(1) $FontCol
   rslider bounds(273, 41, 60, 60) range(0, 20, 0, 0.5, 0.001) channel("panlforate") text("pan lfo") valuetextbox(1) textbox(1) $FontCol
   rslider bounds(273, 115, 60, 60) range(0, 3, 1, 1, 0.001) channel("revgain") text("gain") valuetextbox(1) textbox(1) $FontCol
 
