@@ -474,11 +474,27 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
   opcode PanLFO, a, kk
     kpanlforate, kpan xin
 
-      apanlfo = poscil:a(0.5, kpanlforate) + 0.5
-      apanlfoscale = kpan*(-2) + 1
-    apanlfoamt = apanlfo * apanlfoscale
+      if (kpanlforate == 0) then
+        apanlfo = 0
+      else
+        apanlfo = oscil:a(0.5, kpanlforate, gisine) + 0.5
+      endif
+      kpanlfoscale = kpan*(-2) + 1
+    apan = (kpan + (apanlfo * kpanlfoscale)) * $M_PI_2
 
-    xout apanlfoamt
+    xout apan
+  endop
+
+  opcode PanLFO4, aaaa, aakk
+    asigl, asigr, kpanlforate, kpan xin
+
+        apan PanLFO kpanlforate, kpan
+      asigll = asigl * cos(apan)
+      asiglr = asigl * sin(apan)
+      asigrl = asigr * cos(apan)
+      asigrr = asigr * sin(apan)
+
+    xout asigll, asiglr, asigrl, asigrr
   endop
 
   instr 1
@@ -785,14 +801,13 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
         kspeed chnget "delayspeed"
       endif
 
-      asiglprescale vcomb gasigl, kdecay, kspeed, imaxspeed
-      asigrprescale vcomb gasigr, kdecay, kspeed, imaxspeed
+      asigl = kamp * vcomb:a(gasigl, kdecay, kspeed, imaxspeed)
+      asigr = kamp * vcomb:a(gasigr, kdecay, kspeed, imaxspeed)
 
-      asigl = asiglprescale * kamp * (1 - (kpan+PanLFO:a(kpanlforate, kpan)))
-      asigr = asigrprescale * kamp *      (kpan+PanLFO:a(kpanlforate, kpan))
+      asigll, asiglr, asigrl, asigrr PanLFO4 asigl, asigr, kpanlforate, kpan
 
-      gasigl = gasigl + asigl
-      gasigr = gasigr + asigr
+      gasigl = gasigl + (asigll + asigrl)
+      gasigr = gasigr + (asiglr + asigrr)
     endif
   endin
 
@@ -918,8 +933,7 @@ instr 98 ; reverb
       iallpt5r   = 0.085
     adelr Schroeder afiltsigr, kfeedback, kdeltr, imaxdelt, kalrvt1r, iallpt1r, kalrvt2r, iallpt2r, kalrvt3r, iallpt3r, kalrvt4r, iallpt4r, kalrvt5r, iallpt5r, ireviws, kdistance
 
-        adelll, adellr pan2 adell, kpan+PanLFO:a(kpanlforate, kpan), 2
-        adelrl, adelrr pan2 adelr, kpan+PanLFO:a(kpanlforate, kpan), 2
+        adelll, adellr, adelrl, adelrr PanLFO4 adell, adelr, kpanlforate, kpan
       asigl = ((adelll + adelrl) * kwetamt * kgain) + (gasigl * kdryamt)
       asigr = ((adellr + adelrr) * kwetamt * kgain) + (gasigr * kdryamt)
     gasigl = asigl
