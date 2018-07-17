@@ -485,6 +485,16 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     xout apan
   endop
 
+  opcode PanLFO2, aa, akk
+    asig, kpanlforate, kpan xin
+
+        apan PanLFO kpanlforate, kpan
+      asigl = asig * cos(apan)
+      asigr = asig * sin(apan)
+
+    xout asigl, asigr
+  endop
+
   opcode PanLFO4, aaaa, aakk
     asigl, asigr, kpanlforate, kpan xin
 
@@ -725,9 +735,12 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
         anoise = 0
       endif
 
-      ;aosc1l = aosc1 * sin((kPan + 0.5) * $M_PI_2)
+      aosc1l, aosc1r PanLFO2 aosc1, kosc1panlfo, kosc1pan
+      aosc2l, aosc2r PanLFO2 aosc2, kosc2panlfo, kosc2pan
+      aosc3l, aosc3r PanLFO2 aosc3, kosc3panlfo, kosc3pan
 
-      asigprefilt  = ((aosc1*kamp1*koscgain) + (aosc2*kamp2*koscgain) + (aosc3*kamp3*koscgain) + anoise) / 4
+      asigprefiltl  = ((aosc1l*kamp1*koscgain) + (aosc2l*kamp2*koscgain) + (aosc3l*kamp3*koscgain) + anoise) / 4
+      asigprefiltr  = ((aosc1r*kamp1*koscgain) + (aosc2r*kamp2*koscgain) + (aosc3r*kamp3*koscgain) + anoise) / 4
 
     if (kfilttog == 1) then
         if (kftrack == 1) then
@@ -741,28 +754,37 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
         endif
 
       if (kftype == 0) then
-            asigfilt1 tonex asigprefilt, kfcut*kfiltenv
-            asigfilt2 lpf18 asigprefilt, kfcut*kfiltenv, kfres, kfdist
+            asigfilt1l tonex asigprefiltl, kfcut*kfiltenv
+            asigfilt2l lpf18 asigprefiltl, kfcut*kfiltenv, kfres, kfdist
+            asigfilt1r tonex asigprefiltr, kfcut*kfiltenv
+            asigfilt2r lpf18 asigprefiltr, kfcut*kfiltenv, kfres, kfdist
           afilt2vol = kfres / 1.5
           afilt1vol = 1 - afilt2vol
-        asigfilt = (asigfilt1 * afilt1vol) + (asigfilt2 * afilt2vol)
+        asigfiltl = (asigfilt1l * afilt1vol) + (asigfilt2l * afilt2vol)
+        asigfiltr = (asigfilt1r * afilt1vol) + (asigfilt2r * afilt2vol)
       else
-                asigfilt111 tonex asigprefilt, (kfcut+kfwidth)*kfiltenv, 3
-                asigfilt112 lpf18 asigprefilt, (kfcut+kfwidth)*kfiltenv, kfres, kfdist
+                asigfilt111l tonex asigprefiltl, (kfcut+kfwidth)*kfiltenv, 3
+                asigfilt112l lpf18 asigprefiltl, (kfcut+kfwidth)*kfiltenv, kfres, kfdist
+                asigfilt111r tonex asigprefiltr, (kfcut+kfwidth)*kfiltenv, 3
+                asigfilt112r lpf18 asigprefiltr, (kfcut+kfwidth)*kfiltenv, kfres, kfdist
               afilt112vol = kfres / 1.5
               afilt111vol = 1 - afilt112vol
-            asigfilt11 = (asigfilt111 * afilt111vol) + (asigfilt112 * afilt112vol)
+            asigfilt11l = (asigfilt111l * afilt111vol) + (asigfilt112l * afilt112vol)
+            asigfilt11r = (asigfilt111r * afilt111vol) + (asigfilt112r * afilt112vol)
                 ksigfilt12cutprezero = kfcut - kfwidth
               if (ksigfilt12cutprezero < 0) then
                 ksigfilt12cut = 0
               else
                 ksigfilt12cut = ksigfilt12cutprezero
               endif
-            asigfilt12  atonex asigfilt11, ksigfilt12cut*kfiltenv, 3
-         asigfilt = asigfilt12
+            asigfilt12l  atonex asigfilt11l, ksigfilt12cut*kfiltenv, 3
+            asigfilt12r  atonex asigfilt11r, ksigfilt12cut*kfiltenv, 3
+         asigfiltl = asigfilt12l
+         asigfiltr = asigfilt12r
       endif
     else
-      asigfilt = asigprefilt
+      asigfiltl = asigprefiltl
+      asigfiltr = asigprefiltr
     endif
 
       if (krel == 1) then
@@ -771,11 +793,15 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
         kenv transeg 0, ienva, ienvash, 1, ienvd, ienvdsh, ienvs
         kcurramp = kenv
       endif
-    asigprescale = asigfilt * kenv
+    asigprescalel = asigfiltl * kenv
+    asigprescaler = asigfiltr * kenv
 
-    asigscale = asigprescale * iscale
+    asigscalel = asigprescalel * iscale
+    asigscaler = asigprescaler * iscale
 
-      asigl, asigr pan2 asigscale, kpan
+        apan PanLFO 0, kpan
+      asigl = asigscalel * cos(apan)
+      asigr = asigscaler * sin(apan)
     gasigl = gasigl + asigl
     gasigr = gasigr + asigr
 
