@@ -471,6 +471,16 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     xout aosc
   endop
 
+  opcode PanLFO, a, kk
+    kpanlforate, kpan xin
+
+      apanlfo = poscil:a(0.5, kpanlforate) + 0.5
+      apanlfoscale = kpan*(-2) + 1
+    apanlfoamt = apanlfo * apanlfoscale
+
+    xout apanlfoamt
+  endop
+
   instr 1
     ifrq   = p4 ; comes from midi
     iscale = p5
@@ -482,6 +492,12 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     kamp1   chnget "amp1"
     kamp2   chnget "amp2"
     kamp3   chnget "amp3"
+    kosc1pan chnget "osc1pan"
+    kosc2pan chnget "osc2pan"
+    kosc3pan chnget "osc3pan"
+    kosc1panlfo chnget "osc1panlfo"
+    kosc2panlfo chnget "osc2panlfo"
+    kosc3panlfo chnget "osc3panlfo"
     koscgain   chnget "oscgain"
     knoisetog  chnget "noisetog"
     knfil   chnget "noisefilt" ; .9999 is white noise, 0 is pink noise, -.9999 is brown noise
@@ -693,8 +709,9 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
         anoise = 0
       endif
 
-    asigprefilt = ((aosc1*kamp1*koscgain) + (aosc2*kamp2*koscgain) + (aosc3*kamp3*koscgain) + anoise) / 4
+      ;aosc1l = aosc1 * sin((kPan + 0.5) * $M_PI_2)
 
+      asigprefilt  = ((aosc1*kamp1*koscgain) + (aosc2*kamp2*koscgain) + (aosc3*kamp3*koscgain) + anoise) / 4
 
     if (kfilttog == 1) then
         if (kftrack == 1) then
@@ -771,11 +788,8 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
       asiglprescale vcomb gasigl, kdecay, kspeed, imaxspeed
       asigrprescale vcomb gasigr, kdecay, kspeed, imaxspeed
 
-            apanlfo = poscil:a(0.5, kpanlforate) + 0.5
-            apanlfoscale = kpan*(-2) + 1
-          apanlfoamt = apanlfo * apanlfoscale
-      asigl = asiglprescale * kamp * (1 - (kpan+apanlfoamt))
-      asigr = asigrprescale * kamp * (kpan+apanlfoamt)
+      asigl = asiglprescale * kamp * (1 - (kpan+PanLFO:a(kpanlforate, kpan)))
+      asigr = asigrprescale * kamp *      (kpan+PanLFO:a(kpanlforate, kpan))
 
       gasigl = gasigl + asigl
       gasigr = gasigr + asigr
@@ -904,11 +918,8 @@ instr 98 ; reverb
       iallpt5r   = 0.085
     adelr Schroeder afiltsigr, kfeedback, kdeltr, imaxdelt, kalrvt1r, iallpt1r, kalrvt2r, iallpt2r, kalrvt3r, iallpt3r, kalrvt4r, iallpt4r, kalrvt5r, iallpt5r, ireviws, kdistance
 
-            apanlfo = poscil:a(0.5, kpanlforate) + 0.5
-            apanlfoscale = kpan*(-2) + 1
-          apanlfoamt = apanlfo * apanlfoscale
-        adelll, adellr pan2 adell, kpan+apanlfoamt, 2
-        adelrl, adelrr pan2 adelr, kpan+apanlfoamt, 2
+        adelll, adellr pan2 adell, kpan+PanLFO:a(kpanlforate, kpan), 2
+        adelrl, adelrr pan2 adelr, kpan+PanLFO:a(kpanlforate, kpan), 2
       asigl = ((adelll + adelrl) * kwetamt * kgain) + (gasigl * kdryamt)
       asigr = ((adellr + adelrr) * kwetamt * kgain) + (gasigr * kdryamt)
     gasigl = asigl
