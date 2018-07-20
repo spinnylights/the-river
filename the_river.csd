@@ -17,7 +17,7 @@
 ; zoe@milky.flowers or on Twitter at @spinnylights.
 
 <Cabbage> bounds(1, 0, 0, 0)
-form caption("The River") size(1310, 1025), pluginid("rivr")
+form caption("The River") size(1310, 1075), pluginid("rivr")
 
 #define ModuleAppearance shape("sharp"), colour(3, 65, 54), outlinecolour(216, 216, 216), outlinethickness(2)
 #define FontCol fontcolour(216, 216, 216) textcolour(216, 216, 216) fontcolour:0(216, 216, 216) fontcolour:1(216, 216, 216)
@@ -27,9 +27,9 @@ form caption("The River") size(1310, 1025), pluginid("rivr")
 
 #define Waveforms text("sine", "triangle", "saw", "semi-saw", "square", "pulse", "narrow pulse", "narrower pulse", "buzz")
 
-keyboard bounds(619, 870, 690, 155) middlec(4) keywidth(30)
+keyboard bounds(619, 870, 690, 205) middlec(4) keywidth(30)
 
-image bounds(0, 0, 620, 1025) plant("oscillators") $ModuleAppearance {
+image bounds(0, 0, 620, 1075) plant("oscillators") $ModuleAppearance {
 
   label bounds(1, 15, 618, 15) text("OSCILLATORS") colour(50, 50, 50) $LabelFontCol
 
@@ -41,113 +41,131 @@ image bounds(0, 0, 620, 1025) plant("oscillators") $ModuleAppearance {
   rslider bounds(126, 80, 60, 60) range(0.9, 1.1, 1, 1, 0.001) velocity(1) channel("fmod2") value(1) text("detune") valuetextbox(1) textbox(1) $FontCol
   rslider bounds(220, 80, 60, 60) range(0.9, 1.1, 1, 1, 0.001) velocity(1) channel("fmod3") value(1) text("detune") valuetextbox(1) textbox(1) $FontCol
 
-  label bounds(1, 164, 308, 14) text("VIBRATO") $FontCol
+  label bounds(1, 167, 308, 14) text("VIBRATO") $FontCol
 
-  rslider bounds(31,  188, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibamp1") text("amp") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(126, 188, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibamp2") text("amp") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(220, 188, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibamp3") text("amp") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(31,  191, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibamp1") text("amp") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(126, 191, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibamp2") text("amp") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(220, 191, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibamp3") text("amp") valuetextbox(1) textbox(1) $FontCol
 
-  rslider bounds(31,  263, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibfreq1") text("freq") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(126, 263, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibfreq2") text("freq") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(220, 263, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibfreq3") text("freq") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(31,  266, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibfreq1") text("freq") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(126, 266, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibfreq2") text("freq") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(220, 266, 60, 60) range(0, 20, 0, 1, 0.001) channel("vibfreq3") text("freq") valuetextbox(1) textbox(1) $FontCol
 
-  checkbox bounds(31,  338, 100, 15) channel("vibfreqt1tog") text("tempo") $FontCol $FontCol $SwitchCol
-  checkbox bounds(126, 338, 100, 15) channel("vibfreqt2tog") text("tempo") $FontCol $FontCol $SwitchCol
-  checkbox bounds(222, 338, 100, 15) channel("vibfreqt3tog") text("tempo") $FontCol $FontCol $SwitchCol
+  checkbox bounds(31,  341, 100, 15) channel("vibfreqt1tog") text("tempo") $FontCol $FontCol $SwitchCol
+  checkbox bounds(126, 341, 100, 15) channel("vibfreqt2tog") text("tempo") $FontCol $FontCol $SwitchCol
+  checkbox bounds(222, 341, 100, 15) channel("vibfreqt3tog") text("tempo") $FontCol $FontCol $SwitchCol
 
-  combobox bounds(20,  363, 80, 20) channel("vibfreqt1") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
-  combobox bounds(115, 363, 80, 20) channel("vibfreqt2") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
-  combobox bounds(210, 363, 80, 20) channel("vibfreqt3") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
+  combobox bounds(20,  366, 80, 20) channel("vibfreqt1") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
+  combobox bounds(115, 366, 80, 20) channel("vibfreqt2") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
+  combobox bounds(210, 366, 80, 20) channel("vibfreqt3") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
 
-  button bounds(31,  395, 60, 30) channel("vibwave1") items("sine","triangle")
-  button bounds(126, 395, 60, 30) channel("vibwave2") items("sine","triangle")
-  button bounds(220, 395, 60, 30) channel("vibwave3") items("sine","triangle")
+  button bounds(31,  398, 60, 30) channel("vibwave1") items("sine","triangle")
+  button bounds(126, 398, 60, 30) channel("vibwave2") items("sine","triangle")
+  button bounds(220, 398, 60, 30) channel("vibwave3") items("sine","triangle")
 
-  label bounds(1, 445, 308, 14) text("PHASE") $FontCol
+  label bounds(1, 451, 308, 14) text("PHASE") $FontCol
 
-  rslider bounds(31, 471, 60, 60) range(0, .5, 0, 1, 0.001) channel("osc1phase") text("phase") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(126, 471, 60, 60) range(0, .5, 0, 1, 0.001) channel("osc2phase") text("phase") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(220, 471, 60, 60) range(0, .5, 0, 1, 0.001) channel("osc3phase") text("phase") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(31, 477, 60, 60) range(0, .5, 0, 1, 0.001) channel("osc1phase") text("phase") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(126, 477, 60, 60) range(0, .5, 0, 1, 0.001) channel("osc2phase") text("phase") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(220, 477, 60, 60) range(0, .5, 0, 1, 0.001) channel("osc3phase") text("phase") valuetextbox(1) textbox(1) $FontCol
 
-  rslider bounds(31,  546, 60, 60) range(0, 20, 0, 1, 0.001) channel("phasefreq1") text("freq") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(126, 546, 60, 60) range(0, 20, 0, 1, 0.001) channel("phasefreq2") text("freq") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(220, 546, 60, 60) range(0, 20, 0, 1, 0.001) channel("phasefreq3") text("freq") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(31,  552, 60, 60) range(0, 20, 0, 1, 0.001) channel("phasefreq1") text("freq") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(126, 552, 60, 60) range(0, 20, 0, 1, 0.001) channel("phasefreq2") text("freq") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(220, 552, 60, 60) range(0, 20, 0, 1, 0.001) channel("phasefreq3") text("freq") valuetextbox(1) textbox(1) $FontCol
 
-  checkbox bounds(31,  619, 100, 15) channel("phasefreq1tog") text("tempo") $FontCol $FontCol $SwitchCol
-  checkbox bounds(126, 619, 100, 15) channel("phasefreq2tog") text("tempo") $FontCol $FontCol $SwitchCol
-  checkbox bounds(222, 619, 100, 15) channel("phasefreq3tog") text("tempo") $FontCol $FontCol $SwitchCol
+  checkbox bounds(31,  625, 100, 15) channel("phasefreq1tog") text("tempo") $FontCol $FontCol $SwitchCol
+  checkbox bounds(126, 625, 100, 15) channel("phasefreq2tog") text("tempo") $FontCol $FontCol $SwitchCol
+  checkbox bounds(222, 625, 100, 15) channel("phasefreq3tog") text("tempo") $FontCol $FontCol $SwitchCol
 
-  combobox bounds(20,  644, 80, 20) channel("phasefreqt1") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
-  combobox bounds(115, 644, 80, 20) channel("phasefreqt2") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
-  combobox bounds(210, 644, 80, 20) channel("phasefreqt3") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
+  combobox bounds(20,  650, 80, 20) channel("phasefreqt1") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
+  combobox bounds(115, 650, 80, 20) channel("phasefreqt2") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
+  combobox bounds(210, 650, 80, 20) channel("phasefreqt3") text("1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/9", "1/12", "1/16", "1/24", "1/32") $FontCol
 
-  button bounds(31,  676, 60, 30) channel("phasewave1") items("sine","triangle")
-  button bounds(126, 676, 60, 30) channel("phasewave2") items("sine","triangle")
-  button bounds(220, 676, 60, 30) channel("phasewave3") items("sine","triangle")
+  button bounds(31,  682, 60, 30) channel("phasewave1") items("sine","triangle")
+  button bounds(126, 682, 60, 30) channel("phasewave2") items("sine","triangle")
+  button bounds(220, 682, 60, 30) channel("phasewave3") items("sine","triangle")
 
-  label bounds(1, 725, 308, 15) text("AMP") $FontCol
+  label bounds(1, 736, 308, 14) text("POLY") $FontCol
 
-  rslider bounds(31, 751, 60, 60)  range(0, 1, 0.5, 1, 0.001) channel("osc1pan") text("pan") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(126, 751, 60, 60) range(0, 1, 0.5, 1, 0.001) channel("osc2pan") text("pan") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(220, 751, 60, 60) range(0, 1, 0.5, 1, 0.001) channel("osc3pan") text("pan") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(31,  762, 60, 60)  range(1, 7, 1, 1, 2) channel("oscvoices1") text("voices") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(126, 762, 60, 60) range(1, 7, 1, 1, 2) channel("oscvoices2") text("voices") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(220, 762, 60, 60) range(1, 7, 1, 1, 2) channel("oscvoices3") text("voices") valuetextbox(1) textbox(1) $FontCol
 
-  rslider bounds(31,  833, 60, 60) range(0, 20, 0, 0.5, 0.001) channel("osc1panlfo") text("pan lfo") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(126, 833, 60, 60) range(0, 20, 0, 0.5, 0.001) channel("osc2panlfo") text("pan lfo") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(220, 833, 60, 60) range(0, 20, 0, 0.5, 0.001) channel("osc3panlfo") text("pan lfo") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(31,  837, 60, 60) range(0, 1, 0, 1, 0.001) channel("oscmix1") text("mix") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(126, 837, 60, 60) range(0, 1, 0, 1, 0.001) channel("oscmix2") text("mix") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(220, 837, 60, 60) range(0, 1, 0, 1, 0.001) channel("oscmix3") text("mix") valuetextbox(1) textbox(1) $FontCol
 
-  rslider bounds(36, 913, 50, 60) range(0, 2, 1, 1, 0.001) value(1) channel("amp1") valuetextbox(1) textbox(1) $FontCol $Highlight
-  rslider bounds(131, 913, 50, 60) range(0, 2, 1, 1, 0.001) value(1) channel("amp2") valuetextbox(1) textbox(1) $FontCol $Highlight
-  rslider bounds(225, 913, 50, 60) range(0, 2, 1, 1, 0.001) value(1) channel("amp3") valuetextbox(1) textbox(1) $FontCol $Highlight
+  rslider bounds(31,  912, 60, 60)  range(0, 1, 0, 1, 0.001) channel("oscpoldet1") text("detune") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(126, 912, 60, 60) range(0, 1, 0, 1, 0.001) channel("oscpoldet2") text("detune") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(220, 912, 60, 60) range(0, 1, 0, 1, 0.001) channel("oscpoldet3") text("detune") valuetextbox(1) textbox(1) $FontCol
 
-  checkbox bounds (56, 990, 11, 11) channel("osc1tog") value(1) $SwitchCol
-  checkbox bounds (151, 990, 11, 11) channel("osc2tog") value(1) $SwitchCol
-  checkbox bounds (245, 990, 11, 11) channel("osc3tog") value(1) $SwitchCol
+  rslider bounds(31,  987, 60, 60)  range(0, 1, 0, 1, 0.001) channel("oscspread1") text("spread") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(126, 987, 60, 60) range(0, 1, 0, 1, 0.001) channel("oscspread2") text("spread") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(220, 987, 60, 60) range(0, 1, 0, 1, 0.001) channel("oscspread3") text("spread") valuetextbox(1) textbox(1) $FontCol
 
   label bounds(316, 50, 308, 15) text("FREQUENCY MODULATION") $FontCol
 
-  label bounds(311, 193, 15, 15) text("1:") $FontCol
+  label bounds(311, 171, 15, 15) text("1:") $FontCol
 
-  rslider bounds(341, 100, 60, 60) range(0, 20, 0, 1, 0.001) velocity(1) channel("fmamt11") text("amt") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(436, 100, 60, 60) range(0, 20, 0, 1, 0.001) velocity(1) channel("fmamt21") text("amt") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(530, 100, 60, 60) range(0, 20, 0, 1, 0.001) velocity(1) channel("fmamt31") text("amt") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(341, 78, 60, 60) range(0, 20, 0, 1, 0.001) velocity(1) channel("fmamt11") text("amt") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(436, 78, 60, 60) range(0, 20, 0, 1, 0.001) velocity(1) channel("fmamt21") text("amt") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(530, 78, 60, 60) range(0, 20, 0, 1, 0.001) velocity(1) channel("fmamt31") text("amt") valuetextbox(1) textbox(1) $FontCol
 
-  rslider bounds(341, 170, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat11") text("ratio") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(436, 170, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat21") text("ratio") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(530, 170, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat31") text("ratio") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(341, 148, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat11") text("ratio") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(436, 148, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat21") text("ratio") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(530, 148, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat31") text("ratio") valuetextbox(1) textbox(1) $FontCol
 
-  rslider bounds(341, 240, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine11") text("fine") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(436, 240, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine21") text("fine") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(530, 240, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine31") text("fine") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(341, 218, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine11") text("fine") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(436, 218, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine21") text("fine") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(530, 218, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine31") text("fine") valuetextbox(1) textbox(1) $FontCol
 
-  label bounds(311, 453, 15, 15) text("2:") $FontCol
+  label bounds(311, 406, 15, 15) text("2:") $FontCol
 
-  rslider bounds(341, 360, 60, 60) range(0, 20, 0, 1, 0.001) velocity(1) channel("fmamt12") text("amt") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(436, 360, 60, 60) range(0, 20, 0, 1, 0.001) velocity(1) channel("fmamt22") text("amt") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(530, 360, 60, 60) range(0, 20, 0, 1, 0.001) velocity(1) channel("fmamt32") text("amt") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(341, 313, 60, 60) range(0, 20, 0, 1, 0.001) velocity(1) channel("fmamt12") text("amt") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(436, 313, 60, 60) range(0, 20, 0, 1, 0.001) velocity(1) channel("fmamt22") text("amt") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(530, 313, 60, 60) range(0, 20, 0, 1, 0.001) velocity(1) channel("fmamt32") text("amt") valuetextbox(1) textbox(1) $FontCol
 
-  rslider bounds(341, 430, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat12") text("ratio") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(436, 430, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat22") text("ratio") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(530, 430, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat32") text("ratio") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(341, 383, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat12") text("ratio") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(436, 383, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat22") text("ratio") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(530, 383, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat32") text("ratio") valuetextbox(1) textbox(1) $FontCol
 
-  rslider bounds(341, 500, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine12") text("fine") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(436, 500, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine22") text("fine") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(530, 500, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine32") text("fine") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(341, 453, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine12") text("fine") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(436, 453, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine22") text("fine") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(530, 453, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine32") text("fine") valuetextbox(1) textbox(1) $FontCol
 
-  label bounds(311, 713, 15, 15) text("3:") $FontCol
+  label bounds(311, 641, 15, 15) text("3:") $FontCol
 
-  rslider bounds(341, 620, 60, 60) range(0, 20, 0, 0.25, 0.001) velocity(1) channel("fmamt13") text("amt") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(436, 620, 60, 60) range(0, 20, 0, 0.25, 0.001) velocity(1) channel("fmamt23") text("amt") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(530, 620, 60, 60) range(0, 20, 0, 0.25, 0.001) velocity(1) channel("fmamt33") text("amt") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(341, 548, 60, 60) range(0, 20, 0, 0.25, 0.001) velocity(1) channel("fmamt13") text("amt") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(436, 548, 60, 60) range(0, 20, 0, 0.25, 0.001) velocity(1) channel("fmamt23") text("amt") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(530, 548, 60, 60) range(0, 20, 0, 0.25, 0.001) velocity(1) channel("fmamt33") text("amt") valuetextbox(1) textbox(1) $FontCol
 
-  rslider bounds(341, 690, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat13") text("ratio") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(436, 690, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat23") text("ratio") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(530, 690, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat33") text("ratio") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(341, 618, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat13") text("ratio") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(436, 618, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat23") text("ratio") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(530, 618, 60, 60) range(0, 8, 1, 1, 1) velocity(1) channel("fmrat33") text("ratio") valuetextbox(1) textbox(1) $FontCol
 
-  rslider bounds(341, 760, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine13") text("fine") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(436, 760, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine23") text("fine") valuetextbox(1) textbox(1) $FontCol
-  rslider bounds(530, 760, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine33") text("fine") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(341, 688, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine13") text("fine") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(436, 688, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine23") text("fine") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(530, 688, 60, 60) range(0, 0.9999, 0, 1, 0.0001) velocity(1) channel("fmfine33") text("fine") valuetextbox(1) textbox(1) $FontCol
 
-;}
+  label bounds(311, 780, 308, 15) text("AMP") $FontCol
+
+  rslider bounds(341, 806, 60, 60)  range(0, 1, 0.5, 1, 0.001) channel("osc1pan") text("pan") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(436, 806, 60, 60) range(0, 1, 0.5, 1, 0.001) channel("osc2pan") text("pan") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(530, 806, 60, 60) range(0, 1, 0.5, 1, 0.001) channel("osc3pan") text("pan") valuetextbox(1) textbox(1) $FontCol
+
+  rslider bounds(341, 888, 60, 60) range(0, 20, 0, 0.5, 0.001) channel("osc1panlfo") text("pan lfo") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(436, 888, 60, 60) range(0, 20, 0, 0.5, 0.001) channel("osc2panlfo") text("pan lfo") valuetextbox(1) textbox(1) $FontCol
+  rslider bounds(530, 888, 60, 60) range(0, 20, 0, 0.5, 0.001) channel("osc3panlfo") text("pan lfo") valuetextbox(1) textbox(1) $FontCol
+
+  rslider bounds(346, 968, 50, 60) range(0, 2, 1, 1, 0.001) value(1) channel("amp1") valuetextbox(1) textbox(1) $FontCol $Highlight
+  rslider bounds(441, 968, 50, 60) range(0, 2, 1, 1, 0.001) value(1) channel("amp2") valuetextbox(1) textbox(1) $FontCol $Highlight
+  rslider bounds(535, 968, 50, 60) range(0, 2, 1, 1, 0.001) value(1) channel("amp3") valuetextbox(1) textbox(1) $FontCol $Highlight
+
+  checkbox bounds (366, 1045, 11, 11) channel("osc1tog") value(1) $SwitchCol
+  checkbox bounds (461, 1045, 11, 11) channel("osc2tog") value(1) $SwitchCol
+  checkbox bounds (555, 1045, 11, 11) channel("osc3tog") value(1) $SwitchCol
+
+}
 
 #define PitchLocations text("center", "slider", "floor", "ceiling")
 
@@ -312,7 +330,7 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
   </Cabbage>
   <CsoundSynthesizer>
   <CsOptions>
-  -n -m0 -+rtmidi=NULL -M0 --midi-key-cps=4 --midi-velocity-amp=5
+  -n -+rtmidi=NULL -M0 --midi-key-cps=4 --midi-velocity-amp=5
   </CsOptions>
   ; ==============================================
   <CsInstruments>
@@ -355,6 +373,42 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
   gasigr init 0
 
   gkcurrpitch init 0
+
+  opcode PanLFO, a, kk
+    kpanlforate, kpan xin
+
+      if (kpanlforate == 0) then
+        apanlfo = 0
+      else
+        apanlfo = oscil:a(0.5, kpanlforate, gisine) + 0.5
+      endif
+      kpanlfoscale = kpan*(-2) + 1
+    apan = (kpan + (apanlfo * kpanlfoscale)) * $M_PI_2
+
+    xout apan
+  endop
+
+  opcode PanLFO2, aa, akk
+    asig, kpanlforate, kpan xin
+
+        apan PanLFO kpanlforate, kpan
+      asigl = asig * cos(apan)
+      asigr = asig * sin(apan)
+
+    xout asigl, asigr
+  endop
+
+  opcode PanLFO4, aaaa, aakk
+    asigl, asigr, kpanlforate, kpan xin
+
+        apan PanLFO kpanlforate, kpan
+      asigll = asigl * cos(apan)
+      asiglr = asigl * sin(apan)
+      asigrl = asigr * cos(apan)
+      asigrr = asigr * sin(apan)
+
+    xout asigll, asiglr, asigrl, asigrr
+  endop
 
   opcode Wavetable, k, kk
     kfrq, kwavnum xin
@@ -423,9 +477,76 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     xout kphasevib
   endop
 
-  opcode FMOsc, a, kkkkkkkkkkkkkkkkkkkkkkkki
-    ktoggle1, ktoggle2, ktoggle3, koscfrq1, kfmratio1, kfmfine1, kphase1, kphasevib1, kwav1, kfmamt1, koscfrq2, kfmratio2, kfmfine2, kphase2, kphasevib2, kwav2, kfmamt2, koscfrq3, kfmratio3, kfmfine3, kphase3, kphasevib3, kwav3, kfmamt3, ioscid xin
+  ; the values in these tables were based on Adam Szabo's paper "How to Emulate
+  ; the Super Saw" studying the Roland JP-8000
+  ; https://www.nada.kth.se/utbildning/grukth/exjobb/rapportlistor/2010/rapporter10/szabo_adam_10131.pdf
 
+  gidetune ftgen 0, 0, 16384, 8, \
+                 0, 971, \
+                 0.00967268, 1101, \
+                 0.0220363, 1101, \
+                 0.0339636, 1101, \
+                 0.0467636, 1101, \
+                 0.0591273, 1101, \
+                 0.0714909, 1101, \
+                 0.0838545, 1101, \
+                 0.0967273, 1101, \
+                 0.121527, 1101, \
+                 0.147127, 1101, \
+                 0.193455, 1101, \
+                 0.243418, 1101, \
+                 0.2933815, 1101, \
+                 0.343345, 1099, \
+                 1, 1
+
+  gimixcenter ftgen 0, 0, 16384, 8, \
+                    1, 971, \
+                    0.965, 1101, \
+                    0.93, 1101, \
+                    0.901, 1101, \
+                    0.86, 1101, \
+                    0.83, 1101, \
+                    0.795, 1101, \
+                    0.76, 1101, \
+                    0.72, 1101, \
+                    0.69, 1101, \
+                    0.65, 1101, \
+                    0.62, 1101, \
+                    0.585, 1101, \
+                    0.55, 1101, \
+                    0.51, 1099, \
+                    0.445, 1
+
+  gimixside ftgen 0, 0, 16384, 8, \
+                  0, 971, \
+                  0.12, 1101, \
+                  0.19, 1101, \
+                  0.25, 1101, \
+                  0.31, 1101, \
+                  0.37, 1101, \
+                  0.42, 1101, \
+                  0.46, 1101, \
+                  0.5, 1101, \
+                  0.53, 1101, \
+                  0.56, 1101, \
+                  0.58, 1101, \
+                  0.59, 1101, \
+                  0.6, 1101, \
+                  0.605, 1099, \
+                  0.59, 1
+
+  opcode PolyDetune, k, ik
+    ifreqfactamt, kdetune xin
+
+    kfreqfact = 1 + (ifreqfactamt * table:k(kdetune, gidetune, 1))
+
+    xout kfreqfact
+  endop
+
+  opcode FMOsc, aa, kkkkkkkkkkkkkkkkkkkkkkkkikkkk
+    ktoggle1, ktoggle2, ktoggle3, koscfrq1, kfmratio1, kfmfine1, kphase1, kphasevib1, kwav1, kfmamt1, koscfrq2, kfmratio2, kfmfine2, kphase2, kphasevib2, kwav2, kfmamt2, koscfrq3, kfmratio3, kfmfine3, kphase3, kphasevib3, kwav3, kfmamt3, ioscid, kvoices, kpoldetune, kspread, kmix xin
+
+    ; set the main settings based on which oscillator is being processed
     if     (ioscid == 1) then
       koscfrq   = koscfrq1
       kphase    = kphase1
@@ -447,64 +568,103 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     endif
 
     if (ktoggle == 1) then
+        iabovefreqfact1amt =  0.01991221
+        ibelowfreqfact1amt = -0.01952356 
+        iabovefreqfact2amt =  0.06216538
+        ibelowfreqfact2amt = -0.06288439
+        iabovefreqfact3amt =  0.10745242
+        ibelowfreqfact3amt = -0.11002313
 
+        kabovefreq1 = koscfrq * PolyDetune:k(iabovefreqfact1amt, kpoldetune)
+        kbelowfreq1 = koscfrq * PolyDetune:k(ibelowfreqfact1amt, kpoldetune)
+        kabovefreq2 = koscfrq * PolyDetune:k(iabovefreqfact2amt, kpoldetune)
+        kbelowfreq2 = koscfrq * PolyDetune:k(ibelowfreqfact2amt, kpoldetune)
+        kabovefreq3 = koscfrq * PolyDetune:k(iabovefreqfact3amt, kpoldetune)
+        kbelowfreq3 = koscfrq * PolyDetune:k(ibelowfreqfact3amt, kpoldetune)
+
+       ; clone each running oscillator for the sake of FM
         if (ktoggle1 == 1) then
           afmosc1 tablekt phasor:a(koscfrq1*(kfmratio1+kfmfine1))+(kphase1+kphasevib1), Wavetable:k(koscfrq1, kwav1), 1, 0, 1
         else
-          afmosc1 = 0
+         afmosc1 = 0
         endif
         if (ktoggle2 == 1) then
           afmosc2 tablekt phasor:a(koscfrq2*(kfmratio2+kfmfine2))+(kphase2+kphasevib2), Wavetable:k(koscfrq2, kwav2), 1, 0, 1
         else
-          afmosc2 = 0
+         afmosc2 = 0
         endif
         if (ktoggle3 == 1) then
           afmosc3 tablekt phasor:a(koscfrq3*(kfmratio3+kfmfine3))+(kphase3+kphasevib3), Wavetable:k(koscfrq3, kwav3), 1, 0, 1
         else
-          afmosc3 = 0
+         afmosc3 = 0
         endif
+      ; compute the main output signal
       aosc tablekt phasor:a(koscfrq)+(kphase+kphasevib)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(koscfrq, kwav), 1, 0, 1
+
+      ; compute poly voices
+      if (kvoices == 3) then
+        aoscabove1 tablekt phasor:a(kabovefreq1)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(kabovefreq1, kwav), 1, random:i(0,1), 1
+        aoscbelow1 tablekt phasor:a(kbelowfreq1)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(kbelowfreq1, kwav), 1, random:i(0,1), 1
+
+        aoscabove2 = 0
+        aoscabove3 = 0
+        aoscbelow2 = 0
+        aoscbelow3 = 0
+      elseif (kvoices == 5) then
+        aoscabove1 tablekt phasor:a(kabovefreq1)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(kabovefreq1, kwav), 1, random:i(0, 1), 1
+        aoscbelow1 tablekt phasor:a(kbelowfreq1)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(kbelowfreq1, kwav), 1, random:i(0, 1), 1
+        aoscabove2 tablekt phasor:a(kabovefreq2)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(kabovefreq2, kwav), 1, random:i(0, 1), 1
+        aoscbelow2 tablekt phasor:a(kbelowfreq2)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(kbelowfreq2, kwav), 1, random:i(0, 1), 1
+
+        aoscabove3 = 0
+        aoscbelow3 = 0
+      elseif (kvoices == 7) then
+        aoscabove1 tablekt phasor:a(kabovefreq1)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(kabovefreq1, kwav), 1, random:i(0, 1), 1
+        aoscbelow1 tablekt phasor:a(kbelowfreq1)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(kbelowfreq1, kwav), 1, random:i(0, 1), 1
+        aoscabove2 tablekt phasor:a(kabovefreq2)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(kabovefreq2, kwav), 1, random:i(0, 1), 1
+        aoscbelow2 tablekt phasor:a(kbelowfreq2)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(kbelowfreq2, kwav), 1, random:i(0, 1), 1
+        aoscabove3 tablekt phasor:a(kabovefreq3)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(kabovefreq3, kwav), 1, random:i(0, 1), 1
+        aoscbelow3 tablekt phasor:a(kbelowfreq3)+(afmosc1*kfmamt1)+(afmosc2*kfmamt2)+(afmosc3*kfmamt3), Wavetable:k(kbelowfreq3, kwav), 1, random:i(0, 1), 1
+      else
+        aoscabove1 = 0
+        aoscbelow1 = 0
+        aoscabove2 = 0
+        aoscabove3 = 0
+        aoscbelow2 = 0
+        aoscbelow3 = 0
+      endif
+
     else
       aosc = 0
+      aoscabove1 = 0
+      aoscbelow1 = 0
+      aoscabove2 = 0
+      aoscabove3 = 0
+      aoscbelow2 = 0
+      aoscbelow3 = 0
     endif
 
-    xout aosc
-  endop
+    kspreadabove1 = kspread*0.167    + 0.5
+    kspreadbelow1 = kspread*(-0.167) + 0.5
+    kspreadabove2 = kspread*0.333    + 0.5
+    kspreadbelow2 = kspread*(-0.333) + 0.5
+    kspreadabove3 = kspread*0.5      + 0.5
+    kspreadbelow3 = kspread*(-0.5)   + 0.5
 
-  opcode PanLFO, a, kk
-    kpanlforate, kpan xin
+    aoscabove1l, aoscabove1r PanLFO2 aoscabove1, 0, kspreadabove1
+    aoscbelow1l, aoscbelow1r PanLFO2 aoscbelow1, 0, kspreadbelow1
+    aoscabove2l, aoscabove2r PanLFO2 aoscabove2, 0, kspreadabove2
+    aoscbelow2l, aoscbelow2r PanLFO2 aoscbelow2, 0, kspreadbelow2
+    aoscabove3l, aoscabove3r PanLFO2 aoscabove3, 0, kspreadabove3
+    aoscbelow3l, aoscbelow3r PanLFO2 aoscbelow3, 0, kspreadbelow3
 
-      if (kpanlforate == 0) then
-        apanlfo = 0
-      else
-        apanlfo = oscil:a(0.5, kpanlforate, gisine) + 0.5
-      endif
-      kpanlfoscale = kpan*(-2) + 1
-    apan = (kpan + (apanlfo * kpanlfoscale)) * $M_PI_2
+    asidesl = aoscbelow1l+aoscabove1l+aoscbelow2l+aoscabove2l+aoscbelow3l+aoscabove3l
+    asidesr = aoscbelow1r+aoscabove1r+aoscbelow2r+aoscabove2r+aoscbelow3r+aoscabove3r
 
-    xout apan
-  endop
+    kcentermix table kmix, gimixcenter, 1
+    ksidemix   table kmix, gimixside, 1
 
-  opcode PanLFO2, aa, akk
-    asig, kpanlforate, kpan xin
-
-        apan PanLFO kpanlforate, kpan
-      asigl = asig * cos(apan)
-      asigr = asig * sin(apan)
-
-    xout asigl, asigr
-  endop
-
-  opcode PanLFO4, aaaa, aakk
-    asigl, asigr, kpanlforate, kpan xin
-
-        apan PanLFO kpanlforate, kpan
-      asigll = asigl * cos(apan)
-      asiglr = asigl * sin(apan)
-      asigrl = asigr * cos(apan)
-      asigrr = asigr * sin(apan)
-
-    xout asigll, asiglr, asigrl, asigrr
+    xout aosc*kcentermix + asidesl*ksidemix, aosc*kcentermix + asidesr*ksidemix
   endop
 
   instr 1
@@ -577,6 +737,18 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     kphwave1   chnget "phasewave1"
     kphwave2   chnget "phasewave2"
     kphwave3   chnget "phasewave3"
+    koscvoices1 chnget "oscvoices1"
+    koscpoldet1    chnget "oscpoldet1"
+    koscspread1    chnget "oscspread1"
+    kmix1       chnget "oscmix1"
+    koscvoices2 chnget "oscvoices2"
+    koscpoldet2    chnget "oscpoldet2"
+    koscspread2    chnget "oscspread2"
+    kmix2       chnget "oscmix2"
+    koscvoices3 chnget "oscvoices3"
+    koscpoldet3    chnget "oscpoldet3"
+    koscspread3    chnget "oscspread3"
+    kmix3       chnget "oscmix3"
     kfmamt11   chnget "fmamt11"
     kfmamt12   chnget "fmamt12"
     kfmamt13   chnget "fmamt13"
@@ -722,11 +894,11 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
         kosc3frq = (kfrq*kmod3) + kvib3
         kphasevib3 FancyPhaseVibr kphfrqtog3, kphfrqtem3, kbpm, kphwave3, kphase3, kphasefrq3, gimewavf1, gimewavf2
 
-      aosc1 FMOsc kosc1tog, kosc2tog, kosc3tog, kosc1frq, kfmratio11, kfmfine11, kphase1, kphasevib1, kwav1, kfmamt11, kosc2frq, kfmratio12, kfmfine12, kphase2, kphasevib2, kwav2, kfmamt12, kosc3frq, kfmratio13, kfmfine13, kphase3, kphasevib3, kwav3, kfmamt13, 1
+      aosc1l, aosc1r FMOsc kosc1tog, kosc2tog, kosc3tog, kosc1frq, kfmratio11, kfmfine11, kphase1, kphasevib1, kwav1, kfmamt11, kosc2frq, kfmratio12, kfmfine12, kphase2, kphasevib2, kwav2, kfmamt12, kosc3frq, kfmratio13, kfmfine13, kphase3, kphasevib3, kwav3, kfmamt13, 1, koscvoices1, koscpoldet1, koscspread1, kmix1
 
-      aosc2 FMOsc kosc1tog, kosc2tog, kosc3tog, kosc1frq, kfmratio21, kfmfine21, kphase1, kphasevib1, kwav1, kfmamt21, kosc2frq, kfmratio22, kfmfine22, kphase2, kphasevib2, kwav2, kfmamt22, kosc3frq, kfmratio23, kfmfine23, kphase3, kphasevib3, kwav3, kfmamt23, 2
+      aosc2l, aosc2r FMOsc kosc1tog, kosc2tog, kosc3tog, kosc1frq, kfmratio21, kfmfine21, kphase1, kphasevib1, kwav1, kfmamt21, kosc2frq, kfmratio22, kfmfine22, kphase2, kphasevib2, kwav2, kfmamt22, kosc3frq, kfmratio23, kfmfine23, kphase3, kphasevib3, kwav3, kfmamt23, 2, koscvoices2, koscpoldet2, koscspread2, kmix3
 
-      aosc3 FMOsc kosc1tog, kosc2tog, kosc3tog, kosc1frq, kfmratio31, kfmfine31, kphase1, kphasevib1, kwav1, kfmamt31, kosc2frq, kfmratio32, kfmfine32, kphase2, kphasevib2, kwav2, kfmamt32, kosc3frq, kfmratio33, kfmfine33, kphase3, kphasevib3, kwav3, kfmamt33, 3
+      aosc3l, aosc3r FMOsc kosc1tog, kosc2tog, kosc3tog, kosc1frq, kfmratio31, kfmfine31, kphase1, kphasevib1, kwav1, kfmamt31, kosc2frq, kfmratio32, kfmfine32, kphase2, kphasevib2, kwav2, kfmamt32, kosc3frq, kfmratio33, kfmfine33, kphase3, kphasevib3, kwav3, kfmamt33, 3, koscvoices3, koscpoldet3, koscspread3, kmix2
 
 
       if ((knoisetog == 1) && (knamp > 0)) then
@@ -735,9 +907,12 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
         anoise = 0
       endif
 
-      aosc1l, aosc1r PanLFO2 aosc1, kosc1panlfo, kosc1pan
-      aosc2l, aosc2r PanLFO2 aosc2, kosc2panlfo, kosc2pan
-      aosc3l, aosc3r PanLFO2 aosc3, kosc3panlfo, kosc3pan
+      aosc1ll, aosc1lr, aosc1rl, aosc1rr PanLFO4 aosc1l, aosc1r, kosc1panlfo, kosc1pan
+      aosc2ll, aosc2lr, aosc2rl, aosc2rr PanLFO4 aosc2l, aosc2r, kosc2panlfo, kosc2pan
+      aosc3ll, aosc3lr, aosc3rl, aosc3rr PanLFO4 aosc3l, aosc3r, kosc3panlfo, kosc3pan
+
+      aosc1l = aosc1ll + aosc1rl
+      aosc1r = aosc1lr + aosc1rr
 
       asigprefiltl  = ((aosc1l*kamp1*koscgain) + (aosc2l*kamp2*koscgain) + (aosc3l*kamp3*koscgain) + anoise) / 4
       asigprefiltr  = ((aosc1r*kamp1*koscgain) + (aosc2r*kamp2*koscgain) + (aosc3r*kamp3*koscgain) + anoise) / 4
