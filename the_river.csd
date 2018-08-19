@@ -25,7 +25,7 @@ form caption("The River") size(1310, 1075), pluginid("rivr")
 #define Highlight trackercolour(175, 233, 221) outlinecolour(175, 233, 221)
 #define SwitchCol colour:1(235, 120, 0) colour:0(0, 0, 0)
 
-#define Waveforms text("sine", "triangle", "saw", "semi-saw", "square", "pulse", "narrow pulse", "narrower pulse", "buzz")
+#define Waveforms text("sine", "triangle", "saw", "semi-saw", "square", "pulse", "narrow pulse", "narrower pulse", "buzz", "spec1", "spec2", "spec3", "spec4", "spec5", "spec6", "spec7", "spec8", "spec9", "spec10", "spec11", "spec12", "spec13", "spec14", "spec15", "spec16", "spec17", "spec18", "spec19", "spec20", "spec21", "spec22", "spec23", "spec24", "spec25", "spec26", "spec27", "spec28", "spec29", "spec30", "hamming", "blackman-harris", "sync", "bartlett", "gaussian")
 
 keyboard bounds(619, 870, 690, 205) middlec(4) keywidth(30)
 
@@ -363,6 +363,76 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
   ginrpulsebl  vco2init -ginrpulse,  ginrpulse+1, 1.05, 512, gitabsize, ginrpulse
   gibuzz   ftgen 0, 0, gitabsize, 11, 30, 1                                                        ; buzz
   gibuzzbl  vco2init -gibuzz,  gibuzz+1, 1.05, 512, gitabsize, gibuzz
+  gispec1 ftgen 0, 0, gitabsize, 10, 1, 0, 0.596, 0, 0.299, 0, 0.062, 0, 0.011, 0, 0.008, 0, 0.003, 0, 0.001
+  gispec1bl vco2init -gispec1, gispec1+1, 1.05, 512, gitabsize, gispec1
+  gispec2 ftgen 0, 0, gitabsize, 19, 1, 0.842, 171, -0.455, 3, 0.754, 253, -0.158, 7, 0.086, 139, -0.024, 9, 0.166, 14, 0.035
+  gispec2bl vco2init -gispec2, gispec2+1, 1.05, 512, gitabsize, gispec2
+  gispec3 ftgen 0, 0, gitabsize, 9, 1, 1.0, 122, 5, 0.509, 331, 8, 0.261, 282, 9, 0.001, 22, 13, 0.048, 82, 14, 0.125, 201, 16, 0.102, 67
+  gispec3bl vco2init -gispec3, gispec3+1, 1.05, 512, gitabsize, gispec3
+  gispec4 ftgen 0, 0, gitabsize, 9, 1, 1.0, 180, 3, 0.877, 341, 4, 0.597, 233, 5, 0.691, 162, 7, 0.954, 298, 8, 0.859, 214, 9, 0.625, 83
+  gispec4bl vco2init -gispec4, gispec4+1, 1.05, 512, gitabsize, gispec4
+  gispec5 ftgen 0, 0, gitabsize, 9, 1, 0.539, 88, 2, 0.578, 309, 3, 0.557, 42, 4, 0.215, 51, 5, 0.249, 307, 6, 0.024, 350
+  gispec5bl vco2init -gispec5, gispec5+1, 1.05, 512, gitabsize, gispec5
+  gispec6 ftgen 0, 0, gitabsize, 19, 1, 0.978, 128, -0.005, 2, 1.0, 203, -0.409, 4, 0.665, 176, -0.03, 5, 0.563, 112, -0.238, 7, 0.392, 183, 0.005, 8, 0.643, 59, -0.019, 9, 0.063, 155, 0.06
+  gispec6bl vco2init -gispec6, gispec6+1, 1.05, 512, gitabsize, gispec6
+  gispec7 ftgen 0, 0, gitabsize, 19, 1, 0.986, 265, 0.068, 4, 0.776, 0, -0.568, 5, 0.721, 133, 0.037, 6, 0.344, 128, 0.462, 7, 0.544, 134, -0.508, 9, 0.57, 178, 0.104, 10, 0.303, 295, -0.001, 11, 0.344, 106, -0.067, 12, 0.066, 292, 0.104
+  gispec7bl vco2init -gispec7, gispec7+1, 1.05, 512, gitabsize, gispec7
+  gispec8 ftgen 0, 0, gitabsize, 19, 1, 0.986, 249, -0.086, 2, 0.975, 261, 0.345, 4, 0.977, 123, 0.076, 8, 0.987, 120, 0.364, 9, 1.0, 171, 0.087, 11, 0.287, 347, -0.002, 12, 0.178, 189, -0.264, 13, 0.153, 208, 0.214
+  gispec8bl vco2init -gispec8, gispec8+1, 1.05, 512, gitabsize, gispec8
+  gispec9 ftgen 0, 0, gitabsize, 9, 1, 1.0, 106, 2, 1.0, 59, 3, 0.801, 206, 6, 0.39, 54, 9, 0.485, 113, 11, 0.698, 224, 12, 0.417, 291, 15, 0.233, 195
+  gispec9bl vco2init -gispec9, gispec9+1, 1.05, 512, gitabsize, gispec9
+  gispec10 ftgen 0, 0, gitabsize, 19, 1, 1.0, 20, 0.393, 2, 1.0, 55, -0.124, 4, 1.0, 320, -0.075, 6, 1.0, 112, 0.256
+  gispec10bl vco2init -gispec10, gispec10+1, 1.05, 512, gitabsize, gispec10
+  gispec11 ftgen 0, 0, gitabsize, 19, 1, 1.0, 267, -0.469, 3, 0.971, 95, 0.088, 6, 0.929, 280, 0.157, 7, 1.0, 159, -0.065, 8, 0.532, 340, -0.097, 10, 0.514, 57, -0.145, 11, 0.59, 245, 0.207, 12, 0.264, 208, 0.852, 13, 0.232, 84, 0.031, 14, 0.155, 357, 0.046, 15, 0.299, 211, -0.832, 16, 0.213, 73, -0.081
+  gispec11bl vco2init -gispec11, gispec11+1, 1.05, 512, gitabsize, gispec11
+  gispec12 ftgen 0, 0, gitabsize, 9, 1, 1.0, 341, 3, 0.873, 47, 4, 0.924, 145, 5, 0.927, 50, 8, 0.877, 358, 10, 0.538, 314, 11, 0.19, 13, 12, 0.211, 104, 16, 0.173, 287, 17, 0.147, 213, 18, 0.183, 147, 20, 0.18, 224
+  gispec12bl vco2init -gispec12, gispec12+1, 1.05, 512, gitabsize, gispec12
+  gispec13 ftgen 0, 0, gitabsize, 19, 1, 0.915, 318, -0.08, 3, 0.934, 41, 0.119, 4, 0.768, 355, 0.046, 5, 0.767, 211, -0.035, 8, 0.768, 147, 0.018, 10, 0.883, 174, -0.067, 11, 0.905, 112, -0.045, 12, 0.739, 267, 0.035, 14, 0.058, 349, 0.023
+  gispec13bl vco2init -gispec13, gispec13+1, 1.05, 512, gitabsize, gispec13
+  gispec14 ftgen 0, 0, gitabsize, 9, 1, 1.0, 172, 2, 1.0, 134, 4, 1.0, 111, 6, 0.943, 351, 8, 1.0, 8, 9, 0.816, 345, 10, 0.701, 81, 13, 0.712, 53
+  gispec14bl vco2init -gispec14, gispec14+1, 1.05, 512, gitabsize, gispec14
+  gispec15 ftgen 0, 0, gitabsize, 9, 1, 0.318, 81, 2, 0.523, 75, 4, 0.416, 294, 7, 0.55, 239, 8, 0.5, 197, 11, 0.462, 266, 12, 0.524, 165, 13, 0.484, 307, 14, 0.188, 223, 16, 0.168, 122
+  gispec15bl vco2init -gispec15, gispec15+1, 1.05, 512, gitabsize, gispec15
+  gispec16 ftgen 0, 0, gitabsize, 9, 1, 1.0, 138, 3, 1.0, 237, 4, 0.88, 162, 6, 0.672, 24, 7, 0.474, 233, 8, 0.597, 39, 11, 0.427, 91, 12, 0.411, 232, 14, 0.754, 347, 15, 0.548, 86, 18, 0.367, 32, 19, 0.093, 225
+  gispec16bl vco2init -gispec16, gispec16+1, 1.05, 512, gitabsize, gispec16
+  gispec17 ftgen 0, 0, gitabsize, 9, 1, 1.0, 348, 2, 1.0, 331, 4, 1.0, 111, 6, 0.979, 350, 7, 1.0, 128, 9, 1.0, 133, 10, 1.0, 332, 12, 1.0, 75, 13, 1.0, 201, 15, 1.0, 338, 16, 0.753, 325, 18, 0.759, 173, 19, 0.772, 40, 20, 0.566, 354, 21, 0.56, 257, 22, 0.652, 254, 23, 0.686, 289, 24, 0.672, 317, 26, 0.704, 28, 27, 0.516, 238, 28, 0.056, 111
+  gispec17bl vco2init -gispec17, gispec17+1, 1.05, 512, gitabsize, gispec17
+  gispec18 ftgen 0, 0, gitabsize, 19, 1, 1.0, 15, 0.332, 2, 0.677, 206, 0.045, 3, 0.784, 64, -0.062, 6, 0.803, 1, -0.347, 7, 0.782, 165, 0.05, 8, 0.582, 178, -0.123, 9, 0.42, 57, 0.094, 11, 0.406, 211, -0.213
+  gispec18bl vco2init -gispec18, gispec18+1, 1.05, 512, gitabsize, gispec18
+  gispec19 ftgen 0, 0, gitabsize, 19, 1, 0.901, 239, -0.047, 2, 1.0, 245, -0.277, 3, 1.0, 180, -0.053, 5, 1.0, 288, 0.143, 6, 0.628, 292, 0.09, 8, 0.585, 138, -0.205, 11, 0.68, 160, 0.054, 13, 0.729, 70, 0.039, 15, 0.369, 178, -0.018, 16, 0.417, 337, 0.017, 17, 0.416, 270, 0.036, 19, 0.353, 132, 0.05, 20, 0.242, 133, -0.022, 22, 0.433, 323, 0.075, 24, 0.057, 51, 0.051, 25, 0.156, 245, -0.038, 26, 0.267, 260, 0.155, 27, 0.418, 23, -0.027, 28, 0.303, 91, -0.242
+  gispec19bl vco2init -gispec19, gispec19+1, 1.05, 512, gitabsize, gispec19
+  gispec20 ftgen 0, 0, gitabsize, 9, 1, 0.736, 175, 5, 0.72, 302, 6, 0.35, 316, 10, 0.223, 347, 12, 0.115, 56, 14, 0.11, 71, 15, 0.203, 48, 18, 0.212, 74, 19, 0.264, 215
+  gispec20bl vco2init -gispec20, gispec20+1, 1.05, 512, gitabsize, gispec20
+  gispec21 ftgen 0, 0, gitabsize, 19, 1, 1.0, 279, 0.056, 3, 1.0, 12, 0.342, 5, 1.0, 23, -0.031, 6, 1.0, 151, -0.164, 7, 0.918, 257, 0.14, 8, 0.982, 121, 0.04, 9, 1.0, 94, -0.694, 10, 0.79, 73, -0.4, 12, 0.843, 232, 0.14, 14, 0.949, 210, 0.163, 16, 0.99, 337, 0.08, 19, 0.619, 44, -0.038, 20, 0.247, 302, -0.118, 22, 0.247, 305, 0.132, 25, 0.352, 54, -0.014, 29, 0.41, 3, 0.228, 30, 0.311, 352, 0.017, 31, 0.306, 338, -0.495
+  gispec21bl vco2init -gispec21, gispec21+1, 1.05, 512, gitabsize, gispec21
+  gispec22 ftgen 0, 0, gitabsize, 19, 1, 1.0, 217, 0.152, 2, 0.795, 21, 0.249, 3, 1.0, 272, 0.089, 7, 0.621, 350, -0.194, 10, 0.338, 207, 0.14, 11, 0.522, 191, 0.22, 15, 0.913, 69, -0.249, 17, 0.997, 192, 0.026, 18, 0.962, 249, -0.046, 21, 1.0, 232, 0.004, 22, 0.959, 85, -0.347, 24, 0.809, 156, -0.424, 26, 0.871, 202, 0.159, 28, 0.185, 68, 0.063, 29, 0.339, 214, 0.085, 31, 0.202, 82, -0.194
+  gispec22bl vco2init -gispec22, gispec22+1, 1.05, 512, gitabsize, gispec22
+  gispec23 ftgen 0, 0, gitabsize, 19, 1, 0.977, 307, -0.092, 3, 1.0, 181, 0.022, 7, 1.0, 105, -0.067, 8, 1.0, 257, -0.06, 9, 1.0, 226, 0.054, 10, 0.967, 30, 0.031, 13, 0.866, 241, 0.143, 14, 1.0, 290, -0.176, 17, 0.875, 296, 0.191, 19, 0.44, 120, -0.615, 20, 0.722, 169, -0.454, 22, 0.704, 256, 0.051, 25, 0.754, 33, 0.036, 26, 0.779, 21, 0.038, 27, 0.437, 124, 0.025, 28, 0.682, 295, -0.221, 30, 0.921, 130, -0.255, 31, 1.0, 9, -0.194, 33, 0.805, 178, -0.021, 35, 0.871, 114, 0.115, 39, 1.0, 328, -0.281, 40, 0.909, 273, -0.82, 41, 0.926, 145, -0.09, 42, 1.0, 38, -0.158, 44, 1.0, 54, -0.206, 47, 1.0, 166, -0.231, 51, 0.555, 277, -0.426, 52, 0.155, 152, -0.265
+  gispec23bl vco2init -gispec23, gispec23+1, 1.05, 512, gitabsize, gispec23
+  gispec24 ftgen 0, 0, gitabsize, 9, 1, 0.801, 35, 2, 1.0, 167, 3, 0.636, 65, 4, 0.721, 352, 6, 0.99, 104, 7, 0.948, 67, 10, 0.978, 251, 11, 0.981, 342, 12, 1.0, 290, 14, 1.0, 229, 18, 1.0, 276, 20, 1.0, 214, 21, 0.685, 299, 22, 0.659, 353, 23, 0.587, 348, 24, 0.492, 321, 28, 0.778, 76, 29, 0.89, 178, 31, 0.743, 217, 33, 0.572, 30, 34, 0.595, 89, 35, 0.39, 44
+  gispec24bl vco2init -gispec24, gispec24+1, 1.05, 512, gitabsize, gispec24
+  gispec25 ftgen 0, 0, gitabsize, 19, 1, 0.845, 189, 0.097, 2, 0.8, 196, 0.042, 3, 0.874, 210, 0.149, 4, 0.784, 221, -0.351, 7, 0.588, 210, 0.02, 8, 0.631, 261, -0.258, 10, 0.668, 87, -0.201, 13, 0.832, 233, -0.384, 14, 0.782, 200, -0.464, 15, 0.324, 111, -0.162, 17, 0.435, 352, 0.097, 18, 0.43, 85, 0.037, 20, 0.505, 62, 0.029, 21, 0.538, 150, 0.023, 22, 0.718, 247, -0.294, 23, 0.731, 169, 0.06, 24, 0.72, 104, 0.013, 26, 0.578, 233, -1.999, 27, 0.742, 183, 0.145, 30, 0.768, 261, -0.253, 31, 0.828, 0, -0.026, 32, 0.611, 235, 0.035, 33, 0.601, 183, 0.025, 35, 0.415, 118, -0.936, 37, 0.409, 46, 0.244, 39, 0.316, 206, 0.057, 40, 0.236, 112, 0.222, 41, 0.117, 10, -0.006, 42, 0.056, 186, 0.104
+  gispec25bl vco2init -gispec25, gispec25+1, 1.05, 512, gitabsize, gispec25
+  gispec26 ftgen 0, 0, gitabsize, 19, 1, 1.0, 171, -0.339, 3, 0.57, 279, 0.014, 7, 0.59, 1, -0.131, 9, 0.714, 111, 0.012, 10, 0.664, 227, -0.02, 13, 0.639, 28, -0.046, 14, 0.657, 357, 0.192, 17, 0.559, 352, -0.116, 18, 0.63, 107, -0.324, 22, 0.55, 119, -0.681, 24, 0.557, 125, -0.311, 25, 0.37, 358, -0.186
+  gispec26bl vco2init -gispec26, gispec26+1, 1.05, 512, gitabsize, gispec26
+  gispec27 ftgen 0, 0, gitabsize, 19, 1, 1.0, 338, -1.195, 3, 1.0, 231, 0.111, 4, 1.0, 24, 0.169, 5, 1.0, 272, 0.122, 6, 0.944, 355, -0.145, 7, 0.866, 102, -0.596, 8, 0.964, 164, -0.014, 9, 0.827, 98, 0.15, 11, 0.751, 207, -0.354, 14, 0.887, 30, 0.343, 18, 0.903, 206, -0.414, 20, 0.902, 314, -0.1, 24, 0.958, 259, -0.1, 28, 1.0, 46, -0.275, 32, 1.0, 141, -0.615, 34, 1.0, 61, 0.017, 38, 1.0, 64, 0.032, 42, 1.0, 35, 0.059, 44, 0.838, 354, 0.164, 45, 0.586, 167, 0.072, 47, 0.81, 45, -0.198, 49, 0.895, 241, 0.16, 51, 1.0, 215, -0.48, 52, 1.0, 69, 0.044, 54, 1.0, 30, -0.169, 55, 0.925, 283, -0.064, 56, 0.602, 51, -0.141, 58, 0.691, 343, 0.104, 59, 0.695, 103, 0.01, 60, 0.752, 299, -0.403, 62, 0.97, 99, -0.002, 64, 1.0, 254, -0.025, 66, 0.805, 330, -0.218, 68, 1.0, 312, -0.195, 69, 1.0, 342, 0.057, 72, 0.673, 272, -0.394, 74, 0.651, 347, -0.027, 75, 0.654, 55, 0.006, 77, 0.572, 244, 0.066, 78, 0.625, 53, 0.128, 80, 0.628, 316, -0.08, 82, 0.711, 39, -0.296, 83, 0.549, 229, 0.195, 84, 0.634, 148, 0.197, 88, 0.885, 349, 0.134, 91, 0.223, 163, 0.124
+  gispec27bl vco2init -gispec27, gispec27+1, 1.05, 512, gitabsize, gispec27
+  gispec28 ftgen 0, 0, gitabsize, 19, 1, 1.0, 280, 0.068, 4, 1.0, 75, 0.158, 8, 0.645, 73, 0.002, 10, 0.598, 126, -0.016, 13, 0.738, 198, -0.177, 17, 0.745, 294, 0.066, 19, 0.793, 130, -0.907, 20, 0.1, 353, 0.105, 21, 0.1, 144, -0.128, 22, 0.304, 227, 0.231, 25, 0.314, 315, -0.003, 27, 0.342, 44, -0.075, 29, 0.164, 70, -0.142, 31, 0.076, 258, 0.029, 33, 0.327, 139, -0.028, 34, 0.322, 52, 0.081, 38, 0.094, 15, -0.063, 39, 0.03, 268, 0.038, 41, 0.127, 33, -0.36
+  gispec28bl vco2init -gispec28, gispec28+1, 1.05, 512, gitabsize, gispec28
+  gispec29 ftgen 0, 0, gitabsize, 19, 1, 0.808, 157, 0.069, 3, 0.983, 205, -0.06, 4, 1.0, 343, -0.564, 5, 1.0, 211, -0.107, 8, 0.957, 320, 0.163, 9, 1.0, 96, 0.028, 10, 1.0, 353, 0.617, 14, 1.0, 253, -0.103, 15, 1.0, 186, 0.184, 16, 1.0, 347, 0.227, 17, 0.937, 261, -0.039, 18, 0.895, 203, -0.002, 19, 0.903, 305, -0.357, 22, 0.862, 335, 0.082, 23, 0.639, 29, 0.096, 25, 0.677, 143, -0.266, 26, 0.881, 157, -0.167, 28, 1.0, 328, 0.026, 30, 0.889, 189, 0.028, 32, 0.935, 108, -0.15, 33, 0.498, 123, 0.03, 34, 0.391, 272, 0.394, 36, 0.607, 111, -0.611, 37, 0.434, 221, -0.062, 38, 0.473, 209, -0.006, 40, 0.554, 171, -0.093, 41, 0.692, 21, -0.075, 42, 0.337, 288, 0.085, 44, 0.19, 189, -0.096, 45, 0.277, 51, -0.052, 47, 0.552, 10, -0.188, 49, 0.082, 54, -0.017
+  gispec29bl vco2init -gispec29, gispec29+1, 1.05, 512, gitabsize, gispec29
+  gispec30 ftgen 0, 0, gitabsize, 19, 1, 1.0, 220, 0.162, 4, 1.0, 280, 0.101, 7, 1.0, 352, 0.008, 9, 1.0, 73, 0.171, 10, 1.0, 118, -0.046, 14, 0.577, 281, 0.032, 15, 0.693, 30, -0.174, 16, 0.794, 292, -0.029, 18, 0.544, 336, 0.087, 20, 0.419, 92, -0.547, 21, 0.014, 58, 0.13, 22, 0.201, 2, -0.01, 23, 0.34, 284, -0.105, 27, 0.236, 131, -0.066, 30, 0.265, 184, -0.308, 33, 0.274, 234, -0.193, 36, 0.315, 350, -0.12, 37, 0.208, 234, -0.248, 38, 0.22, 244, -0.061, 39, 0.469, 43, 0.058, 40, 0.405, 43, 0.149, 42, 0.81, 353, -0.11, 43, 0.821, 226, -0.197, 44, 0.825, 25, -0.0, 47, 0.851, 51, 0.01, 48, 0.158, 303, -0.223, 50, 0.096, 243, 0.307
+  gispec30bl vco2init -gispec30, gispec30+1, 1.05, 512, gitabsize, gispec30
+  gihamming ftgen 0, 0, gitabsize, 20, 1, 1
+  gihammingbl vco2init -gihamming, gihamming+1, 1.05, 512, gitabsize, gihamming
+  giblackmanharris ftgen 0, 0, gitabsize, 20, 5, 1
+  giblackmanharrisbl vco2init -giblackmanharris, giblackmanharris+1, 1.05, 512, gitabsize, giblackmanharris
+  gisync ftgen 0, 0, gitabsize, 20, 9, 1
+  gisyncbl vco2init -gisync, gisync+1, 1.05, 512, gitabsize, gisync
+  gibartlett ftgen 0, 0, gitabsize, 20, 3, 1
+  gibartlettbl vco2init -gibartlett, gibartlett+1, 1.05, 512, gitabsize, gibartlett
+  gigaussian ftgen 0, 0, gitabsize, 20, 6, 1, 1
+  gigaussianbl vco2init -gigaussian, gigaussian+1, 1.05, 512, gitabsize, gigaussian
 
   ; accomp
 
@@ -432,7 +502,76 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
       kwav vco2ft kfrq, -ginrpulse
     elseif (kwavnum == 9) then
       kwav vco2ft kfrq, -gibuzz
-    endif
+    elseif (kwavnum == 10) then
+      kwav vco2ft kfrq, -gispec1
+    elseif (kwavnum == 11) then
+      kwav vco2ft kfrq, -gispec2
+    elseif (kwavnum == 12) then
+      kwav vco2ft kfrq, -gispec3
+    elseif (kwavnum == 13) then
+      kwav vco2ft kfrq, -gispec4
+    elseif (kwavnum == 14) then
+      kwav vco2ft kfrq, -gispec5
+    elseif (kwavnum == 15) then
+      kwav vco2ft kfrq, -gispec6
+    elseif (kwavnum == 16) then
+      kwav vco2ft kfrq, -gispec7
+    elseif (kwavnum == 17) then
+      kwav vco2ft kfrq, -gispec8
+    elseif (kwavnum == 18) then
+      kwav vco2ft kfrq, -gispec9
+    elseif (kwavnum == 19) then
+      kwav vco2ft kfrq, -gispec10
+    elseif (kwavnum == 20) then
+      kwav vco2ft kfrq, -gispec11
+    elseif (kwavnum == 21) then
+      kwav vco2ft kfrq, -gispec12
+    elseif (kwavnum == 22) then
+      kwav vco2ft kfrq, -gispec13
+    elseif (kwavnum == 23) then
+      kwav vco2ft kfrq, -gispec14
+    elseif (kwavnum == 24) then
+      kwav vco2ft kfrq, -gispec15
+    elseif (kwavnum == 25) then
+      kwav vco2ft kfrq, -gispec16
+    elseif (kwavnum == 26) then
+      kwav vco2ft kfrq, -gispec17
+    elseif (kwavnum == 27) then
+      kwav vco2ft kfrq, -gispec18
+    elseif (kwavnum == 28) then
+      kwav vco2ft kfrq, -gispec19
+    elseif (kwavnum == 29) then
+      kwav vco2ft kfrq, -gispec20
+    elseif (kwavnum == 30) then
+      kwav vco2ft kfrq, -gispec21
+    elseif (kwavnum == 31) then
+      kwav vco2ft kfrq, -gispec22
+    elseif (kwavnum == 32) then
+      kwav vco2ft kfrq, -gispec23
+    elseif (kwavnum == 33) then
+      kwav vco2ft kfrq, -gispec24
+    elseif (kwavnum == 34) then
+      kwav vco2ft kfrq, -gispec25
+    elseif (kwavnum == 35) then
+      kwav vco2ft kfrq, -gispec26
+    elseif (kwavnum == 36) then
+      kwav vco2ft kfrq, -gispec27
+    elseif (kwavnum == 37) then
+      kwav vco2ft kfrq, -gispec28
+    elseif (kwavnum == 38) then
+      kwav vco2ft kfrq, -gispec29
+    elseif (kwavnum == 39) then
+      kwav vco2ft kfrq, -gispec30
+    elseif (kwavnum == 40) then
+      kwav vco2ft kfrq, -gihamming
+    elseif (kwavnum == 41) then
+      kwav vco2ft kfrq, -giblackmanharris
+    elseif (kwavnum == 42) then
+      kwav vco2ft kfrq, -gisync
+    elseif (kwavnum == 43) then
+      kwav vco2ft kfrq, -gibartlett
+    elseif (kwavnum == 44) then
+      kwav vco2ft kfrq, -gigaussian
 
     xout kwav
   endop
@@ -804,6 +943,8 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
     ; use an xtratim/release pair for the envelopes,
     ; because multiple linsegr/expsegr opcodes cause
     ; serious performance problems
+    ;
+    ; maybe should account for pitch env here as well
     if (ienvr <= ifenvr) then
       xtratim ienvr
     else
