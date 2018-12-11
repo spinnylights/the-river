@@ -572,6 +572,7 @@ image bounds(818, 452, 343, 200) plant("reverb") $ModuleAppearance {
       kwav vco2ft kfrq, -gibartlett
     elseif (kwavnum == 44) then
       kwav vco2ft kfrq, -gigaussian
+    endif
 
     xout kwav
   endop
